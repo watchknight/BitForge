@@ -97,41 +97,32 @@ export const ExperienceIntroGate: React.FC<ExperienceIntroGateProps> = ({ onEnte
             invariant tracking, and algorithmic sonification.
           </motion.p>
 
-          {/* Interactive Gate Buttons with Corner Crosshairs */}
+          {/* Interactive Gate Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.5 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-4"
           >
             {/* Enter with Sound Button */}
             <button
               onClick={handleEnterWithSound}
-              className="relative group w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-cyan-500 text-obsidian-950 font-bold text-sm tracking-wide shadow-lg shadow-brand-500/20 hover:shadow-brand-500/40 hover:scale-[1.02] transition-all duration-200 flex items-center justify-center gap-2.5"
+              className="group relative w-full sm:w-auto px-7 py-3.5 rounded-full bg-gradient-to-r from-brand-400 via-cyan-300 to-brand-400 text-obsidian-950 font-bold text-sm tracking-wide shadow-lg shadow-brand-500/25 hover:shadow-brand-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2.5"
             >
-              {/* Corner crosshairs */}
-              <span className="absolute -top-1 -left-1 font-mono text-[10px] text-brand-300 pointer-events-none select-none">
-                ┌
+              <div className="p-1 rounded-full bg-obsidian-950/10 flex items-center justify-center">
+                <Volume2 className="w-4 h-4 text-obsidian-950 fill-current" />
+              </div>
+              <span className="font-semibold text-[13.5px]">Enter Experience</span>
+              <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-obsidian-950/15 text-obsidian-950/80 font-medium">
+                Audio On
               </span>
-              <span className="absolute -top-1 -right-1 font-mono text-[10px] text-brand-300 pointer-events-none select-none">
-                ┐
-              </span>
-              <span className="absolute -bottom-1 -left-1 font-mono text-[10px] text-brand-300 pointer-events-none select-none">
-                └
-              </span>
-              <span className="absolute -bottom-1 -right-1 font-mono text-[10px] text-brand-300 pointer-events-none select-none">
-                ┘
-              </span>
-
-              <Volume2 className="w-4 h-4 fill-current" />
-              <span>Enter Experience // With Sound</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              <ArrowRight className="w-4 h-4 text-obsidian-950 group-hover:translate-x-1 transition-transform" />
             </button>
 
             {/* Enter Silently Button */}
             <button
               onClick={handleEnterSilently}
-              className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-obsidian-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white text-xs font-mono tracking-wider transition-all flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-5 py-3.5 rounded-full bg-obsidian-900/90 hover:bg-slate-800/80 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-slate-200 text-xs font-mono tracking-wider transition-all duration-200 flex items-center justify-center gap-2"
             >
               <VolumeX className="w-4 h-4 text-slate-500" />
               <span>Enter Muted</span>
