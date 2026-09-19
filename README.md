@@ -105,5 +105,32 @@ npm run preview
 
 ---
 
+## 🌐 Deploy to Render
+
+BitForge is pre-configured for **Render** via [`render.yaml`](render.yaml) with automatic SPA routing rewrites (`/* -> /index.html`), global CDN, and HTTPS.
+
+### Option 1: Automatic Blueprint (Recommended)
+1. Go to your [Render Dashboard](https://dashboard.render.com/).
+2. Click **New +** and select **Blueprint**.
+3. Connect your GitHub repository: `https://github.com/watchknight/BitForge`.
+4. Render will detect `render.yaml` and configure everything automatically.
+5. Click **Apply** to launch!
+
+### Option 2: Manual Static Site Setup
+1. In the [Render Dashboard](https://dashboard.render.com/), click **New +** and select **Static Site**.
+2. Connect `https://github.com/watchknight/BitForge`.
+3. Configure the settings:
+   - **Name:** `bitforge` (or your preferred name)
+   - **Branch:** `main`
+   - **Build Command:** `npm install && npm run build`
+   - **Publish Directory:** `dist`
+4. Under **Redirects / Rewrites**, add:
+   - **Type:** `Rewrite`
+   - **Source:** `/*`
+   - **Destination:** `/index.html`
+5. Click **Create Static Site**.
+
+---
+
 ## 📄 License
 MIT License. Built for computer science learners worldwide.
