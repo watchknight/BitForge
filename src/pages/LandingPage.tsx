@@ -336,7 +336,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div 
+          className="grid gap-6 justify-center"
+          style={{
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+          }}
+        >
           {flagshipCards.map((card) => {
             const Icon = card.icon;
             const isHovered = hoveredFlagshipId === card.id;

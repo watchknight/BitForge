@@ -192,7 +192,12 @@ export const QuizHubPage: React.FC<QuizHubPageProps> = ({
       {/* Mode Selection Screen */}
       {!quizStarted && (
         <div className="space-y-8 animate-fadeIn">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div 
+            className="grid gap-6 justify-center"
+            style={{
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+            }}
+          >
             {/* Mode 1: Quick Blitz */}
             <div 
               role="button"

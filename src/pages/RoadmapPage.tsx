@@ -248,8 +248,18 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
                 </div>
               )}
 
-              {/* Topics Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+              {/* Adaptive Topics Grid (Step 2: Auto-fit & Balanced Remainder Margin) */}
+              <div 
+                className="grid gap-3.5"
+                style={{
+                  gridTemplateColumns: filteredTopics.length === 1
+                    ? 'minmax(min(100%, 320px), 560px)'
+                    : filteredTopics.length === 2
+                    ? 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))'
+                    : 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+                  justifyContent: filteredTopics.length === 1 ? 'center' : 'stretch',
+                }}
+              >
                 {filteredTopics.map((topicRef) => {
                   const status = getTopicStatus(topicRef.id);
                   const isDone = status === 'mastered';
