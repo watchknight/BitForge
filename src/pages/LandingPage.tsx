@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   ArrowRight, 
   Terminal, 
@@ -25,6 +25,8 @@ import { TopicCardPreview } from '../components/topic/TopicCardPreview';
 import { DriftingEmbers } from '../components/background/DriftingEmbers';
 import { SpotlightCard } from '../components/motion/SpotlightCard';
 import { ArchitecturalFrame } from '../components/motion/ArchitecturalFrame';
+import { BitForgeLogo } from '../components/common/BitForgeLogo';
+import { HeroSimulationStage } from '../components/home/HeroSimulationStage';
 import { soundEngine } from '../services/soundEngine';
 
 interface LandingPageProps {
@@ -36,19 +38,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   onStartLearning,
   onSelectTopic,
 }) => {
-  // Hero mini-simulation state (interactive Bubble / Insertion step)
-  const [heroArr, setHeroArr] = useState<number[]>([42, 18, 75, 29, 61, 14, 88]);
-  const [heroComparing, setHeroComparing] = useState<[number, number]>([1, 2]);
-  const [heroSorted, setHeroSorted] = useState<number[]>([5, 6]);
+  const heroStageRef = useRef<HTMLDivElement>(null);
   const [hoveredFlagshipId, setHoveredFlagshipId] = useState<string | null>(null);
   const [activePreviewFlagshipId, setActivePreviewFlagshipId] = useState<string | null>(null);
-
-  const randomizeHero = () => {
-    soundEngine.playStepSound('swap', Math.random());
-    const arr = Array.from({ length: 7 }, () => Math.floor(Math.random() * 80) + 15);
-    setHeroArr(arr);
-    setHeroComparing([Math.floor(Math.random() * 4), Math.floor(Math.random() * 4) + 1]);
-  };
 
 
   const flagshipCards = [
@@ -116,146 +108,129 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
   return (
     <div className="space-y-20 sm:space-y-28 pb-24">
-      {/* Hero Section with Staggered Typography Reveal */}
-      <section className="relative pt-10 md:pt-20 px-4 sm:px-6 lg:px-8 2xl:px-12 max-w-7xl 2xl:max-w-9xl 3xl:max-w-10xl mx-auto overflow-hidden">
-        {/* Step 3: Atmospheric Forge Background (Soft Ember Glow + Film Grain + Drifting Sparks) */}
+      {/* Hero Section with Split Interactive Showcase */}
+      <section className="relative pt-6 sm:pt-10 lg:pt-14 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 2xl:px-12 max-w-7xl 2xl:max-w-9xl 3xl:max-w-10xl mx-auto overflow-hidden">
+        {/* Atmospheric Layers: Volumetric Ember Glow + Blueprint Coordinate Grid + Film Grain + Drifting Sparks */}
         <div className="absolute inset-0 forge-glow-hero pointer-events-none" />
+        <div className="absolute inset-0 forge-blueprint-grid pointer-events-none opacity-60" />
         <div className="absolute inset-0 forge-grain opacity-80 pointer-events-none" />
         <DriftingEmbers density="sparse" speed="slow" />
 
-        <div className="text-center max-w-4xl mx-auto space-y-6 relative z-10">
-          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-obsidian-900/90 border border-slate-800 hover:border-slate-700 shadow-xl shadow-obsidian-950/60 backdrop-blur-md transition-all duration-300 group">
-            <div className="flex items-center gap-2">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-400"></span>
-              </span>
-              <span className="text-[11px] font-mono font-semibold tracking-wider text-brand-400 uppercase">
-                ENGINE v2.0
-              </span>
-            </div>
-            <span className="w-px h-3.5 bg-slate-800" />
-            <span className="text-xs font-medium text-slate-300 tracking-tight group-hover:text-bone transition-colors">
-              Interactive Data Structures & Algorithms Engine
-            </span>
-          </div>
-
-          {/* Staggered Line Reveal Headline with Fluid CSS clamp() */}
-          <LineReveal
-            as="h1"
-            lines={[
-              <span className="block text-[clamp(2.1rem,6.5vw+0.5rem,5.5rem)] font-extrabold tracking-tight text-bone font-sans leading-[1.08] break-words hyphens-none">
-                Stop memorizing code.
-              </span>,
-              <span className="block text-[clamp(2.1rem,6.5vw+0.5rem,5.5rem)] font-extrabold tracking-tight bg-gradient-to-r from-amber-200 via-orange-400 to-amber-500 bg-clip-text text-transparent font-sans leading-[1.08] break-words hyphens-none">
-                Watch data move.
-              </span>
-            ]}
-            delay={0.1}
-            lineDelay={0.18}
-          />
-
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.45 }}
-            className="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed"
-          >
-            Textbook pseudocode is lifeless. BitForge replaces static walls of text with live,
-            interactive step-through simulations, plain-language narration, and synced multi-language code.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-wrap items-center justify-center gap-4 pt-2"
-          >
-            <button
-              onClick={onStartLearning}
-              className="flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-500 hover:bg-brand-400 text-obsidian-950 font-bold text-sm sm:text-base shadow-xl shadow-brand-500/25 hover:shadow-brand-500/40 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center relative z-10">
+          {/* Left Column: Copy & CTAs */}
+          <div className="lg:col-span-5 xl:col-span-5 text-center lg:text-left space-y-5">
+            {/* Dual-Pill Kicker Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-obsidian-900/90 border border-brand-500/30 hover:border-brand-500/50 shadow-lg shadow-brand-500/10 backdrop-blur-md transition-all duration-300 group cursor-default"
             >
-              <span>Explore Interactive Roadmap</span>
-              <ArrowRight className="w-5 h-5" />
-            </button>
-
-            <button
-              onClick={() => onSelectTopic('merge-sort')}
-              className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-obsidian-900/90 hover:bg-obsidian-850 text-slate-200 hover:text-white border border-slate-700/80 font-semibold text-sm sm:text-base transition-all"
-            >
-              <span>Try Merge Sort Flagship</span>
-            </button>
-          </motion.div>
-        </div>
-
-        {/* Live Mini-Simulation Hero Widget */}
-        <div className="mt-14 max-w-3xl mx-auto bg-obsidian-900/90 border border-slate-800 rounded-2xl p-5 md:p-6 shadow-2xl backdrop-blur-xl relative">
-          <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-800/80">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-red-500/70" />
-              <span className="w-3 h-3 rounded-full bg-amber-500/70" />
-              <span className="w-3 h-3 rounded-full bg-steel-400/80" />
-              <span className="text-xs font-mono text-slate-400 ml-2">
-                Live Simulation Engine Preview
+              <BitForgeLogo className="w-3.5 h-3.5 text-brand-400 shrink-0" />
+              <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-wider text-brand-400 uppercase">
+                <span className="hidden sm:inline">THE VISUAL INTUITION ENGINE</span>
+                <span className="sm:hidden">VISUAL INTUITION ENGINE</span>
               </span>
-            </div>
+              <span className="w-px h-3 bg-slate-700" />
+              <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono uppercase text-slate-300 shrink-0">
+                <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-emerald-400"></span>
+                </span>
+                <span>REAL-TIME LAB</span>
+              </div>
+            </motion.div>
 
-            <button
-              onClick={randomizeHero}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-obsidian-950 border border-slate-800 text-xs font-mono text-brand-300 hover:text-white transition-colors"
+            {/* Staggered Line Reveal Headline with Fluid CSS clamp() */}
+            <LineReveal
+              as="h1"
+              lines={[
+                <span className="block text-[clamp(2.1rem,4.2vw+0.5rem,3.8rem)] font-extrabold tracking-tight text-bone font-sans leading-[1.08] break-words hyphens-none">
+                  Stop memorizing code.
+                </span>,
+                <span className="block text-[clamp(2.1rem,4.2vw+0.5rem,3.8rem)] font-extrabold tracking-tight forge-shimmer-text bg-gradient-to-r from-amber-300 via-orange-400 to-amber-500 bg-clip-text text-transparent font-sans leading-[1.08] break-words hyphens-none">
+                  Watch data move.
+                </span>
+              ]}
+              delay={0.1}
+              lineDelay={0.18}
+            />
+
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-sm sm:text-base lg:text-lg text-slate-300 leading-relaxed max-w-xl mx-auto lg:mx-0"
             >
-              <Shuffle className="w-3.5 h-3.5 text-brand-400" />
-              <span>Randomize Array</span>
-            </button>
-          </div>
+              Textbook pseudocode is lifeless. BitForge illuminates memory mutations, pointer hops, tree balance, and graph waves with live, step-through simulations and synchronized multi-language code.
+            </motion.p>
 
-          {/* Interactive Bars visualizer */}
-          <div className="h-36 flex items-end justify-center gap-3 px-4 pb-2 border-b border-slate-800/60">
-            {heroArr.map((val, idx) => {
-              const isComp = heroComparing.includes(idx);
-              const isSorted = heroSorted.includes(idx);
-              const heightPercent = Math.max(20, Math.round((val / 100) * 100));
+            {/* Interactive CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.55 }}
+              className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1"
+            >
+              <button
+                onClick={onStartLearning}
+                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-400 hover:to-brand-500 text-obsidian-950 font-bold text-sm shadow-xl shadow-brand-500/25 hover:shadow-brand-500/40 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <span>Explore Interactive Roadmap</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
 
-              return (
-                <div key={idx} className="flex-1 flex flex-col items-center justify-end h-full max-w-[50px]">
-                  <span className="text-[11px] font-mono text-slate-400 font-bold mb-1">
-                    {val}
-                  </span>
-                  <motion.div
-                    layout
-                    animate={{ height: `${heightPercent}%` }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                    className={`w-full rounded-t-md transition-all duration-300 ${
-                      isComp
-                        ? 'bg-amber-400 shadow-lg shadow-amber-400/40'
-                        : isSorted
-                        ? 'bg-steel-400 shadow-lg shadow-steel-400/40'
-                        : 'bg-[#333842] hover:bg-[#3f444e]'
-                    }`}
-                  />
-                  <span className="text-[10px] font-mono text-slate-500 mt-1">
-                    [{idx}]
-                  </span>
+              <button
+                onClick={() => onSelectTopic('merge-sort')}
+                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-obsidian-900/90 hover:bg-obsidian-850 text-slate-200 hover:text-white border border-slate-700/80 hover:border-brand-500/40 font-semibold text-sm shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <span>Try Merge Sort Flagship</span>
+              </button>
+            </motion.div>
+
+            {/* Key Capabilities Marquee Badges */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.7 }}
+              className="pt-2 max-w-md mx-auto lg:mx-0"
+            >
+              {/* Desktop & Tablet: 4 Glass Badges */}
+              <div className="hidden sm:grid grid-cols-2 gap-2 text-xs font-mono text-slate-400">
+                <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-obsidian-950/60 border border-slate-800/80">
+                  <span className="text-brand-400 font-bold">✦</span>
+                  <span className="truncate">11 Curriculum Stages</span>
                 </div>
-              );
-            })}
+                <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-obsidian-950/60 border border-slate-800/80">
+                  <span className="text-amber-400 font-bold">✦</span>
+                  <span className="truncate">50+ Visualized Algms</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-obsidian-950/60 border border-slate-800/80">
+                  <span className="text-steel-300 font-bold">✦</span>
+                  <span className="truncate">C++ • Python • Java • TS</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-obsidian-950/60 border border-slate-800/80">
+                  <span className="text-emerald-400 font-bold">✦</span>
+                  <span className="truncate">100% In-Memory Exec</span>
+                </div>
+              </div>
+
+              {/* Mobile: Clean, compact 1-line ticker */}
+              <div className="sm:hidden flex items-center justify-center gap-2 text-[11px] font-mono text-slate-400 pt-1">
+                <span>11 Stages</span>
+                <span className="text-slate-600">•</span>
+                <span>50+ Algorithms</span>
+                <span className="text-slate-600">•</span>
+                <span>4 Languages</span>
+              </div>
+            </motion.div>
           </div>
 
-          <div className="mt-3 flex items-center justify-between text-xs font-mono text-slate-400">
-            <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#333842]" /> Unforged
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-amber-400" /> In the Forge
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-steel-400" /> Tempered
-              </span>
-            </div>
-            <span className="text-brand-300">
-              Synced Step Engine &bull; Zero Lag
-            </span>
+          {/* Right Column: The Crown Jewel Live Interactive Stage */}
+          <div ref={heroStageRef} className="lg:col-span-7 xl:col-span-7 relative">
+            {/* Ambient Background Glow halo behind the stage */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-brand-500/15 via-amber-500/10 to-steel-500/15 rounded-3xl blur-2xl -z-10 pointer-events-none opacity-80" />
+            <HeroSimulationStage onSelectTopic={onSelectTopic} />
           </div>
         </div>
       </section>
