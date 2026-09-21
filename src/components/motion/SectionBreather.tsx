@@ -83,7 +83,7 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
 
                 let color = 'bg-slate-800 border-slate-700';
                 if (isPivot) color = 'bg-brand-400 border-brand-300 shadow-lg shadow-brand-400/40';
-                else if (isSorted) color = 'bg-emerald-500/80 border-emerald-400';
+                else if (isSorted) color = 'bg-steel-500/80 border-steel-400 shadow-md shadow-steel-500/20';
                 else if (isComparing) color = 'bg-amber-400/90 border-amber-300 animate-pulse';
 
                 return (
@@ -105,36 +105,36 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
             <div className="relative w-full h-full flex items-center justify-center">
               <svg className="w-full h-full max-w-md" viewBox="0 0 400 180">
                 {/* Connecting Edges */}
-                <line x1="200" y1="30" x2="100" y2="80" stroke="#334155" strokeWidth="2" strokeDasharray="4 2" />
-                <line x1="200" y1="30" x2="300" y2="80" stroke="#334155" strokeWidth="2" strokeDasharray="4 2" />
-                <line x1="100" y1="80" x2="60" y2="140" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="80" x2="140" y2="140" stroke="#334155" strokeWidth="1.5" />
-                <line x1="300" y1="80" x2="260" y2="140" stroke="#334155" strokeWidth="1.5" />
-                <line x1="300" y1="80" x2="340" y2="140" stroke="#334155" strokeWidth="1.5" />
+                <line x1="200" y1="30" x2="100" y2="80" stroke="#2e2e33" strokeWidth="2" strokeDasharray="4 2" />
+                <line x1="200" y1="30" x2="300" y2="80" stroke="#2e2e33" strokeWidth="2" strokeDasharray="4 2" />
+                <line x1="100" y1="80" x2="60" y2="140" stroke="#2e2e33" strokeWidth="1.5" />
+                <line x1="100" y1="80" x2="140" y2="140" stroke="#2e2e33" strokeWidth="1.5" />
+                <line x1="300" y1="80" x2="260" y2="140" stroke="#2e2e33" strokeWidth="1.5" />
+                <line x1="300" y1="80" x2="340" y2="140" stroke="#2e2e33" strokeWidth="1.5" />
 
                 {/* Level 0: Root */}
-                <circle cx="200" cy="30" r="14" fill="#0E7490" stroke="#22D3EE" strokeWidth="2" />
-                <text x="200" y="34" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontFamily="monospace" fontWeight="bold">50</text>
+                <circle cx="200" cy="30" r="14" fill="#9a3412" stroke="#fb923c" strokeWidth="2" />
+                <text x="200" y="34" textAnchor="middle" fill="#f5f2eb" fontSize="11" fontFamily="monospace" fontWeight="bold">50</text>
 
                 {/* Level 1 */}
-                <circle cx="100" cy="80" r="12" fill="#1E293B" stroke="#06B6D4" strokeWidth="2" />
-                <text x="100" y="84" textAnchor="middle" fill="#CBD5E1" fontSize="10" fontFamily="monospace">25</text>
+                <circle cx="100" cy="80" r="12" fill="#141416" stroke="#f97316" strokeWidth="2" />
+                <text x="100" y="84" textAnchor="middle" fill="#ded7cc" fontSize="10" fontFamily="monospace">25</text>
 
-                <circle cx="300" cy="80" r="12" fill="#1E293B" stroke="#10B981" strokeWidth="2" />
-                <text x="300" y="84" textAnchor="middle" fill="#CBD5E1" fontSize="10" fontFamily="monospace">75</text>
+                <circle cx="300" cy="80" r="12" fill="#141416" stroke="#38bdf8" strokeWidth="2" />
+                <text x="300" y="84" textAnchor="middle" fill="#ded7cc" fontSize="10" fontFamily="monospace">75</text>
 
                 {/* Level 2: Leaves */}
-                <circle cx="60" cy="140" r="10" fill="#0F172A" stroke="#475569" strokeWidth="1.5" />
-                <text x="60" y="143" textAnchor="middle" fill="#94A3B8" fontSize="9" fontFamily="monospace">10</text>
+                <circle cx="60" cy="140" r="10" fill="#0c0c0e" stroke="#3a3632" strokeWidth="1.5" />
+                <text x="60" y="143" textAnchor="middle" fill="#a39e95" fontSize="9" fontFamily="monospace">10</text>
 
-                <circle cx="140" cy="140" r="10" fill="#0F172A" stroke="#475569" strokeWidth="1.5" />
-                <text x="140" y="143" textAnchor="middle" fill="#94A3B8" fontSize="9" fontFamily="monospace">35</text>
+                <circle cx="140" cy="140" r="10" fill="#0c0c0e" stroke="#3a3632" strokeWidth="1.5" />
+                <text x="140" y="143" textAnchor="middle" fill="#a39e95" fontSize="9" fontFamily="monospace">35</text>
 
-                <circle cx="260" cy="140" r="10" fill="#0F172A" stroke="#475569" strokeWidth="1.5" />
-                <text x="260" y="143" textAnchor="middle" fill="#94A3B8" fontSize="9" fontFamily="monospace">60</text>
+                <circle cx="260" cy="140" r="10" fill="#0c0c0e" stroke="#3a3632" strokeWidth="1.5" />
+                <text x="260" y="143" textAnchor="middle" fill="#a39e95" fontSize="9" fontFamily="monospace">60</text>
 
-                <circle cx="340" cy="140" r="10" fill="#0F172A" stroke="#475569" strokeWidth="1.5" />
-                <text x="340" y="143" textAnchor="middle" fill="#94A3B8" fontSize="9" fontFamily="monospace">90</text>
+                <circle cx="340" cy="140" r="10" fill="#0c0c0e" stroke="#3a3632" strokeWidth="1.5" />
+                <text x="340" y="143" textAnchor="middle" fill="#a39e95" fontSize="9" fontFamily="monospace">90</text>
               </svg>
             </div>
           )}
@@ -145,36 +145,36 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
               <svg className="w-full h-full max-w-lg" viewBox="0 0 450 180">
                 <defs>
                   <marker id="arrowhead" markerWidth="6" markerHeight="4" refX="10" refY="2" orient="auto">
-                    <polygon points="0 0, 6 2, 0 4" fill="#06B6D4" />
+                    <polygon points="0 0, 6 2, 0 4" fill="#f97316" />
                   </marker>
                 </defs>
                 {/* Directed Edges */}
-                <line x1="60" y1="90" x2="160" y2="40" stroke="#06B6D4" strokeWidth="2" markerEnd="url(#arrowhead)" />
-                <line x1="60" y1="90" x2="160" y2="140" stroke="#334155" strokeWidth="1.5" markerEnd="url(#arrowhead)" />
-                <line x1="160" y1="40" x2="280" y2="40" stroke="#06B6D4" strokeWidth="2" markerEnd="url(#arrowhead)" />
-                <line x1="160" y1="140" x2="280" y2="140" stroke="#334155" strokeWidth="1.5" markerEnd="url(#arrowhead)" />
-                <line x1="160" y1="40" x2="280" y2="140" stroke="#334155" strokeWidth="1.5" markerEnd="url(#arrowhead)" />
-                <line x1="280" y1="40" x2="390" y2="90" stroke="#06B6D4" strokeWidth="2" markerEnd="url(#arrowhead)" />
-                <line x1="280" y1="140" x2="390" y2="90" stroke="#334155" strokeWidth="1.5" markerEnd="url(#arrowhead)" />
+                <line x1="60" y1="90" x2="160" y2="40" stroke="#f97316" strokeWidth="2" markerEnd="url(#arrowhead)" />
+                <line x1="60" y1="90" x2="160" y2="140" stroke="#2e2e33" strokeWidth="1.5" markerEnd="url(#arrowhead)" />
+                <line x1="160" y1="40" x2="280" y2="40" stroke="#f97316" strokeWidth="2" markerEnd="url(#arrowhead)" />
+                <line x1="160" y1="140" x2="280" y2="140" stroke="#2e2e33" strokeWidth="1.5" markerEnd="url(#arrowhead)" />
+                <line x1="160" y1="40" x2="280" y2="140" stroke="#2e2e33" strokeWidth="1.5" markerEnd="url(#arrowhead)" />
+                <line x1="280" y1="40" x2="390" y2="90" stroke="#f97316" strokeWidth="2" markerEnd="url(#arrowhead)" />
+                <line x1="280" y1="140" x2="390" y2="90" stroke="#2e2e33" strokeWidth="1.5" markerEnd="url(#arrowhead)" />
 
                 {/* Nodes */}
-                <circle cx="60" cy="90" r="14" fill="#0E7490" stroke="#22D3EE" strokeWidth="2" />
-                <text x="60" y="94" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontFamily="monospace" fontWeight="bold">S</text>
+                <circle cx="60" cy="90" r="14" fill="#9a3412" stroke="#fb923c" strokeWidth="2" />
+                <text x="60" y="94" textAnchor="middle" fill="#f5f2eb" fontSize="11" fontFamily="monospace" fontWeight="bold">S</text>
 
-                <circle cx="160" cy="40" r="13" fill="#1E293B" stroke="#06B6D4" strokeWidth="2" />
-                <text x="160" y="44" textAnchor="middle" fill="#CBD5E1" fontSize="10" fontFamily="monospace">A</text>
+                <circle cx="160" cy="40" r="13" fill="#141416" stroke="#f97316" strokeWidth="2" />
+                <text x="160" y="44" textAnchor="middle" fill="#ded7cc" fontSize="10" fontFamily="monospace">A</text>
 
-                <circle cx="160" cy="140" r="13" fill="#0F172A" stroke="#475569" strokeWidth="1.5" />
-                <text x="160" y="144" textAnchor="middle" fill="#94A3B8" fontSize="10" fontFamily="monospace">B</text>
+                <circle cx="160" cy="140" r="13" fill="#0c0c0e" stroke="#3a3632" strokeWidth="1.5" />
+                <text x="160" y="144" textAnchor="middle" fill="#a39e95" fontSize="10" fontFamily="monospace">B</text>
 
-                <circle cx="280" cy="40" r="13" fill="#1E293B" stroke="#06B6D4" strokeWidth="2" />
-                <text x="280" y="44" textAnchor="middle" fill="#CBD5E1" fontSize="10" fontFamily="monospace">C</text>
+                <circle cx="280" cy="40" r="13" fill="#141416" stroke="#38bdf8" strokeWidth="2" />
+                <text x="280" y="44" textAnchor="middle" fill="#ded7cc" fontSize="10" fontFamily="monospace">C</text>
 
-                <circle cx="280" cy="140" r="13" fill="#0F172A" stroke="#475569" strokeWidth="1.5" />
-                <text x="280" y="144" textAnchor="middle" fill="#94A3B8" fontSize="10" fontFamily="monospace">D</text>
+                <circle cx="280" cy="140" r="13" fill="#0c0c0e" stroke="#3a3632" strokeWidth="1.5" />
+                <text x="280" y="144" textAnchor="middle" fill="#a39e95" fontSize="10" fontFamily="monospace">D</text>
 
-                <circle cx="390" cy="90" r="14" fill="#065F46" stroke="#34D399" strokeWidth="2" />
-                <text x="390" y="94" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontFamily="monospace" fontWeight="bold">T</text>
+                <circle cx="390" cy="90" r="14" fill="#075985" stroke="#38bdf8" strokeWidth="2" />
+                <text x="390" y="94" textAnchor="middle" fill="#f5f2eb" fontSize="11" fontFamily="monospace" fontWeight="bold">T</text>
               </svg>
             </div>
           )}

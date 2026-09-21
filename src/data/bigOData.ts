@@ -521,16 +521,16 @@ export const complexityEntries: ComplexityEntry[] = [
 ];
 
 export const getComplexityBadgeClass = (complexity?: string) => {
-  if (!complexity || complexity === 'N/A') return 'bg-slate-800 text-slate-400 border-slate-700';
+  if (!complexity || complexity === 'N/A') return 'bg-obsidian-900 text-slate-400 border-slate-800';
   if (complexity === 'O(1)' || complexity.includes('O(α(N))'))
-    return 'bg-emerald-950/70 text-emerald-300 border-emerald-500/40 font-bold';
-  if (complexity === 'O(log N)' || complexity.includes('log') && !complexity.includes('N log'))
-    return 'bg-cyan-950/70 text-cyan-300 border-cyan-500/40 font-semibold';
+    return 'bg-steel-950/80 text-steel-200 border-steel-500/40 font-bold';
+  if (complexity === 'O(log N)' || (complexity.includes('log') && !complexity.includes('N log')))
+    return 'bg-sky-950/70 text-sky-300 border-sky-500/40 font-semibold';
   if (complexity === 'O(N)' || complexity === 'O(V + E)' || complexity === 'O(L)')
     return 'bg-amber-950/70 text-amber-300 border-amber-500/40';
   if (complexity === 'O(N log N)' || complexity.includes('log'))
-    return 'bg-orange-950/70 text-orange-300 border-orange-500/40';
+    return 'bg-brand-950/70 text-brand-300 border-brand-500/40';
   if (complexity.includes('N²') || complexity.includes('2^N') || complexity.includes('N!') || complexity.includes('4^'))
     return 'bg-rose-950/70 text-rose-300 border-rose-500/40 font-bold';
-  return 'bg-slate-800 text-slate-300 border-slate-700';
+  return 'bg-obsidian-900 text-slate-300 border-slate-800';
 };

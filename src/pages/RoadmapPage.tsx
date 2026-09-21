@@ -56,8 +56,8 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
     switch (status) {
       case 'mastered':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm shadow-emerald-500/10">
-            <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-steel-500/20 text-steel-200 border border-steel-500/40 shadow-sm shadow-steel-500/15">
+            <CheckCircle2 className="w-3 h-3 text-steel-400" />
             Mastered
           </span>
         );
@@ -102,7 +102,7 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
             </div>
             <div className="w-full h-2.5 bg-obsidian-950 rounded-full overflow-hidden border border-slate-800 p-0.5">
               <div
-                className="h-full bg-gradient-to-r from-brand-500 to-emerald-400 rounded-full transition-all duration-500"
+                className="h-full bg-gradient-to-r from-brand-500 to-steel-400 rounded-full transition-all duration-500"
                 style={{ width: `${percentComplete}%` }}
               />
             </div>
@@ -112,7 +112,7 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
         {/* Gamified Stats Summary */}
         <div className="flex items-center gap-3 sm:gap-4 bg-obsidian-950/80 p-4 rounded-2xl border border-slate-800 shrink-0">
           <div className="flex flex-col items-center px-2">
-            <span className="text-2xl font-mono font-bold text-emerald-400">
+            <span className="text-2xl font-mono font-bold text-steel-300">
               {masteredCount}
             </span>
             <span className="text-[10px] font-mono text-slate-500 uppercase">

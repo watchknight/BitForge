@@ -114,7 +114,7 @@ export const ConstellationMesh: React.FC<ConstellationMeshProps> = ({
         // Pulse radius gently
         const currentRadius = n.baseRadius + Math.sin(time + n.phase) * 0.5;
 
-        // Node Glow
+        // Node Glow - Forge Ember Sparks
         const gradient = ctx.createRadialGradient(
           n.x,
           n.y,
@@ -123,17 +123,17 @@ export const ConstellationMesh: React.FC<ConstellationMeshProps> = ({
           n.y,
           currentRadius * 3.5
         );
-        gradient.addColorStop(0, 'rgba(6, 182, 212, 0.7)'); // Cyan centroid
-        gradient.addColorStop(0.5, 'rgba(6, 182, 212, 0.2)');
-        gradient.addColorStop(1, 'rgba(6, 182, 212, 0)');
+        gradient.addColorStop(0, 'rgba(249, 115, 22, 0.7)'); // Forge flame orange centroid
+        gradient.addColorStop(0.5, 'rgba(251, 146, 60, 0.2)');
+        gradient.addColorStop(1, 'rgba(249, 115, 22, 0)');
 
         ctx.fillStyle = gradient;
         ctx.beginPath();
         ctx.arc(n.x, n.y, currentRadius * 3.5, 0, Math.PI * 2);
         ctx.fill();
 
-        // Node Center Core
-        ctx.fillStyle = '#67e8f9';
+        // Node Center Core - Molten Gold
+        ctx.fillStyle = '#fed7aa';
         ctx.beginPath();
         ctx.arc(n.x, n.y, currentRadius, 0, Math.PI * 2);
         ctx.fill();
@@ -151,7 +151,7 @@ export const ConstellationMesh: React.FC<ConstellationMeshProps> = ({
           if (dist < connectionDistance) {
             const alpha = (1 - dist / connectionDistance) * 0.25;
 
-            // Check if near mouse for electric brightening
+            // Check if near mouse for heat brightening
             let edgeNearMouse = false;
             if (mouse.active) {
               const midX = (n1.x + n2.x) / 2;
@@ -166,8 +166,8 @@ export const ConstellationMesh: React.FC<ConstellationMeshProps> = ({
             ctx.moveTo(n1.x, n1.y);
             ctx.lineTo(n2.x, n2.y);
             ctx.strokeStyle = edgeNearMouse
-              ? `rgba(34, 211, 238, ${Math.min(0.8, alpha * 3)})`
-              : `rgba(6, 182, 212, ${alpha})`;
+              ? `rgba(251, 146, 60, ${Math.min(0.85, alpha * 3.5)})`
+              : `rgba(249, 115, 22, ${alpha * 0.8})`;
             ctx.lineWidth = edgeNearMouse ? 1.2 : 0.6;
             ctx.stroke();
           }

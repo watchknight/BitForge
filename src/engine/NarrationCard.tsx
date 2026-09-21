@@ -21,12 +21,12 @@ export const NarrationCard: React.FC<NarrationCardProps> = ({ step }) => {
       return 'bg-brand-950/70 text-brand-300 border-brand-500/40';
     }
     if (lower.includes('sorted') || lower.includes('found') || lower.includes('complete') || lower.includes('finish')) {
-      return 'bg-emerald-950/70 text-emerald-300 border-emerald-500/40';
+      return 'bg-steel-950/80 text-steel-200 border-steel-500/40';
     }
     if (lower.includes('delete') || lower.includes('danger') || lower.includes('unwind')) {
       return 'bg-rose-950/70 text-rose-300 border-rose-500/40';
     }
-    return 'bg-cyan-950/70 text-cyan-300 border-cyan-500/40';
+    return 'bg-obsidian-800 text-slate-300 border-slate-700';
   };
 
   return (

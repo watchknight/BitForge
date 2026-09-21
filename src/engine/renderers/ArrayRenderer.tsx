@@ -39,15 +39,15 @@ export const ArrayRenderer: React.FC<ArrayRendererProps> = ({
       case 'active':
         return 'bg-brand-500/20 border-brand-400 text-brand-200 ring-2 ring-brand-400/40 shadow-lg shadow-brand-500/20 scale-105';
       case 'sorted':
-        return 'bg-emerald-500/20 border-emerald-400 text-emerald-300 ring-1 ring-emerald-500/30';
+        return 'bg-steel-500/20 border-steel-400 text-steel-200 ring-1 ring-steel-500/40 shadow-lg shadow-steel-500/10';
       case 'visited':
-        return 'bg-violet-500/20 border-violet-400 text-violet-300';
+        return 'bg-obsidian-800/90 border-slate-600 text-slate-300';
       case 'pivot':
-        return 'bg-sky-500/30 border-sky-400 text-sky-200 ring-2 ring-sky-400/50';
+        return 'bg-amber-400/25 border-amber-300 text-amber-200 ring-2 ring-amber-400/50 shadow-lg shadow-amber-500/25';
       case 'danger':
         return 'bg-rose-500/20 border-rose-400 text-rose-300 ring-2 ring-rose-400/40';
       default:
-        return 'bg-obsidian-900 border-slate-700/80 text-slate-200 hover:border-slate-600';
+        return 'bg-obsidian-900 border-slate-800 text-slate-300 hover:border-slate-700';
     }
   };
 
@@ -58,15 +58,15 @@ export const ArrayRenderer: React.FC<ArrayRendererProps> = ({
       case 'active':
         return 'bg-brand-400 shadow-brand-400/50';
       case 'sorted':
-        return 'bg-emerald-400 shadow-emerald-400/50';
+        return 'bg-steel-400 shadow-steel-400/50';
       case 'visited':
-        return 'bg-violet-400 shadow-violet-400/50';
+        return 'bg-slate-500 shadow-slate-500/30';
       case 'pivot':
-        return 'bg-sky-400 shadow-sky-400/50';
+        return 'bg-amber-300 shadow-amber-300/60';
       case 'danger':
         return 'bg-rose-400 shadow-rose-400/50';
       default:
-        return 'bg-slate-600';
+        return 'bg-slate-700 hover:bg-slate-600';
     }
   };
 

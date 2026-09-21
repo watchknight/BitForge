@@ -93,32 +93,32 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
   const getNodeFill = (role?: HighlightRole) => {
     switch (role) {
       case 'active':
-        return '#06b6d4'; // cyan
+        return '#f97316'; // blazing forge heat
       case 'comparing':
-        return '#f59e0b'; // amber
+        return '#f59e0b'; // molten gold
       case 'sorted':
-        return '#10b981'; // emerald
+        return '#38bdf8'; // tempered cool blue-steel
       case 'visited':
-        return '#8b5cf6'; // violet
+        return '#3f3f46'; // worked warm cast iron
       case 'danger':
-        return '#f43f5e'; // rose
+        return '#ef4444'; // slag warning
       default:
-        return '#161f30'; // obsidian-800
+        return '#141416'; // unworked cast iron
     }
   };
 
   const getNodeStroke = (role?: HighlightRole) => {
     switch (role) {
       case 'active':
-        return '#22d3ee';
+        return '#fb923c';
       case 'comparing':
         return '#fbbf24';
       case 'sorted':
-        return '#34d399';
+        return '#7dd3fc';
       case 'visited':
-        return '#a78bfa';
+        return '#79736a';
       default:
-        return '#334155';
+        return '#2e2e33';
     }
   };
 
@@ -143,7 +143,7 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
                 y1={l.y1}
                 x2={l.x2}
                 y2={l.y2}
-                stroke="#334155"
+                stroke="#2e2e33"
                 strokeWidth="2.5"
                 strokeLinecap="round"
               />
@@ -186,7 +186,7 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
                     x={n.x}
                     y={n.y + 5}
                     textAnchor="middle"
-                    fill={role && role !== 'neutral' ? '#ffffff' : '#e2e8f0'}
+                    fill={role && role !== 'neutral' ? '#f5f2eb' : '#ded7cc'}
                     fontSize="13"
                     fontWeight="bold"
                     fontFamily="monospace"
@@ -204,7 +204,7 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
       {traversalList.length > 0 && (
         <div className="mt-4 w-full max-w-xl flex flex-col items-center">
           <div className="text-xs font-mono text-slate-400 mb-2 flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-violet-400"></span>
+            <span className="w-2 h-2 rounded-full bg-steel-400"></span>
             <span>In-Order Traversal Visited Stream:</span>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-2 p-2 bg-obsidian-950 rounded-lg border border-slate-800">
@@ -213,7 +213,7 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
                 key={idx}
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="px-2.5 py-1 rounded bg-violet-500/20 text-violet-200 border border-violet-500/40 text-xs font-mono font-bold"
+                className="px-2.5 py-1 rounded bg-steel-500/20 text-steel-200 border border-steel-500/40 text-xs font-mono font-bold"
               >
                 {val}
               </motion.div>

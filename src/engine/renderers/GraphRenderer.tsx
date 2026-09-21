@@ -44,32 +44,34 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
   const getNodeFill = (role?: HighlightRole) => {
     switch (role) {
       case 'active':
-        return '#06b6d4'; // cyan
+        return '#f97316'; // blazing forge heat
       case 'comparing':
-        return '#f59e0b'; // amber
+        return '#f59e0b'; // molten gold
       case 'visited':
-        return '#8b5cf6'; // violet
+        return '#3f3f46'; // worked warm cast iron
       case 'sorted':
-        return '#10b981'; // emerald
+        return '#38bdf8'; // tempered cool blue-steel
       case 'danger':
-        return '#f43f5e'; // rose
+        return '#ef4444'; // slag warning
       default:
-        return '#161f30';
+        return '#141416'; // unworked cast iron
     }
   };
 
   const getNodeStroke = (role?: HighlightRole) => {
     switch (role) {
       case 'active':
-        return '#22d3ee';
+        return '#fb923c';
       case 'comparing':
         return '#fbbf24';
       case 'visited':
-        return '#a78bfa';
+        return '#79736a';
       case 'sorted':
-        return '#34d399';
+        return '#7dd3fc';
+      case 'danger':
+        return '#f87171';
       default:
-        return '#334155';
+        return '#2e2e33';
     }
   };
 
@@ -95,7 +97,7 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
                   y1={u.y}
                   x2={v.x}
                   y2={v.y}
-                  stroke={isEdgeActive ? '#06b6d4' : '#334155'}
+                  stroke={isEdgeActive ? '#f97316' : '#2e2e33'}
                   strokeWidth={isEdgeActive ? '3.5' : '2'}
                   strokeDasharray={isEdgeActive ? '4 2' : undefined}
                   className="transition-all duration-300"
@@ -105,7 +107,7 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
                     x={(u.x + v.x) / 2}
                     y={(u.y + v.y) / 2 - 6}
                     textAnchor="middle"
-                    fill="#94a3b8"
+                    fill="#a39e95"
                     fontSize="11"
                     fontFamily="monospace"
                   >
@@ -129,7 +131,7 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
                     cy={node.y}
                     r={NODE_RADIUS + 6}
                     fill="none"
-                    stroke="#22d3ee"
+                    stroke="#fb923c"
                     strokeWidth="2"
                     opacity="0.6"
                     className="animate-ping"
@@ -149,7 +151,7 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
                   x={node.x}
                   y={node.y + 5}
                   textAnchor="middle"
-                  fill="#ffffff"
+                  fill="#f5f2eb"
                   fontSize="14"
                   fontWeight="bold"
                   fontFamily="monospace"
@@ -165,15 +167,15 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
                       width="20"
                       height="16"
                       rx="4"
-                      fill="#0b0f17"
-                      stroke="#0891b2"
+                      fill="#0c0c0e"
+                      stroke="#ea580c"
                       strokeWidth="1"
                     />
                     <text
                       x={node.x + 22}
                       y={node.y - 12}
                       textAnchor="middle"
-                      fill="#67e8f9"
+                      fill="#fed7aa"
                       fontSize="10"
                       fontFamily="monospace"
                       fontWeight="bold"
@@ -194,14 +196,14 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
         <div className="bg-obsidian-900/90 rounded-lg border border-slate-800 p-3 flex flex-col">
           <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
             <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+              <span className="w-2 h-2 rounded-full bg-brand-500"></span>
               Queue (FIFO)
             </span>
             <span className="text-[10px] text-slate-500">Front &larr; Back</span>
           </div>
           <div className="flex items-center gap-2 min-h-[38px] p-1.5 bg-obsidian-950 rounded border border-slate-800/80 overflow-x-auto">
             {queue.length === 0 ? (
-              <span className="text-xs font-mono text-slate-600 italic px-2">
+              <span className="text-xs font-mono text-slate-500 italic px-2">
                 Empty Queue
               </span>
             ) : (
@@ -214,7 +216,7 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
                   className={`px-3 py-1 rounded text-xs font-mono font-bold border ${
                     idx === 0
                       ? 'bg-brand-500/20 text-brand-300 border-brand-500/40 ring-1 ring-brand-400/40'
-                      : 'bg-slate-800 text-slate-300 border-slate-700'
+                      : 'bg-obsidian-800 text-slate-300 border-slate-700'
                   }`}
                 >
                   {item}
@@ -233,21 +235,21 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
         <div className="bg-obsidian-900/90 rounded-lg border border-slate-800 p-3 flex flex-col">
           <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
             <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-violet-400"></span>
+              <span className="w-2 h-2 rounded-full bg-steel-400"></span>
               Visited Set
             </span>
             <span className="text-[10px] text-slate-500">{visited.length} total</span>
           </div>
           <div className="flex flex-wrap items-center gap-1.5 min-h-[38px] p-1.5 bg-obsidian-950 rounded border border-slate-800/80">
             {visited.length === 0 ? (
-              <span className="text-xs font-mono text-slate-600 italic px-2">
+              <span className="text-xs font-mono text-slate-500 italic px-2">
                 None visited yet
               </span>
             ) : (
               visited.map((v) => (
                 <span
                   key={v}
-                  className="px-2 py-0.5 rounded bg-violet-500/20 text-violet-200 border border-violet-500/40 text-xs font-mono font-bold"
+                  className="px-2 py-0.5 rounded bg-steel-500/20 text-steel-200 border border-steel-500/40 text-xs font-mono font-bold"
                 >
                   {v}
                 </span>

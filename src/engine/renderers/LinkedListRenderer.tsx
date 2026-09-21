@@ -38,13 +38,13 @@ export const LinkedListRenderer: React.FC<LinkedListRendererProps> = ({
       case 'comparing':
         return 'bg-amber-500/20 border-amber-400 text-amber-200 ring-2 ring-amber-400/40 shadow-lg shadow-amber-500/20';
       case 'sorted':
-        return 'bg-emerald-500/20 border-emerald-400 text-emerald-200 ring-1 ring-emerald-400/30';
+        return 'bg-steel-500/20 border-steel-400 text-steel-200 ring-1 ring-steel-400/40';
       case 'danger':
         return 'bg-rose-500/20 border-rose-400 text-rose-200 ring-2 ring-rose-400/40';
       case 'visited':
-        return 'bg-violet-500/20 border-violet-400 text-violet-200 ring-1 ring-violet-400/30';
+        return 'bg-obsidian-800 border-slate-600 text-slate-300 ring-1 ring-slate-500/30';
       default:
-        return 'bg-obsidian-900 border-slate-700 text-slate-100 hover:border-slate-600';
+        return 'bg-obsidian-900 border-slate-800 text-slate-100 hover:border-slate-700';
     }
   };
 

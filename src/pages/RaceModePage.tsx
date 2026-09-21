@@ -44,7 +44,7 @@ const AVAILABLE_ALGORITHMS: SortAlgorithmMeta[] = [
     complexity: 'O(N log N)',
     bestCase: 'O(N log N)',
     generator: generateQuickSortSteps,
-    color: 'from-blue-500 to-indigo-600',
+    color: 'from-steel-400 to-sky-600',
   },
   {
     id: 'merge-sort',
@@ -52,7 +52,7 @@ const AVAILABLE_ALGORITHMS: SortAlgorithmMeta[] = [
     complexity: 'O(N log N)',
     bestCase: 'O(N log N)',
     generator: generateMergeSortSteps,
-    color: 'from-brand-400 to-brand-600',
+    color: 'from-brand-500 to-amber-500',
   },
   {
     id: 'heap-sort',
@@ -60,7 +60,7 @@ const AVAILABLE_ALGORITHMS: SortAlgorithmMeta[] = [
     complexity: 'O(N log N)',
     bestCase: 'O(N log N)',
     generator: generateHeapSortSteps,
-    color: 'from-purple-500 to-pink-600',
+    color: 'from-amber-600 to-orange-700',
   },
   {
     id: 'insertion-sort',
@@ -68,7 +68,7 @@ const AVAILABLE_ALGORITHMS: SortAlgorithmMeta[] = [
     complexity: 'O(N²)',
     bestCase: 'O(N)',
     generator: generateInsertionSortSteps,
-    color: 'from-amber-400 to-orange-500',
+    color: 'from-amber-400 to-amber-600',
   },
   {
     id: 'bubble-sort',
@@ -76,7 +76,7 @@ const AVAILABLE_ALGORITHMS: SortAlgorithmMeta[] = [
     complexity: 'O(N²)',
     bestCase: 'O(N)',
     generator: generateBubbleSortSteps,
-    color: 'from-rose-400 to-red-600',
+    color: 'from-rose-500 to-red-700',
   },
   {
     id: 'selection-sort',
@@ -84,7 +84,7 @@ const AVAILABLE_ALGORITHMS: SortAlgorithmMeta[] = [
     complexity: 'O(N²)',
     bestCase: 'O(N²)',
     generator: generateSelectionSortSteps,
-    color: 'from-teal-400 to-emerald-600',
+    color: 'from-stone-600 to-stone-800',
   },
 ];
 
@@ -477,7 +477,7 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
                 {/* Progress bar */}
                 <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden mb-5">
                   <div 
-                    className="h-full bg-gradient-to-r from-brand-500 to-emerald-400 transition-all duration-100"
+                    className="h-full bg-gradient-to-r from-brand-500 to-steel-400 transition-all duration-100"
                     style={{ width: `${progressPercent}%` }}
                   />
                 </div>
@@ -515,7 +515,7 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
                     } else if (highlight === 'active' || highlight === 'danger') {
                       barColor = 'bg-rose-500 border-rose-400 text-white animate-pulse';
                     } else if (highlight === 'sorted' || isFinished) {
-                      barColor = 'bg-emerald-500 border-emerald-400 text-obsidian-950';
+                      barColor = 'bg-steel-400 border-steel-300 shadow-md shadow-steel-400/30 text-obsidian-950';
                     }
 
                     return (
@@ -543,8 +543,8 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
                 <span className="text-slate-400 flex items-center gap-1.5">
                   {isFinished ? (
                     <>
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                      <span className="text-emerald-300 font-medium">Finished in {item.totalSteps} steps</span>
+                      <CheckCircle2 className="w-4 h-4 text-steel-400" />
+                      <span className="text-steel-300 font-medium">Finished in {item.totalSteps} steps</span>
                     </>
                   ) : (
                     <>

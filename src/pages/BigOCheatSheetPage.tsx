@@ -66,27 +66,27 @@ export const BigOCheatSheetPage: React.FC<BigOCheatSheetPageProps> = ({
         </h1>
         <p className="text-sm text-slate-400 max-w-2xl">
           Quickly compare time and space complexities across fundamental data structures and algorithms.
-          Color-coded from best <span className="text-emerald-400 font-mono">O(1)</span> to worst <span className="text-rose-400 font-mono">O(N²) / O(2^N)</span>.
+          Color-coded from best <span className="text-steel-300 font-mono">O(1)</span> to worst <span className="text-rose-400 font-mono">O(N²) / O(2^N)</span>.
         </p>
       </div>
 
       {/* Complexity Scale Legend & Visual Intuition */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 p-4 bg-obsidian-900/80 border border-slate-800 rounded-2xl">
-        <div className="flex flex-col items-center p-2 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-center">
-          <span className="text-xs font-mono font-bold text-emerald-300">O(1)</span>
-          <span className="text-[10px] text-emerald-400/80 uppercase font-mono mt-0.5">Constant (Best)</span>
+        <div className="flex flex-col items-center p-2 rounded-xl bg-steel-950/40 border border-steel-500/40 text-center">
+          <span className="text-xs font-mono font-bold text-steel-200">O(1)</span>
+          <span className="text-[10px] text-steel-300/80 uppercase font-mono mt-0.5">Constant (Best)</span>
         </div>
-        <div className="flex flex-col items-center p-2 rounded-xl bg-cyan-950/30 border border-cyan-500/30 text-center">
-          <span className="text-xs font-mono font-bold text-cyan-300">O(log N)</span>
-          <span className="text-[10px] text-cyan-400/80 uppercase font-mono mt-0.5">Logarithmic (Great)</span>
+        <div className="flex flex-col items-center p-2 rounded-xl bg-sky-950/40 border border-sky-500/40 text-center">
+          <span className="text-xs font-mono font-bold text-sky-300">O(log N)</span>
+          <span className="text-[10px] text-sky-400/80 uppercase font-mono mt-0.5">Logarithmic (Great)</span>
         </div>
         <div className="flex flex-col items-center p-2 rounded-xl bg-amber-950/30 border border-amber-500/30 text-center">
           <span className="text-xs font-mono font-bold text-amber-300">O(N)</span>
           <span className="text-[10px] text-amber-400/80 uppercase font-mono mt-0.5">Linear (Fair)</span>
         </div>
-        <div className="flex flex-col items-center p-2 rounded-xl bg-orange-950/30 border border-orange-500/30 text-center">
-          <span className="text-xs font-mono font-bold text-orange-300">O(N log N)</span>
-          <span className="text-[10px] text-orange-400/80 uppercase font-mono mt-0.5">Linearithmic (Bad)</span>
+        <div className="flex flex-col items-center p-2 rounded-xl bg-brand-950/40 border border-brand-500/30 text-center">
+          <span className="text-xs font-mono font-bold text-brand-300">O(N log N)</span>
+          <span className="text-[10px] text-brand-400/80 uppercase font-mono mt-0.5">Linearithmic (Bad)</span>
         </div>
         <div className="flex flex-col items-center p-2 rounded-xl bg-rose-950/30 border border-rose-500/30 text-center col-span-2 sm:col-span-1">
           <span className="text-xs font-mono font-bold text-rose-300">O(N²) / O(2^N)</span>

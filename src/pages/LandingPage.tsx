@@ -123,7 +123,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
         {/* Glow ambient background elements */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-brand-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="text-center max-w-4xl mx-auto space-y-6 relative z-10">
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-obsidian-900/90 border border-slate-800 hover:border-slate-700 shadow-xl shadow-obsidian-950/60 backdrop-blur-md transition-all duration-300 group">
@@ -137,7 +137,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               </span>
             </div>
             <span className="w-px h-3.5 bg-slate-800" />
-            <span className="text-xs font-medium text-slate-300 tracking-tight group-hover:text-white transition-colors">
+            <span className="text-xs font-medium text-slate-300 tracking-tight group-hover:text-bone transition-colors">
               Interactive Data Structures & Algorithms Engine
             </span>
           </div>
@@ -145,10 +145,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           {/* Staggered Line Reveal Headline (Inspired by dkton.at / awwwards) */}
           <LineReveal
             lines={[
-              <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white font-sans leading-[1.05]">
+              <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-bone font-sans leading-[1.05]">
                 Stop memorizing code.
               </span>,
-              <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight bg-gradient-to-r from-brand-300 via-cyan-400 to-emerald-400 bg-clip-text text-transparent font-sans leading-[1.05]">
+              <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight bg-gradient-to-r from-amber-200 via-orange-400 to-amber-500 bg-clip-text text-transparent font-sans leading-[1.05]">
                 Watch data move.
               </span>
             ]}
@@ -230,8 +230,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                       isComp
                         ? 'bg-amber-400 shadow-lg shadow-amber-400/40'
                         : isSorted
-                        ? 'bg-emerald-400 shadow-emerald-400/30'
-                        : 'bg-brand-400/80 shadow-brand-400/20'
+                        ? 'bg-steel-400 shadow-lg shadow-steel-400/40'
+                        : 'bg-brand-500/80 shadow-brand-500/20'
                     }`}
                   />
                   <span className="text-[10px] font-mono text-slate-500 mt-1">
@@ -248,7 +248,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <span className="w-2 h-2 rounded-full bg-amber-400" /> Comparing
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400" /> Sorted
+                <span className="w-2 h-2 rounded-full bg-steel-400" /> Sorted (Tempered)
               </span>
             </div>
             <span className="text-brand-300">

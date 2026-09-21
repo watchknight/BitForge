@@ -657,7 +657,7 @@ export const TopicPage: React.FC<TopicPageProps> = ({
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></div>
+            <div className="w-3 h-3 rounded-full bg-brand-500 animate-pulse shadow-sm shadow-brand-500/50"></div>
             <h2 className="text-lg font-bold text-white font-sans">
               Interactive Simulation Engine
             </h2>

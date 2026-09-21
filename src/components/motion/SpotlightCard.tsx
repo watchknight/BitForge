@@ -15,7 +15,7 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({
   children,
   className = '',
   onClick,
-  spotlightColor = 'rgba(6, 182, 212, 0.12)',
+  spotlightColor = 'rgba(249, 115, 22, 0.12)',
   enableTilt = true,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);

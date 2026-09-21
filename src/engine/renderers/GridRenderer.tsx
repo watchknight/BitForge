@@ -44,11 +44,11 @@ export const GridRenderer: React.FC<GridRendererProps> = ({
       case 'comparing':
         return 'bg-amber-500/20 border-amber-400 text-amber-200 ring-2 ring-amber-400/50 shadow-lg shadow-amber-500/20 font-bold';
       case 'sorted':
-        return 'bg-emerald-500/20 border-emerald-400 text-emerald-200';
+        return 'bg-steel-500/20 border-steel-400 text-steel-200 ring-1 ring-steel-500/40';
       case 'visited':
-        return 'bg-violet-500/20 border-violet-400 text-violet-200';
+        return 'bg-obsidian-800 border-slate-600 text-slate-300';
       default:
-        return 'bg-obsidian-900 border-slate-700/80 text-slate-300';
+        return 'bg-obsidian-900 border-slate-800 text-slate-300';
     }
   };
 
@@ -133,11 +133,11 @@ export const GridRenderer: React.FC<GridRendererProps> = ({
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded bg-brand-500/40 border border-brand-400" />
-          <span>Current DP Cell</span>
+          <span>Current DP Cell (Heated)</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-emerald-500/40 border border-emerald-400" />
-          <span>Memoized / Computed</span>
+          <div className="w-3 h-3 rounded bg-steel-500/40 border border-steel-400" />
+          <span>Computed / Preserved (Tempered)</span>
         </div>
       </div>
     </div>

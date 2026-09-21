@@ -49,7 +49,7 @@ export const ExperienceIntroGate: React.FC<ExperienceIntroGateProps> = ({ onEnte
       >
         {/* Subtle Background Radial Aura */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-brand-500/10 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[300px] bg-cyan-500/10 rounded-full blur-[90px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[300px] bg-amber-500/10 rounded-full blur-[90px] pointer-events-none" />
 
         {/* Skip Button (Top Right) */}
         <button
@@ -107,7 +107,7 @@ export const ExperienceIntroGate: React.FC<ExperienceIntroGateProps> = ({ onEnte
             {/* Enter with Sound Button */}
             <button
               onClick={handleEnterWithSound}
-              className="group relative w-full sm:w-auto px-7 py-3.5 rounded-full bg-gradient-to-r from-brand-400 via-cyan-300 to-brand-400 text-obsidian-950 font-bold text-sm tracking-wide shadow-lg shadow-brand-500/25 hover:shadow-brand-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2.5"
+              className="group relative w-full sm:w-auto px-7 py-3.5 rounded-full bg-gradient-to-r from-brand-500 via-amber-400 to-brand-500 text-obsidian-950 font-bold text-sm tracking-wide shadow-lg shadow-brand-500/25 hover:shadow-brand-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2.5"
             >
               <div className="p-1 rounded-full bg-obsidian-950/10 flex items-center justify-center">
                 <Volume2 className="w-4 h-4 text-obsidian-950 fill-current" />
