@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAccessibility } from '../../context/AccessibilityContext';
 import { Sparkles, Network, GitBranch, BarChart3, ArrowDown } from 'lucide-react';
+import { DriftingEmbers } from '../background/DriftingEmbers';
 
 interface SectionBreatherProps {
   initialVariant?: 'sorting' | 'tree' | 'graph';
@@ -9,6 +10,7 @@ interface SectionBreatherProps {
   quote?: string;
   author?: string;
   onExplore?: () => void;
+  showEmbers?: boolean;
 }
 
 export const SectionBreather: React.FC<SectionBreatherProps> = ({
@@ -17,15 +19,17 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
   quote = 'Every algorithm is a solved puzzle waiting for you to see the picture on the box.',
   author = 'BitForge Instructional Philosophy',
   onExplore,
+  showEmbers = true,
 }) => {
   const { reducedMotion } = useAccessibility();
   const [variant, setVariant] = useState<'sorting' | 'tree' | 'graph'>(initialVariant);
 
   return (
     <section className="relative w-full py-20 sm:py-28 overflow-hidden bg-obsidian-950 border-y border-slate-800/80">
-      {/* Ambient background glow */}
-      <div className="absolute inset-0 bg-gradient-to-b from-obsidian-950 via-obsidian-900/60 to-obsidian-950 pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-brand-500/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Step 3: Full atmospheric break treatment (Ember Glow + Film Grain + Drifting Sparks) */}
+      <div className="absolute inset-0 forge-glow-break pointer-events-none" />
+      <div className="absolute inset-0 forge-grain opacity-80 pointer-events-none" />
+      {showEmbers && <DriftingEmbers density="sparse" speed="slow" />}
 
       {/* Atmospheric Visual Backdrop */}
       <div className="max-w-7xl 2xl:max-w-9xl 3xl:max-w-10xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 relative z-10 flex flex-col items-center text-center">
@@ -70,8 +74,8 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
 
         {/* The Atmospheric Data Structure Graphic */}
         <div className="w-full max-w-4xl h-44 sm:h-56 rounded-3xl bg-obsidian-900/50 border border-slate-800/80 backdrop-blur-sm p-6 flex items-center justify-center relative overflow-hidden shadow-2xl mb-10 group">
-          {/* Subtle grid background inside canvas */}
-          <div className="absolute inset-0 bg-dot-pattern opacity-20 pointer-events-none" />
+          {/* Subtle tactile grain background inside canvas */}
+          <div className="absolute inset-0 forge-grain opacity-40 pointer-events-none" />
 
           {/* 1. Sorting Variant: Partition Harmonic Bars */}
           {variant === 'sorting' && (

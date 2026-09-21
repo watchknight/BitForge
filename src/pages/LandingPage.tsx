@@ -23,7 +23,7 @@ import { LineReveal, TextReveal } from '../components/motion/TextReveal';
 import { ScrollSentenceBuilder } from '../components/motion/ScrollSentenceBuilder';
 import { SectionBreather } from '../components/motion/SectionBreather';
 import { TopicCardPreview } from '../components/topic/TopicCardPreview';
-import { ConstellationMesh } from '../components/motion/ConstellationMesh';
+import { DriftingEmbers } from '../components/background/DriftingEmbers';
 import { SpotlightCard } from '../components/motion/SpotlightCard';
 import { ArchitecturalFrame } from '../components/motion/ArchitecturalFrame';
 import { soundEngine } from '../services/soundEngine';
@@ -118,12 +118,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     <div className="space-y-20 sm:space-y-28 pb-24">
       {/* Hero Section with Staggered Typography Reveal */}
       <section className="relative pt-10 md:pt-20 px-4 sm:px-6 lg:px-8 2xl:px-12 max-w-7xl 2xl:max-w-9xl 3xl:max-w-10xl mx-auto overflow-hidden">
-        {/* Interactive Constellation Mesh (Boon Global technique) */}
-        <ConstellationMesh className="opacity-75" nodeCount={55} connectionDistance={145} />
-
-        {/* Glow ambient background elements */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-brand-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        {/* Step 3: Atmospheric Forge Background (Soft Ember Glow + Film Grain + Drifting Sparks) */}
+        <div className="absolute inset-0 forge-glow-hero pointer-events-none" />
+        <div className="absolute inset-0 forge-grain opacity-80 pointer-events-none" />
+        <DriftingEmbers density="sparse" speed="slow" />
 
         <div className="text-center max-w-4xl mx-auto space-y-6 relative z-10">
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-obsidian-900/90 border border-slate-800 hover:border-slate-700 shadow-xl shadow-obsidian-950/60 backdrop-blur-md transition-all duration-300 group">

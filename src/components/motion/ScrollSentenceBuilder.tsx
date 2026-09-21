@@ -112,9 +112,9 @@ export const ScrollSentenceBuilder: React.FC = () => {
       ref={containerRef}
       className="py-16 sm:py-24 bg-gradient-to-b from-obsidian-950 via-obsidian-900 to-obsidian-950 border-y border-slate-800/80 relative overflow-hidden"
     >
-      {/* Subtle architectural background grid */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-15 pointer-events-none" />
-      <div className="absolute -top-32 right-1/4 w-96 h-96 bg-brand-500/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Tactile grain & subtle ember glow */}
+      <div className="absolute inset-0 forge-glow-break pointer-events-none" />
+      <div className="absolute inset-0 forge-grain opacity-70 pointer-events-none" />
 
       <div className="max-w-6xl 2xl:max-w-8xl 3xl:max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 relative z-10">
         {/* Section Header */}

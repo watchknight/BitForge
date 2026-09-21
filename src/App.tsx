@@ -47,8 +47,24 @@ const PageLoadingFallback: React.FC = () => (
 );
 
 export const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<ViewType>('landing');
-  const [activeTopicId, setActiveTopicId] = useState<string>('merge-sort');
+  const [currentView, setCurrentView] = useState<ViewType>(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.replace('#', '').trim();
+      if (hash.startsWith('topic/')) return 'topic';
+      if (['roadmap', 'race', 'quiz-hub', 'big-o', 'about'].includes(hash)) return hash as ViewType;
+    }
+    return 'landing';
+  });
+  const [activeTopicId, setActiveTopicId] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.replace('#', '').trim();
+      if (hash.startsWith('topic/')) {
+        const tid = hash.replace('topic/', '').trim();
+        if (tid) return tid;
+      }
+    }
+    return 'merge-sort';
+  });
   const [searchOpen, setSearchOpen] = useState(false);
 
   // Hash-based URL sync for easy sharing and navigation
@@ -132,14 +148,23 @@ export const App: React.FC = () => {
   return (
     <AccessibilityProvider>
       <ProgressProvider>
-        <div className="min-h-screen bg-obsidian-950 text-slate-100 flex flex-col font-sans selection:bg-brand-500/30 selection:text-brand-200">
-          <Navbar 
-            currentView={currentView} 
-            onNavigate={navigateTo} 
-            onOpenSearch={() => setSearchOpen(true)}
-          />
+        <div className="min-h-screen bg-obsidian-950 text-slate-100 flex flex-col font-sans selection:bg-brand-500/30 selection:text-brand-200 relative overflow-x-hidden">
+          {/* Universal Tactile Film-Grain Overlay */}
+          <div className="fixed inset-0 forge-grain opacity-60 pointer-events-none z-0" aria-hidden="true" />
 
-          <main className="flex-1">
+          {/* Reduced Ambient Ember Glow for Content-Dense Pages (Topic, Roadmap, Quiz Hub, Race, Big-O, About) */}
+          {currentView !== 'landing' && (
+            <div className="fixed inset-0 forge-glow-content pointer-events-none z-0" aria-hidden="true" />
+          )}
+
+          <div className="relative z-10 flex flex-col flex-1">
+            <Navbar 
+              currentView={currentView} 
+              onNavigate={navigateTo} 
+              onOpenSearch={() => setSearchOpen(true)}
+            />
+
+            <main className="flex-1">
             {currentView === 'landing' && (
               <LandingPage
                 onStartLearning={() => navigateTo('roadmap')}
@@ -190,6 +215,7 @@ export const App: React.FC = () => {
           </main>
 
           <Footer onNavigate={navigateTo} />
+          </div>
 
           {/* Cinematic Experience Intro Gate (dkton.at style) */}
           <ExperienceIntroGate />

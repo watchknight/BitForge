@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Volume2, VolumeX, ArrowRight, Zap } from 'lucide-react';
 import { soundEngine } from '../../services/soundEngine';
 import { useAccessibility } from '../../context/AccessibilityContext';
+import { DriftingEmbers } from '../background/DriftingEmbers';
 
 interface ExperienceIntroGateProps {
   onEnter?: () => void;
@@ -48,8 +49,9 @@ export const ExperienceIntroGate: React.FC<ExperienceIntroGateProps> = ({ onEnte
         className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-obsidian-950/98 backdrop-blur-2xl text-slate-100 p-6 overflow-hidden select-none"
       >
         {/* Subtle Background Radial Aura */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-brand-500/10 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[300px] bg-amber-500/10 rounded-full blur-[90px] pointer-events-none" />
+        <div className="absolute inset-0 forge-glow-hero pointer-events-none" />
+        <div className="absolute inset-0 forge-grain opacity-80 pointer-events-none" />
+        <DriftingEmbers density="sparse" speed="slow" />
 
         {/* Skip Button (Top Right) */}
         <button

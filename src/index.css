@@ -86,17 +86,38 @@
   }
 }
 
-/* Subtle background grid pattern */
-.bg-grid-pattern {
-  background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(245, 242, 235, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(245, 242, 235, 0.03) 1px, transparent 1px);
+/* Tactile film-grain noise texture — eliminates flat vector look without reducing legibility */
+.forge-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.038'/%3E%3C/svg%3E");
+  background-repeat: repeat;
 }
 
-.bg-dot-pattern {
-  background-size: 24px 24px;
-  background-image: radial-gradient(rgba(245, 242, 235, 0.07) 1px, transparent 1px);
+/* Atmospheric Ember & Rust Radial Glows */
+.forge-glow-hero {
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 28%,
+    rgba(194, 65, 12, 0.13) 0%,
+    rgba(154, 52, 18, 0.06) 40%,
+    rgba(12, 12, 14, 0) 75%
+  );
+}
+
+.forge-glow-break {
+  background: radial-gradient(
+    ellipse 55% 45% at 50% 50%,
+    rgba(194, 65, 12, 0.11) 0%,
+    rgba(124, 45, 18, 0.05) 45%,
+    rgba(12, 12, 14, 0) 70%
+  );
+}
+
+.forge-glow-content {
+  background: radial-gradient(
+    ellipse 75% 40% at 50% 15%,
+    rgba(194, 65, 12, 0.05) 0%,
+    rgba(124, 45, 18, 0.02) 40%,
+    rgba(12, 12, 14, 0) 70%
+  );
 }
 
 /* Glassmorphism card surfaces in warm graphite & bone */

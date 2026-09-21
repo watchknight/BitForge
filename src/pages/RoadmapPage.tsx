@@ -389,6 +389,7 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
           quote="The human mind learns structures through movement, not formulas. Once you see the tree rebalance itself, logarithmic time is intuitive forever."
           author="BitForge Pedagogical Framework"
           onExplore={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          showEmbers={false}
         />
       </div>
     </div>
