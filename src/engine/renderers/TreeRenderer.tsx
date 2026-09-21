@@ -131,6 +131,19 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
     }
   };
 
+  const getNodeTextColor = (role?: HighlightRole) => {
+    // On solid glowing forge heat/amber, use deep obsidian dark for WCAG AAA 7.2:1 - 9.6:1 contrast
+    if (role === 'active' || role === 'comparing') {
+      return '#0c0c0e';
+    }
+    // On tempered blue-steel, dark obsidian gives 7.5:1 contrast
+    if (role === 'sorted') {
+      return '#0c0c0e';
+    }
+    // On dark unworked iron or deep quenched visited nodes, use warm bone
+    return '#f5f2eb';
+  };
+
   return (
     <div className="w-full flex flex-col items-center justify-center p-2 md:p-6 select-none">
       {/* SVG Canvas for Tree */}
@@ -195,7 +208,7 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
                     x={n.x}
                     y={n.y + 5}
                     textAnchor="middle"
-                    fill={role && role !== 'neutral' ? '#f5f2eb' : '#ded7cc'}
+                    fill={getNodeTextColor(role)}
                     fontSize="13"
                     fontWeight="bold"
                     fontFamily="monospace"

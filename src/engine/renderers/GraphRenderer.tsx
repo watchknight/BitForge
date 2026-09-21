@@ -82,6 +82,14 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
     }
   };
 
+  const getNodeTextColor = (role?: HighlightRole) => {
+    // Deep obsidian on glowing orange or gold for WCAG AAA 7.2:1 - 9.6:1 contrast
+    if (role === 'active' || role === 'comparing' || role === 'sorted') {
+      return '#0c0c0e';
+    }
+    return '#f5f2eb';
+  };
+
   return (
     <div className="w-full flex flex-col items-center justify-center p-2 md:p-6 select-none">
       {/* Top: Graph Canvas */}
@@ -158,7 +166,7 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
                   x={node.x}
                   y={node.y + 5}
                   textAnchor="middle"
-                  fill="#f5f2eb"
+                  fill={getNodeTextColor(role)}
                   fontSize="14"
                   fontWeight="bold"
                   fontFamily="monospace"

@@ -100,7 +100,15 @@ export const ArrayRenderer: React.FC<ArrayRendererProps> = ({
 
           return (
             <div key={idx} className="flex-1 flex flex-col items-center justify-end h-full max-w-[56px]">
-              <span className="text-[11px] font-mono font-bold mb-1.5 text-slate-300">
+              <span className={`text-[11px] font-mono font-bold mb-1.5 transition-colors ${
+                role === 'active'
+                  ? 'text-brand-300 font-extrabold scale-110'
+                  : role === 'comparing'
+                  ? 'text-amber-300 font-extrabold scale-110'
+                  : role === 'sorted'
+                  ? 'text-steel-300 font-bold'
+                  : 'text-slate-400'
+              }`}>
                 {value}
               </span>
               <motion.div
