@@ -28,7 +28,7 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-brand-500/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Atmospheric Visual Backdrop */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center text-center">
+      <div className="max-w-7xl 2xl:max-w-9xl 3xl:max-w-10xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 relative z-10 flex flex-col items-center text-center">
         {/* Subtle Category Variant Switcher */}
         <div className="inline-flex items-center gap-1.5 p-1 rounded-xl bg-obsidian-900/90 border border-slate-800 backdrop-blur-md mb-8">
           <button

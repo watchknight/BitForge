@@ -596,7 +596,7 @@ export const TopicPage: React.FC<TopicPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen pb-20 pt-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    <div className="min-h-screen pb-20 pt-6 max-w-7xl 2xl:max-w-9xl 3xl:max-w-10xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 space-y-10">
       {/* Top Breadcrumb & Navigation */}
       <div className="flex items-center justify-between gap-4">
         <button
@@ -622,7 +622,7 @@ export const TopicPage: React.FC<TopicPageProps> = ({
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white font-sans">
           {topic.title}
         </h1>
-        <p className="text-base md:text-lg text-slate-400 font-medium">
+        <p className="text-base md:text-lg text-slate-400 font-medium max-w-3xl">
           {topic.subtitle}
         </p>
       </div>
@@ -640,7 +640,7 @@ export const TopicPage: React.FC<TopicPageProps> = ({
           </h2>
         </div>
 
-        <p className="text-sm md:text-base text-slate-300 leading-relaxed mb-4">
+        <p className="text-sm md:text-base text-slate-300 leading-relaxed mb-4 max-w-4xl">
           {topic.analogy.story}
         </p>
 

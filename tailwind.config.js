@@ -7,6 +7,15 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      screens: {
+        '3xl': '1920px',
+        '4xl': '2560px',
+      },
+      maxWidth: {
+        '8xl': '88rem',   // 1408px
+        '9xl': '96rem',   // 1536px (2xl)
+        '10xl': '108rem', // 1728px (3xl)
+      },
       colors: {
         // Base / Neutrals: "The Forge" Metallurgy Foundations
         // 1. Warm near-black (graphite/charcoal, NOT blue-black) for backgrounds

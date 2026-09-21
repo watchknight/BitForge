@@ -117,7 +117,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   return (
     <div className="space-y-20 sm:space-y-28 pb-24">
       {/* Hero Section with Staggered Typography Reveal */}
-      <section className="relative pt-10 md:pt-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+      <section className="relative pt-10 md:pt-20 px-4 sm:px-6 lg:px-8 2xl:px-12 max-w-7xl 2xl:max-w-9xl 3xl:max-w-10xl mx-auto overflow-hidden">
         {/* Interactive Constellation Mesh (Boon Global technique) */}
         <ConstellationMesh className="opacity-75" nodeCount={55} connectionDistance={145} />
 
@@ -265,7 +265,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       <ScrollSentenceBuilder />
 
       {/* Core Architectural Pillars Feature Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-7xl 2xl:max-w-9xl 3xl:max-w-10xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-950/60 border border-brand-500/30 text-brand-300 text-xs font-mono mb-3">
             <CheckCircle className="w-3.5 h-3.5 text-brand-400" />
@@ -313,7 +313,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* Flagship Archetypes Showcase Grid with Structured Credits & Micro-Previews */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-7xl 2xl:max-w-9xl 3xl:max-w-10xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
           <div>
             <div className="text-xs font-mono text-brand-400 uppercase tracking-widest mb-1">

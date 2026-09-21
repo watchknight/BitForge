@@ -79,7 +79,7 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24 space-y-10">
+    <div className="max-w-7xl 2xl:max-w-9xl 3xl:max-w-10xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 pt-8 pb-24 space-y-10">
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-obsidian-900 via-obsidian-850 to-brand-950/30 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="space-y-3">
@@ -255,9 +255,9 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
                   gridTemplateColumns: filteredTopics.length === 1
                     ? 'minmax(min(100%, 320px), 560px)'
                     : filteredTopics.length === 2
-                    ? 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))'
+                    ? 'repeat(auto-fit, minmax(min(100%, 340px), 640px))'
                     : 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
-                  justifyContent: filteredTopics.length === 1 ? 'center' : 'stretch',
+                  justifyContent: filteredTopics.length <= 2 ? 'center' : 'stretch',
                 }}
               >
                 {filteredTopics.map((topicRef) => {

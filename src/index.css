@@ -159,4 +159,31 @@ html.reduced-motion ::after {
   50% { height: 16px; }
 }
 
+/* Step 4: Fluid Responsive Container & Proportional Large-Viewport Scaling */
+.forge-container {
+  width: 100%;
+  max-width: 80rem; /* 1280px */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1rem, 2.5vw, 3rem);
+  padding-right: clamp(1rem, 2.5vw, 3rem);
+}
+
+@media (min-width: 1536px) {
+  .forge-container {
+    max-width: 96rem; /* 1536px */
+  }
+}
+
+@media (min-width: 1920px) {
+  .forge-container {
+    max-width: 108rem; /* 1728px */
+  }
+}
+
+.px-fluid {
+  padding-left: clamp(1rem, 2.5vw, 3rem);
+  padding-right: clamp(1rem, 2.5vw, 3rem);
+}
+
 

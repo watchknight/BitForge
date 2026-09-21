@@ -174,7 +174,7 @@ export const QuizHubPage: React.FC<QuizHubPageProps> = ({
   const activeQuestion = currentQuestions[currentIndex];
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24 space-y-8">
+    <div className="max-w-5xl 2xl:max-w-6xl 3xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 pt-8 pb-24 space-y-8">
       {/* Header Banner */}
       <div className="border-b border-slate-800/80 pb-6">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-950/80 border border-brand-500/30 text-brand-300 text-xs font-mono mb-2">
@@ -184,7 +184,7 @@ export const QuizHubPage: React.FC<QuizHubPageProps> = ({
         <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
           Quiz Hub
         </h1>
-        <p className="text-slate-400 text-sm sm:text-base mt-1">
+        <p className="text-slate-400 text-sm sm:text-base mt-1 max-w-2xl">
           Challenge your conceptual understanding with {allQuestions.length}+ curated DSA questions from across the entire curriculum.
         </p>
       </div>
