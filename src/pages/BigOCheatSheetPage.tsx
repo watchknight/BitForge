@@ -94,21 +94,21 @@ export const BigOCheatSheetPage: React.FC<BigOCheatSheetPageProps> = ({
         </div>
       </div>
 
-      {/* Filter and Search Bar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-        <div className="relative flex-1 max-w-sm">
+      {/* Filter and Search Bar (Step 3: Flex-1 Search Bar Filling Middle Space) */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+        <div className="relative flex-1 min-w-[260px]">
           <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search structure or algorithm..."
-            className="w-full pl-10 pr-4 py-2 rounded-xl bg-obsidian-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-brand-400 font-sans"
+            className="w-full pl-10 pr-4 py-2 rounded-xl bg-obsidian-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-brand-400 font-sans transition-colors"
           />
         </div>
 
         {/* Category Pill Filters */}
-        <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1">
+        <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1 shrink-0">
           {categories.map((cat) => (
             <button
               key={cat}

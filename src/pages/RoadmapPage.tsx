@@ -144,21 +144,21 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
         </div>
       </div>
 
-      {/* Filter and Search Bar */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-        <div className="relative flex-1 max-w-md">
+      {/* Filter and Search Bar (Step 3: Flex-1 Search Bar Filling Middle Space) */}
+      <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4">
+        <div className="relative flex-1 min-w-[280px]">
           <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search algorithms (e.g. merge, avl, dijkstra)..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-obsidian-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-brand-400 font-sans"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-obsidian-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-brand-400 font-sans transition-colors"
           />
         </div>
 
         {/* Status Filter Tab Pills */}
-        <div className="flex flex-wrap items-center gap-1.5 p-1 bg-obsidian-950 rounded-xl border border-slate-800">
+        <div className="flex flex-wrap items-center gap-1.5 p-1 bg-obsidian-950 rounded-xl border border-slate-800 shrink-0">
           {(['all', 'mastered', 'practicing', 'not-started'] as const).map((st) => {
             const isSelected = statusFilter === st;
             let activeStyle = 'bg-brand-500/20 text-brand-300 font-bold border border-brand-500/40 shadow-sm';

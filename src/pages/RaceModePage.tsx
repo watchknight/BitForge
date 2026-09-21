@@ -326,10 +326,10 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
         </div>
       </div>
 
-      {/* Inputs & Controls Toolbar */}
+      {/* Inputs & Controls Toolbar (Step 3: Restructured with intentional spacing) */}
       <div className="bg-obsidian-900/90 border border-slate-800 rounded-2xl p-4 shadow-xl backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Input Presets */}
-        <div className="flex items-center gap-2 flex-wrap w-full md:w-auto">
+        <div className="flex items-center gap-2 flex-wrap flex-1 w-full md:w-auto">
           <span className="text-xs font-mono text-slate-400 mr-1">Dataset:</span>
           {PRESETS.map((p) => (
             <button
@@ -356,8 +356,18 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
           </button>
         </div>
 
+        {/* Middle Dataset State (fills passive gap with functional information) */}
+        <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-obsidian-950 border border-slate-800/80 text-xs font-mono text-slate-400 shrink-0">
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-400" />
+          <span>Active Array:</span>
+          <span className="text-brand-300 font-semibold">{inputArray.length} items</span>
+          <span className="text-slate-700">|</span>
+          <span>Max:</span>
+          <span className="text-amber-300 font-semibold">{maxValue}</span>
+        </div>
+
         {/* Global Race Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={resetRace}
             title="Reset Race"
