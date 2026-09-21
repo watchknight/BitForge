@@ -70,18 +70,24 @@ export const GridRenderer: React.FC<GridRendererProps> = ({
         </div>
       )}
 
-      {/* Grid container */}
-      <div className="overflow-x-auto max-w-full p-2">
-        <table className="border-separate border-spacing-2">
+      {/* Grid container with horizontal momentum scroll & sticky headers */}
+      <div 
+        className="overflow-x-auto max-w-full p-2 w-full flex justify-start sm:justify-center"
+        style={{
+          WebkitOverflowScrolling: 'touch',
+          overscrollBehaviorX: 'contain',
+        }}
+      >
+        <table className="border-separate border-spacing-1.5 sm:border-spacing-2">
           {/* Column headers */}
           {colLabels && (
             <thead>
               <tr>
-                {rowLabels && <th className="p-2"></th>}
+                {rowLabels && <th className="p-1 sticky left-0 z-20 bg-obsidian-900/95"></th>}
                 {colLabels.map((col, cIdx) => (
                   <th
                     key={cIdx}
-                    className="p-1 text-center font-mono text-xs text-slate-400 font-semibold"
+                    className="p-1 text-center font-mono text-[11px] sm:text-xs text-slate-400 font-semibold min-w-[40px]"
                   >
                     {col}
                   </th>
@@ -93,9 +99,9 @@ export const GridRenderer: React.FC<GridRendererProps> = ({
           <tbody>
             {matrix.map((row, rIdx) => (
               <tr key={rIdx}>
-                {/* Row label if present */}
+                {/* Row label with sticky positioning on horizontal scroll */}
                 {rowLabels && (
-                  <td className="pr-3 text-right font-mono text-xs text-slate-400 font-semibold">
+                  <td className="pr-2.5 text-right font-mono text-[11px] sm:text-xs text-slate-400 font-semibold sticky left-0 z-10 bg-obsidian-900/95 whitespace-nowrap">
                     {rowLabels[rIdx]}
                   </td>
                 )}
@@ -109,11 +115,11 @@ export const GridRenderer: React.FC<GridRendererProps> = ({
                     <td key={cIdx} className="p-0">
                       <motion.div
                         layout
-                        className={`w-12 h-12 md:w-14 md:h-14 rounded-lg border flex flex-col items-center justify-center transition-all duration-200 shadow-sm ${getCellClasses(
+                        className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg border flex flex-col items-center justify-center transition-all duration-200 shadow-sm ${getCellClasses(
                           role
                         )}`}
                       >
-                        <span className="text-sm md:text-base font-mono">
+                        <span className="text-xs sm:text-sm md:text-base font-mono">
                           {val !== null && val !== undefined ? val : (
                             <span className="text-slate-600 text-xs">?</span>
                           )}

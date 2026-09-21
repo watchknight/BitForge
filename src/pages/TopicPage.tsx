@@ -672,8 +672,8 @@ export const TopicPage: React.FC<TopicPageProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column: Visual Canvas + Narration + Playback Controls */}
           <div className="lg:col-span-7 flex flex-col gap-4">
-            {/* Visual Canvas Card */}
-            <div className="bg-obsidian-900/80 border border-slate-800 rounded-2xl p-4 shadow-xl backdrop-blur-md flex flex-col items-center justify-center min-h-[360px]">
+            {/* Visual Canvas Card with Responsive Padding and Strict Overflow Containment */}
+            <div className="bg-obsidian-900/80 border border-slate-800 rounded-2xl p-2 sm:p-4 shadow-xl backdrop-blur-md flex flex-col items-center justify-center min-h-[340px] sm:min-h-[360px] overflow-hidden">
               {renderAlgorithmVisualization()}
             </div>
 

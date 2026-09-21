@@ -1,6 +1,7 @@
 import React from 'react';
 import { HighlightRole } from '../../types/simulation';
 import { motion } from 'framer-motion';
+import { SimulationViewport } from './SimulationViewport';
 
 export interface GraphNode {
   id: string;
@@ -92,9 +93,18 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
 
   return (
     <div className="w-full flex flex-col items-center justify-center p-2 md:p-6 select-none">
-      {/* Top: Graph Canvas */}
-      <div className="w-full max-w-2xl bg-obsidian-950/70 rounded-xl border border-slate-800/80 p-2 overflow-x-auto relative">
-        <svg viewBox="0 0 560 300" className="w-full h-auto max-h-[320px]">
+      {/* Top: Graph Canvas with Pan/Zoom & Fit-to-Screen */}
+      <SimulationViewport
+        contentWidth={560}
+        contentHeight={300}
+        className="max-w-2xl min-h-[300px]"
+      >
+        <svg
+          width={560}
+          height={300}
+          viewBox="0 0 560 300"
+          className="overflow-visible select-none shrink-0"
+        >
           {/* Edges */}
           {edges.map((edge, idx) => {
             const u = nodeMap.get(edge.from);
@@ -203,7 +213,7 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
             );
           })}
         </svg>
-      </div>
+      </SimulationViewport>
 
       {/* Bottom: Queue and Visited Panels */}
       <div className="w-full max-w-2xl grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
@@ -216,7 +226,10 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
             </span>
             <span className="text-[10px] text-slate-500">Front &larr; Back</span>
           </div>
-          <div className="flex items-center gap-2 min-h-[38px] p-1.5 bg-obsidian-950 rounded border border-slate-800/80 overflow-x-auto">
+          <div
+            className="flex items-center gap-2 min-h-[38px] p-1.5 bg-obsidian-950 rounded border border-slate-800/80 overflow-x-auto"
+            style={{ WebkitOverflowScrolling: 'touch', overscrollBehaviorX: 'contain' }}
+          >
             {queue.length === 0 ? (
               <span className="text-xs font-mono text-slate-500 italic px-2">
                 Empty Queue

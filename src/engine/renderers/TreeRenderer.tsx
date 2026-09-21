@@ -1,6 +1,7 @@
 import React from 'react';
 import { HighlightRole } from '../../types/simulation';
 import { motion } from 'framer-motion';
+import { SimulationViewport } from './SimulationViewport';
 
 export interface TreeNode {
   id: string | number;
@@ -146,16 +147,22 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
 
   return (
     <div className="w-full flex flex-col items-center justify-center p-2 md:p-6 select-none">
-      {/* SVG Canvas for Tree */}
-      <div className="w-full max-w-2xl bg-obsidian-950/60 rounded-xl border border-slate-800/80 p-2 overflow-x-auto">
+      {/* SVG Canvas for Tree with Pan/Zoom & Fit-to-Screen */}
+      <SimulationViewport
+        contentWidth={WIDTH}
+        contentHeight={HEIGHT}
+        className="max-w-2xl min-h-[300px]"
+      >
         {!positionedRoot ? (
           <div className="h-48 flex items-center justify-center text-slate-500 font-mono text-sm">
             Empty Tree (NULL)
           </div>
         ) : (
           <svg
+            width={WIDTH}
+            height={HEIGHT}
             viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-            className="w-full h-auto max-h-[300px] overflow-visible"
+            className="overflow-visible select-none shrink-0"
           >
             {/* Tree branches/edges */}
             {lines.map((l) => (
@@ -220,26 +227,28 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
             })}
           </svg>
         )}
-      </div>
+      </SimulationViewport>
 
-      {/* In-Order Traversal sequence bar if present */}
+      {/* In-Order Traversal sequence bar if present with momentum horizontal scrolling */}
       {traversalList.length > 0 && (
         <div className="mt-4 w-full max-w-xl flex flex-col items-center">
           <div className="text-xs font-mono text-slate-400 mb-2 flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-steel-400"></span>
             <span>In-Order Traversal Visited Stream:</span>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-2 p-2 bg-obsidian-950 rounded-lg border border-slate-800">
-            {traversalList.map((val, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="px-2.5 py-1 rounded bg-steel-500/20 text-steel-200 border border-steel-500/40 text-xs font-mono font-bold"
-              >
-                {val}
-              </motion.div>
-            ))}
+          <div className="w-full overflow-x-auto pb-1" style={{ WebkitOverflowScrolling: 'touch', overscrollBehaviorX: 'contain' }}>
+            <div className="flex items-center justify-start sm:justify-center gap-2 p-2 bg-obsidian-950 rounded-lg border border-slate-800 min-w-max">
+              {traversalList.map((val, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="px-2.5 py-1 rounded bg-steel-500/20 text-steel-200 border border-steel-500/40 text-xs font-mono font-bold shrink-0"
+                >
+                  {val}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       )}

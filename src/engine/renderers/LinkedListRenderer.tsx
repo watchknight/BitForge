@@ -55,7 +55,7 @@ export const LinkedListRenderer: React.FC<LinkedListRendererProps> = ({
   };
 
   return (
-    <div className="w-full flex flex-col items-center justify-center p-4 md:p-8 select-none overflow-x-auto min-h-[220px]">
+    <div className="w-full flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 select-none min-h-[220px]">
       {/* Floating / Detached Node (e.g. newly allocated node during insertion) */}
       {detachedNode && (
         <div className="mb-6 flex flex-col items-center">
@@ -87,19 +87,26 @@ export const LinkedListRenderer: React.FC<LinkedListRendererProps> = ({
         </div>
       )}
 
-      {/* Main Linked List Chain */}
-      <div className="flex items-center gap-2 md:gap-3 py-4 min-w-max">
-        {nodes.length === 0 ? (
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold text-brand-400 px-2 py-1 rounded bg-brand-950/60 border border-brand-500/30">
-              HEAD
-            </span>
-            <ArrowRight className="w-4 h-4 text-slate-500" />
-            <span className="text-xs font-mono text-slate-500 italic px-2 py-1 rounded bg-obsidian-950 border border-slate-800">
-              NULL (Empty List)
-            </span>
-          </div>
-        ) : (
+      {/* Main Linked List Chain in Momentum Horizontal Scroll Container */}
+      <div 
+        className="w-full overflow-x-auto py-2"
+        style={{
+          WebkitOverflowScrolling: 'touch',
+          overscrollBehaviorX: 'contain',
+        }}
+      >
+        <div className="min-w-fit flex items-center justify-start sm:justify-center mx-auto px-4 py-2 gap-2 md:gap-3">
+          {nodes.length === 0 ? (
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-mono font-bold text-brand-400 px-2 py-1 rounded bg-brand-950/60 border border-brand-500/30">
+                HEAD
+              </span>
+              <ArrowRight className="w-4 h-4 text-slate-500" />
+              <span className="text-xs font-mono text-slate-500 italic px-2 py-1 rounded bg-obsidian-950 border border-slate-800">
+                NULL (Empty List)
+              </span>
+            </div>
+          ) : (
           <AnimatePresence mode="popLayout">
             {nodes.map((node, index) => {
               const role = highlights[node.id] || highlights[index];
@@ -173,6 +180,7 @@ export const LinkedListRenderer: React.FC<LinkedListRendererProps> = ({
             <div className="min-h-[16px] mt-1" />
           </div>
         )}
+        </div>
       </div>
     </div>
   );
