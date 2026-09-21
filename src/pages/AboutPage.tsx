@@ -1,15 +1,14 @@
 import React from 'react';
 import { 
-  Zap, 
   Cpu, 
   Eye, 
   Layers, 
   ShieldCheck, 
   Terminal, 
   Heart,
-  Sparkles,
   ArrowRight
 } from 'lucide-react';
+import { BitForgeLogo } from '../components/common/BitForgeLogo';
 
 interface AboutPageProps {
   onStartLearning: () => void;
@@ -21,7 +20,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onStartLearning }) => {
       {/* Header */}
       <div className="space-y-3">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-950/80 border border-brand-500/30 text-brand-300 text-xs font-mono">
-          <Zap className="w-3.5 h-3.5 text-brand-400" />
+          <BitForgeLogo className="w-3.5 h-3.5 text-brand-400" />
           <span>Our Instructional Mission</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-extrabold text-white font-sans tracking-tight">

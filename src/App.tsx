@@ -8,7 +8,7 @@ import { LandingPage } from './pages/LandingPage';
 import { GlobalSearchModal } from './components/common/GlobalSearchModal';
 import { ExperienceIntroGate } from './components/motion/ExperienceIntroGate';
 import { soundEngine } from './services/soundEngine';
-import { Zap } from 'lucide-react';
+import { BitForgeLogo } from './components/common/BitForgeLogo';
 
 // Lazy load pages for high performance and fast initial load
 const RoadmapPage = lazy(() =>
@@ -37,7 +37,7 @@ const PageLoadingFallback: React.FC = () => (
   <div className="min-h-[60vh] flex flex-col items-center justify-center p-8 text-center">
     <div className="relative mb-4">
       <div className="w-14 h-14 rounded-2xl bg-brand-500/10 border border-brand-500/30 flex items-center justify-center text-brand-400 animate-pulse">
-        <Zap className="w-7 h-7 fill-current animate-bounce" />
+        <BitForgeLogo className="w-7 h-7 animate-bounce" />
       </div>
       <div className="absolute inset-0 rounded-2xl border-2 border-brand-400/40 border-t-transparent animate-spin" />
     </div>

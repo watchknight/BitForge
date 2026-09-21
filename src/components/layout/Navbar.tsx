@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Zap, 
   Flame, 
   Map, 
   Table, 
   Info, 
   Code2, 
+  Boxes,
   ChevronDown, 
-  Sparkles,
   Menu,
   X,
   Search,
@@ -18,6 +17,7 @@ import {
   Sun,
   Moon
 } from 'lucide-react';
+import { BitForgeLogo } from '../common/BitForgeLogo';
 import { useTheme } from '../../context/ThemeContext';
 import { useProgress } from '../../context/ProgressContext';
 import { useAccessibility } from '../../context/AccessibilityContext';
@@ -59,8 +59,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
     };
     if (mobileMenuOpen) {
       window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
     }
-    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [mobileMenuOpen]);
 
   return (
@@ -72,7 +72,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
           className="flex items-center gap-2.5 cursor-pointer group flex-shrink-0"
         >
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-obsidian-950 shadow-lg shadow-brand-500/20 group-hover:shadow-brand-500/40 transition-all duration-300">
-            <Zap className="w-5 h-5 fill-current" />
+            <BitForgeLogo className="w-5 h-5" />
           </div>
           <div className="flex flex-col">
             <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-brand-300 bg-clip-text text-transparent font-sans">
@@ -149,7 +149,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
                   : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
               }`}
             >
-              <Code2 className="w-3.5 h-3.5 text-brand-400" />
+              <Boxes className="w-3.5 h-3.5 text-brand-400" />
               Flagships
               <ChevronDown className={`w-3 h-3 transition-transform ${topicsDropdownOpen ? 'rotate-180' : ''}`} />
             </button>
@@ -257,7 +257,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
           </div>
 
           <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-brand-950/60 rounded-full border border-brand-500/30 text-xs font-mono text-brand-300">
-            <Sparkles className="w-3 h-3 text-brand-400" />
+            <Code2 className="w-3.5 h-3.5 text-brand-400" />
             <span className="font-bold">{progress.xp}</span>
             <span className="text-brand-400/80 font-sans hidden sm:inline text-[11px]">XP</span>
           </div>
@@ -294,7 +294,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
                 <span className="font-bold">{progress.streakDays} Day Streak</span>
               </div>
               <div className="flex items-center gap-1.5 text-brand-300">
-                <Sparkles className="w-3.5 h-3.5 text-brand-400" />
+                <Code2 className="w-3.5 h-3.5 text-brand-400" />
                 <span className="font-bold">{progress.xp} XP</span>
               </div>
             </div>

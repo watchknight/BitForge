@@ -5,7 +5,6 @@ import {
   Code2, 
   Layers, 
   CheckCircle, 
-  Zap, 
   Cpu, 
   GitMerge, 
   Share2, 

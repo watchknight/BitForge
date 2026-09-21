@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Volume2, VolumeX, ArrowRight, Zap } from 'lucide-react';
+import { Volume2, VolumeX, ArrowRight } from 'lucide-react';
 import { soundEngine } from '../../services/soundEngine';
 import { useAccessibility } from '../../context/AccessibilityContext';
 import { DriftingEmbers } from '../background/DriftingEmbers';
+import { BitForgeLogo } from '../common/BitForgeLogo';
 
 interface ExperienceIntroGateProps {
   onEnter?: () => void;
@@ -69,7 +70,7 @@ export const ExperienceIntroGate: React.FC<ExperienceIntroGateProps> = ({ onEnte
             transition={{ delay: 0.15, duration: 0.5 }}
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-obsidian-900 border border-slate-800 text-[11px] font-mono uppercase tracking-widest text-brand-400"
           >
-            <Zap className="w-3.5 h-3.5 fill-current" />
+            <BitForgeLogo className="w-3.5 h-3.5" />
             <span>BitForge Computational Lab</span>
           </motion.div>
 

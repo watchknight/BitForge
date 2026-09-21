@@ -8,12 +8,10 @@ import { SectionBreather } from '../components/motion/SectionBreather';
 import { 
   CheckCircle2, 
   Clock, 
-  Sparkles, 
   ArrowRight, 
   Search, 
   Filter, 
   Trophy, 
-  Zap, 
   MapPin,
   Circle,
   PlayCircle,

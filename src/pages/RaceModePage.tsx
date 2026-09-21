@@ -14,8 +14,7 @@ import {
   Flame, 
   ArrowRight,
   Info,
-  Medal,
-  Sparkles
+  Medal
 } from 'lucide-react';
 import { Step } from '../types/simulation';
 import { 
@@ -592,7 +591,7 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
       {allFinished && (
         <div className="bg-obsidian-900 border border-brand-500/30 rounded-2xl p-6 shadow-2xl animate-fadeIn space-y-4">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-brand-400" />
+            <Trophy className="w-5 h-5 text-brand-400" />
             <h3 className="text-lg font-bold text-white">Race Results & Complexity Verdict</h3>
           </div>
 

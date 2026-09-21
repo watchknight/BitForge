@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { 
   HelpCircle, 
-  Sparkles, 
+  Code2, 
   Zap, 
   BookOpen, 
   GraduationCap, 
@@ -455,7 +455,7 @@ export const QuizHubPage: React.FC<QuizHubPageProps> = ({
             </p>
 
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 font-mono text-xs">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <Code2 className="w-3.5 h-3.5 text-amber-400" />
               <span>+{scoreCount * 15} XP added to your BitForge account</span>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Zap, Heart, Shield, Terminal, ArrowUpRight } from 'lucide-react';
+import { Heart, Shield, Terminal, ArrowUpRight } from 'lucide-react';
+import { BitForgeLogo } from '../common/BitForgeLogo';
 
 interface FooterProps {
   onNavigate: (view: string, topicId?: string) => void;
@@ -13,8 +14,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Col 1: Brand */}
           <div className="space-y-3 md:col-span-1">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-brand-500 flex items-center justify-center text-obsidian-950 font-bold">
-                <Zap className="w-4 h-4 fill-current" />
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-obsidian-950 shadow-sm shadow-brand-500/20">
+                <BitForgeLogo className="w-4 h-4" />
               </div>
               <span className="font-bold text-white tracking-tight text-base font-sans">
                 BitForge
