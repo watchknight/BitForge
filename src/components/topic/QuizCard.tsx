@@ -105,7 +105,7 @@ export const QuizCard: React.FC<QuizCardProps> = ({ topicId, questions }) => {
                     key={idx}
                     disabled={isAnswered}
                     onClick={() => handleSelectOption(idx)}
-                    className={`w-full text-left p-3.5 rounded-xl border text-xs md:text-sm transition-all flex items-start justify-between gap-3 ${btnStyle}`}
+                    className={`w-full text-left p-3.5 rounded-xl border text-xs md:text-sm min-h-[48px] transition-all flex items-center justify-between gap-3 ${btnStyle}`}
                   >
                     <div className="flex items-start gap-2.5">
                       <span className="w-5 h-5 rounded-full border border-slate-700/80 flex items-center justify-center text-[11px] font-mono shrink-0 text-slate-400 mt-0.5">

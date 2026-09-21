@@ -311,7 +311,7 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
                 <button
                   key={algo.id}
                   onClick={() => toggleAlgorithm(algo.id)}
-                  className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                  className={`text-xs px-3 py-2 min-h-[40px] rounded-xl font-medium transition-all flex items-center gap-1.5 ${
                     isSelected
                       ? 'bg-brand-500 text-obsidian-950 font-bold shadow-md shadow-brand-500/20'
                       : 'bg-obsidian-900 border border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
@@ -326,7 +326,7 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
         </div>
       </div>
 
-      {/* Inputs & Controls Toolbar (Step 3: Restructured with intentional spacing) */}
+      {/* Inputs & Controls Toolbar (Step 3: Restructured with intentional spacing and touch targets) */}
       <div className="bg-obsidian-900/90 border border-slate-800 rounded-2xl p-4 shadow-xl backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Input Presets */}
         <div className="flex items-center gap-2 flex-wrap flex-1 w-full md:w-auto">
@@ -338,7 +338,7 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
                 setInputArray(p.data);
                 setActivePreset(p.label);
               }}
-              className={`text-xs px-2.5 py-1 rounded-lg transition-all ${
+              className={`text-xs px-3 py-2 min-h-[40px] rounded-xl transition-all flex items-center justify-center ${
                 activePreset === p.label
                   ? 'bg-brand-500/20 text-brand-300 border border-brand-500/40 font-semibold'
                   : 'bg-obsidian-950 text-slate-400 border border-slate-800 hover:text-slate-200'
@@ -349,10 +349,10 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
           ))}
           <button
             onClick={generateRandomArray}
-            className="flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
+            className="flex items-center gap-1.5 text-xs px-3 py-2 min-h-[40px] rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
           >
-            <Shuffle className="w-3 h-3 text-brand-400" />
-            Randomize
+            <Shuffle className="w-3.5 h-3.5 text-brand-400" />
+            <span>Randomize</span>
           </button>
         </div>
 
@@ -366,12 +366,13 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
           <span className="text-amber-300 font-semibold">{maxValue}</span>
         </div>
 
-        {/* Global Race Controls */}
-        <div className="flex items-center gap-2 shrink-0">
+        {/* Global Race Controls with full 44x44px touch targets */}
+        <div className="flex items-center justify-center flex-wrap gap-2 shrink-0 w-full md:w-auto">
           <button
             onClick={resetRace}
             title="Reset Race"
-            className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
+            aria-label="Reset Race"
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
           >
             <RotateCcw className="w-4 h-4" />
           </button>
@@ -380,14 +381,15 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
             onClick={stepBackward}
             disabled={isPlaying}
             title="Step Back"
-            className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white disabled:opacity-40 transition-colors"
+            aria-label="Step Back"
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white disabled:opacity-40 transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
 
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-brand-500 hover:bg-brand-400 text-obsidian-950 font-bold shadow-lg shadow-brand-500/20 hover:shadow-brand-500/40 transition-all transform active:scale-95"
+            className="flex items-center justify-center gap-2 px-5 py-2.5 min-h-[44px] rounded-xl bg-brand-500 hover:bg-brand-400 text-obsidian-950 font-bold shadow-lg shadow-brand-500/20 hover:shadow-brand-500/40 transition-all transform active:scale-95"
           >
             {isPlaying ? (
               <>
@@ -406,19 +408,20 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
             onClick={stepForward}
             disabled={isPlaying || allFinished}
             title="Step Forward"
-            className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white disabled:opacity-40 transition-colors"
+            aria-label="Step Forward"
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white disabled:opacity-40 transition-colors"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
 
           {/* Speed Selector */}
-          <div className="flex items-center gap-1 bg-obsidian-950 p-1 rounded-lg border border-slate-800 ml-2">
-            <FastForward className="w-3 h-3 text-slate-500 ml-1" />
+          <div className="flex items-center gap-1 bg-obsidian-950 p-1 rounded-xl border border-slate-800 ml-1">
+            <FastForward className="w-3.5 h-3.5 text-slate-500 ml-1" />
             {[1, 2, 4, 8].map((s) => (
               <button
                 key={s}
                 onClick={() => setSpeed(s)}
-                className={`px-2 py-0.5 text-xs font-mono rounded ${
+                className={`px-2.5 py-1 min-h-[36px] min-w-[32px] flex items-center justify-center text-xs font-mono rounded-lg transition-all ${
                   speed === s
                     ? 'bg-brand-500/20 text-brand-300 font-bold border border-brand-500/40'
                     : 'text-slate-400 hover:text-slate-200'

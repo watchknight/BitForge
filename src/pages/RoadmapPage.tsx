@@ -18,7 +18,9 @@ import {
   Circle,
   PlayCircle,
   Award,
-  ChevronDown
+  ChevronDown,
+  Play,
+  Pause
 } from 'lucide-react';
 
 interface RoadmapPageProps {
@@ -31,6 +33,7 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
   const [statusFilter, setStatusFilter] = useState<'all' | TopicStatus>('all');
   const [activeDropdownTopic, setActiveDropdownTopic] = useState<string | null>(null);
   const [hoveredTopicId, setHoveredTopicId] = useState<string | null>(null);
+  const [activePreviewTopicId, setActivePreviewTopicId] = useState<string | null>(null);
 
   // Calculate statistics
   let totalTopics = 0;
@@ -270,6 +273,7 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
                   const archetype = meta?.dataStructureType || 'array';
                   const worstTime = meta?.complexity?.worstTime || 'O(N)';
                   const isHovered = hoveredTopicId === topicRef.id;
+                  const isPreviewActive = isHovered || activePreviewTopicId === topicRef.id;
 
                   return (
                     <div
@@ -357,8 +361,38 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
                           </div>
                         </div>
 
-                        {/* Hover Simulation Snippet Micro-Preview */}
-                        <TopicCardPreview type={archetype} isHovered={isHovered} />
+                        {/* Simulation Snippet Micro-Preview with Touch & Hover Preview Affordance */}
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between text-[11px] font-mono text-slate-400">
+                            <span className="text-[10px] uppercase text-slate-500 tracking-wider">Preview</span>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActivePreviewTopicId(activePreviewTopicId === topicRef.id ? null : topicRef.id);
+                              }}
+                              aria-label={activePreviewTopicId === topicRef.id ? `Stop previewing ${topicRef.title}` : `Preview ${topicRef.title} animation`}
+                              className={`px-2.5 py-1 min-h-[32px] rounded-md text-[10px] font-mono flex items-center gap-1.5 border transition-all ${
+                                activePreviewTopicId === topicRef.id
+                                  ? 'bg-brand-500 text-obsidian-950 font-bold border-brand-400 shadow-sm'
+                                  : 'bg-obsidian-900/90 text-slate-300 border-slate-700/80 hover:text-brand-300 hover:border-brand-500/30'
+                              }`}
+                            >
+                              {activePreviewTopicId === topicRef.id ? (
+                                <>
+                                  <Pause className="w-2.5 h-2.5 fill-current" />
+                                  <span>Playing</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Play className="w-2.5 h-2.5 fill-current text-brand-400" />
+                                  <span>Tap to Preview</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
+                          <TopicCardPreview type={archetype} isHovered={isPreviewActive} />
+                        </div>
 
                         {userProg?.quizPassed && (
                           <div className="flex items-center gap-1.5 text-[11px] font-mono text-steel-300">

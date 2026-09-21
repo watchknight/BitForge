@@ -144,8 +144,8 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
       <span className="absolute bottom-1 left-1 font-mono text-[9px] text-slate-700 pointer-events-none">+</span>
       <span className="absolute bottom-1 right-1 font-mono text-[9px] text-slate-700 pointer-events-none">+</span>
 
-      {/* Top row: Scrub bar & step counter */}
-      <div className="flex items-center gap-3 w-full">
+      {/* Top row: Scrub bar & step counter with touch-friendly spacing */}
+      <div className="flex items-center gap-3 w-full py-1 mb-1">
         <span 
           className="text-xs font-mono font-medium text-slate-400 min-w-[70px]"
           aria-live="polite"
@@ -153,7 +153,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
           Step {totalSteps > 0 ? currentStepIndex + 1 : 0} / {totalSteps}
         </span>
         
-        <div className="relative flex-1 flex items-center">
+        <div className="relative flex-1 flex items-center min-h-[40px]">
           <input
             type="range"
             min={0}
@@ -166,25 +166,25 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
             aria-valuemin={0}
             aria-valuemax={Math.max(0, totalSteps - 1)}
             aria-valuetext={`Step ${currentStepIndex + 1} of ${totalSteps}`}
-            className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-400 hover:accent-brand-300 transition-all focus:outline-none focus:ring-1 focus:ring-brand-400"
+            className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-400 hover:accent-brand-300 transition-all focus:outline-none focus:ring-2 focus:ring-brand-400/50"
           />
         </div>
 
-        <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-brand-950/60 border border-brand-500/30 text-brand-300">
+        <span className="text-xs font-mono font-semibold px-2 py-1 rounded bg-brand-950/60 border border-brand-500/30 text-brand-300 min-w-[40px] text-center">
           {totalSteps > 0 ? Math.round(((currentStepIndex + 1) / totalSteps) * 100) : 0}%
         </span>
       </div>
 
-      {/* Bottom row: Control buttons, speed, and input triggers */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-800/80">
-        {/* Left cluster: Playback buttons */}
+      {/* Bottom row: Control buttons, speed, and input triggers (min 44x44px touch targets) */}
+      <div className="flex flex-wrap items-center justify-between gap-2.5 pt-2 border-t border-slate-800/80">
+        {/* Left cluster: Playback buttons (min 44x44px touch targets) */}
         <div className="flex items-center gap-1.5">
           <button
             onClick={handleReset}
             onMouseEnter={() => soundEngine.playHoverTick()}
             title="Reset to Start (Key: R)"
             aria-label="Reset simulation to start"
-            className="p-2 rounded-lg bg-slate-800/70 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-slate-800/70 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed"
             disabled={isAtStart && !isPlaying}
           >
             <RotateCcw className="w-4 h-4" />
@@ -196,7 +196,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
             title="Previous Step (Key: ← or J)"
             aria-label="Previous step"
             disabled={isAtStart || isPlaying}
-            className="p-2 rounded-lg bg-slate-800/70 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-slate-800/70 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
@@ -206,7 +206,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
             onMouseEnter={() => soundEngine.playHoverTick()}
             title={isPlaying ? 'Pause (Space or K)' : 'Play (Space or K)'}
             aria-label={isPlaying ? 'Pause simulation' : isAtEnd ? 'Replay simulation' : 'Play simulation'}
-            className="flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-brand-500 hover:bg-brand-400 text-obsidian-950 font-semibold shadow-lg shadow-brand-500/20 hover:shadow-brand-500/40 transition-all transform active:scale-95"
+            className="flex items-center justify-center gap-2 min-h-[44px] px-5 py-2 rounded-xl bg-brand-500 hover:bg-brand-400 text-obsidian-950 font-bold shadow-lg shadow-brand-500/20 hover:shadow-brand-500/40 transition-all transform active:scale-95"
           >
             {isPlaying ? (
               <>
@@ -227,15 +227,15 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
             title="Next Step (Key: → or L)"
             aria-label="Next step"
             disabled={isAtEnd || isPlaying}
-            className="p-2 rounded-lg bg-slate-800/70 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-slate-800/70 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Center: Speed multiplier buttons */}
+        {/* Center: Speed multiplier buttons (touch-friendly container) */}
         <div 
-          className="flex items-center gap-1 bg-obsidian-950/80 p-1 rounded-lg border border-slate-800"
+          className="flex items-center gap-1 bg-obsidian-950/80 p-1 rounded-xl border border-slate-800 min-h-[44px]"
           role="group"
           aria-label="Playback speed"
         >
@@ -250,9 +250,9 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
               onMouseEnter={() => soundEngine.playHoverTick()}
               title={`Speed ${s}x (Key: ${idx + 1})`}
               aria-label={`Playback speed ${s}x`}
-              className={`px-2 py-0.5 text-xs font-mono rounded transition-all ${
+              className={`min-w-[34px] sm:min-w-[38px] min-h-[36px] px-2 py-1 text-xs font-mono rounded-lg transition-all flex items-center justify-center ${
                 speed === s
-                  ? 'bg-brand-500/20 text-brand-300 font-semibold border border-brand-500/40'
+                  ? 'bg-brand-500/20 text-brand-300 font-bold border border-brand-500/40'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
               }`}
             >
@@ -261,7 +261,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
           ))}
         </div>
 
-        {/* Right cluster: Random & Custom Input actions */}
+        {/* Right cluster: Random & Custom Input actions (min 44x44px touch targets) */}
         <div className="flex items-center gap-1.5">
           {onRandomize && (
             <button
@@ -269,7 +269,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
               onMouseEnter={() => soundEngine.playHoverTick()}
               title="Generate Random Input"
               aria-label="Generate random simulation input"
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-xs font-medium text-slate-300 hover:text-white border border-slate-700/60 transition-colors"
+              className="flex items-center justify-center gap-1.5 min-h-[44px] px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-xs font-medium text-slate-300 hover:text-white border border-slate-700/60 transition-colors"
             >
               <Shuffle className="w-3.5 h-3.5 text-brand-400" />
               <span className="hidden sm:inline">Randomize</span>
@@ -285,7 +285,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
               onMouseEnter={() => soundEngine.playHoverTick()}
               title="Enter Custom Input"
               aria-label="Configure custom simulation input"
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-xs font-medium text-slate-300 hover:text-white border border-slate-700/60 transition-colors"
+              className="flex items-center justify-center gap-1.5 min-h-[44px] px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-xs font-medium text-slate-300 hover:text-white border border-slate-700/60 transition-colors"
             >
               <SlidersHorizontal className="w-3.5 h-3.5 text-brand-400" />
               <span>Custom</span>

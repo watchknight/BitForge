@@ -377,7 +377,7 @@ export const QuizHubPage: React.FC<QuizHubPageProps> = ({
                   data-testid={`quiz-option-${idx}`}
                   onClick={() => handleAnswerSelect(idx)}
                   disabled={hasAnswered}
-                  className={`w-full p-4 rounded-xl border text-left flex items-center justify-between transition-all ${btnStyle}`}
+                  className={`w-full p-4 rounded-xl border text-left flex items-center justify-between transition-all min-h-[52px] ${btnStyle}`}
                 >
                   <div className="flex items-center gap-3">
                     <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-mono text-xs font-bold ${

@@ -196,7 +196,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
           {/* Reduced Motion Toggle Button */}
           <button
             onClick={toggleReducedMotion}
-            className={`p-1.5 rounded-lg border transition-all ${
+            className={`min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-xl border transition-all ${
               reducedMotion
                 ? 'bg-amber-500/20 border-amber-500/50 text-amber-300'
                 : 'bg-obsidian-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
@@ -211,7 +211,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
           {onOpenSearch && (
             <button
               onClick={onOpenSearch}
-              className="sm:hidden p-1.5 rounded-lg bg-obsidian-900 border border-slate-800 text-slate-400 hover:text-white"
+              className="sm:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-xl bg-obsidian-900 border border-slate-800 text-slate-400 hover:text-white"
               title="Search topics"
               aria-label="Search topics"
             >
@@ -219,13 +219,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
             </button>
           )}
 
-          <div className="flex items-center gap-1 px-2.5 py-1 bg-obsidian-900 rounded-full border border-slate-800 text-xs font-mono">
+          <div className="hidden sm:flex items-center gap-1 px-2.5 py-1 bg-obsidian-900 rounded-full border border-slate-800 text-xs font-mono">
             <Flame className="w-3.5 h-3.5 text-amber-400 fill-amber-400 animate-pulse" />
             <span className="text-slate-200 font-bold">{progress.streakDays}</span>
             <span className="text-slate-500 hidden xl:inline">d</span>
           </div>
 
-          <div className="flex items-center gap-1.5 px-3 py-1 bg-brand-950/60 rounded-full border border-brand-500/30 text-xs font-mono text-brand-300">
+          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-brand-950/60 rounded-full border border-brand-500/30 text-xs font-mono text-brand-300">
             <Sparkles className="w-3 h-3 text-brand-400" />
             <span className="font-bold">{progress.xp}</span>
             <span className="text-brand-400/80 font-sans hidden sm:inline text-[11px]">XP</span>
@@ -234,7 +234,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
           {/* Mobile menu trigger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
+            className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -245,13 +245,25 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-obsidian-900 border-b border-slate-800 px-4 py-3 space-y-2 animate-fadeIn">
+          {/* Mobile Stats Pill Header */}
+          <div className="flex sm:hidden items-center justify-between gap-2 p-2 bg-obsidian-950 rounded-xl border border-slate-800 text-xs font-mono mb-2">
+            <div className="flex items-center gap-1.5 text-slate-200">
+              <Flame className="w-4 h-4 text-amber-400 fill-amber-400 animate-pulse" />
+              <span className="font-bold">{progress.streakDays} Day Streak</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-brand-300">
+              <Sparkles className="w-3.5 h-3.5 text-brand-400" />
+              <span className="font-bold">{progress.xp} XP</span>
+            </div>
+          </div>
+
           {onOpenSearch && (
             <button
               onClick={() => {
                 onOpenSearch();
                 setMobileMenuOpen(false);
               }}
-              className="w-full text-left px-3 py-2 rounded-lg text-xs text-brand-300 bg-obsidian-950 border border-slate-800 flex items-center justify-between"
+              className="w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-xs text-brand-300 bg-obsidian-950 border border-slate-800 flex items-center justify-between"
             >
               <span className="flex items-center gap-2">
                 <Search className="w-4 h-4 text-brand-400" />
@@ -268,7 +280,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
               onNavigate('roadmap');
               setMobileMenuOpen(false);
             }}
-            className="w-full text-left px-3 py-2 rounded-lg text-sm text-slate-200 hover:bg-slate-800 flex items-center gap-2"
+            className="w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-sm text-slate-200 hover:bg-slate-800 flex items-center gap-2.5"
           >
             <Map className="w-4 h-4 text-brand-400" />
             Roadmap & Curriculum
@@ -279,7 +291,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
               onNavigate('race');
               setMobileMenuOpen(false);
             }}
-            className="w-full text-left px-3 py-2 rounded-lg text-sm text-amber-300 hover:bg-slate-800 flex items-center gap-2"
+            className="w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-sm text-amber-300 hover:bg-slate-800 flex items-center gap-2.5"
           >
             <Trophy className="w-4 h-4 text-amber-400" />
             Sorting Race Mode
@@ -290,7 +302,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
               onNavigate('quiz-hub');
               setMobileMenuOpen(false);
             }}
-            className="w-full text-left px-3 py-2 rounded-lg text-sm text-brand-300 hover:bg-slate-800 flex items-center gap-2"
+            className="w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-sm text-brand-300 hover:bg-slate-800 flex items-center gap-2.5"
           >
             <GraduationCap className="w-4 h-4 text-brand-400" />
             Quiz Hub (100+ Questions)
@@ -307,7 +319,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
                   onNavigate('topic', f.id);
                   setMobileMenuOpen(false);
                 }}
-                className="w-full text-left px-3 py-1.5 rounded-lg text-xs text-slate-300 hover:bg-slate-800 hover:text-brand-300 flex items-center justify-between"
+                className="w-full text-left px-3.5 py-2 min-h-[40px] rounded-xl text-xs text-slate-300 hover:bg-slate-800 hover:text-brand-300 flex items-center justify-between"
               >
                 <span>{f.label}</span>
                 <span className="text-[10px] text-slate-500 font-mono">{f.type}</span>
@@ -320,7 +332,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
               onNavigate('big-o');
               setMobileMenuOpen(false);
             }}
-            className="w-full text-left px-3 py-2 rounded-lg text-sm text-slate-200 hover:bg-slate-800 flex items-center gap-2"
+            className="w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-sm text-slate-200 hover:bg-slate-800 flex items-center gap-2.5"
           >
             <Table className="w-4 h-4 text-brand-400" />
             Big-O Cheat Sheet
@@ -331,7 +343,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
               onNavigate('about');
               setMobileMenuOpen(false);
             }}
-            className="w-full text-left px-3 py-2 rounded-lg text-sm text-slate-200 hover:bg-slate-800 flex items-center gap-2"
+            className="w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-sm text-slate-200 hover:bg-slate-800 flex items-center gap-2.5"
           >
             <Info className="w-4 h-4 text-brand-400" />
             About BitForge

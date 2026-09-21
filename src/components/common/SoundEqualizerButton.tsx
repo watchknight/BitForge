@@ -18,7 +18,7 @@ export const SoundEqualizerButton: React.FC = () => {
   return (
     <button
       onClick={handleToggle}
-      className={`relative group flex items-center gap-2 px-2.5 py-1.5 rounded-lg border transition-all duration-300 ${
+      className={`relative group flex items-center justify-center gap-2 px-2.5 py-2 min-h-[44px] min-w-[44px] rounded-xl border transition-all duration-300 ${
         !muted
           ? 'bg-brand-950/80 border-brand-500/40 text-brand-300 shadow-md shadow-brand-500/10'
           : 'bg-obsidian-900 border-slate-800 text-slate-500 hover:text-slate-300 hover:border-slate-700'
