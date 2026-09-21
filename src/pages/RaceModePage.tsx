@@ -509,12 +509,18 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
                     const highlight = currentStep.highlights?.[idx];
                     const heightPercent = Math.max(12, Math.round((val / maxValue) * 100));
 
-                    let barColor = 'bg-slate-700 border-slate-600';
+                    let barColor = 'bg-[#333842] border-[#3d434f]';
                     if (highlight === 'comparing') {
-                      barColor = 'bg-amber-400 border-amber-300 text-obsidian-950 animate-bounce shadow-lg shadow-amber-400/20';
-                    } else if (highlight === 'active' || highlight === 'danger') {
-                      barColor = 'bg-rose-500 border-rose-400 text-white animate-pulse';
+                      // "In the forge" — comparing / checking (molten gold)
+                      barColor = 'bg-amber-400 border-amber-300 text-obsidian-950 animate-bounce shadow-lg shadow-amber-400/25';
+                    } else if (highlight === 'active') {
+                      // "In the forge" — active modification / swap (blazing flame orange)
+                      barColor = 'bg-brand-500 border-brand-400 text-obsidian-950 animate-pulse shadow-lg shadow-brand-500/30';
+                    } else if (highlight === 'danger') {
+                      // "Overheated" — mistake / conflict state (desaturated red)
+                      barColor = 'bg-red-500 border-red-400 text-white animate-pulse shadow-md shadow-red-500/20';
                     } else if (highlight === 'sorted' || isFinished) {
+                      // "Tempered" — confirmed sorted / quenched (blue-steel)
                       barColor = 'bg-steel-400 border-steel-300 shadow-md shadow-steel-400/30 text-obsidian-950';
                     }
 

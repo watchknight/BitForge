@@ -44,17 +44,23 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
   const getNodeFill = (role?: HighlightRole) => {
     switch (role) {
       case 'active':
-        return '#f97316'; // blazing forge heat
+        // "In the forge" — blazing forge flame (single most vivid color)
+        return '#f97316';
       case 'comparing':
-        return '#f59e0b'; // molten gold
-      case 'visited':
-        return '#3f3f46'; // worked warm cast iron
+        // "In the forge" — molten crucible gold
+        return '#f59e0b';
       case 'sorted':
-        return '#38bdf8'; // tempered cool blue-steel
+        // "Tempered" — cooled blue-steel
+        return '#38bdf8';
+      case 'visited':
+        // "Tempered" — processed / quenched steel
+        return '#0284c7';
       case 'danger':
-        return '#ef4444'; // slag warning
+        // "Overheated" — deep desaturated overheated red
+        return '#c53030';
       default:
-        return '#141416'; // unworked cast iron
+        // "Unforged" — raw unworked iron
+        return '#1a1c22';
     }
   };
 
@@ -64,14 +70,15 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
         return '#fb923c';
       case 'comparing':
         return '#fbbf24';
-      case 'visited':
-        return '#79736a';
       case 'sorted':
         return '#7dd3fc';
+      case 'visited':
+        return '#38bdf8';
       case 'danger':
-        return '#f87171';
+        return '#fca5a5';
       default:
-        return '#2e2e33';
+        // "Unforged" — cool muted border
+        return '#3d434f';
     }
   };
 

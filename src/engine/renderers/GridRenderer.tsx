@@ -40,15 +40,23 @@ export const GridRenderer: React.FC<GridRendererProps> = ({
   const getCellClasses = (role?: HighlightRole) => {
     switch (role) {
       case 'active':
-        return 'bg-brand-500/20 border-brand-400 text-brand-200 ring-2 ring-brand-400/50 shadow-lg shadow-brand-500/20 scale-105 font-bold';
+        // "In the forge" — actively computed DP cell
+        return 'bg-brand-500/25 border-brand-500 text-brand-100 ring-2 ring-brand-400/50 shadow-lg shadow-brand-500/25 scale-105 font-bold';
       case 'comparing':
-        return 'bg-amber-500/20 border-amber-400 text-amber-200 ring-2 ring-amber-400/50 shadow-lg shadow-amber-500/20 font-bold';
+        // "In the forge" — dependency/lookup cell
+        return 'bg-amber-500/25 border-amber-400 text-amber-200 ring-2 ring-amber-400/50 shadow-lg shadow-amber-500/20 font-bold';
       case 'sorted':
-        return 'bg-steel-500/20 border-steel-400 text-steel-200 ring-1 ring-steel-500/40';
+        // "Tempered" — computed finished value
+        return 'bg-steel-500/20 border-steel-400 text-steel-200 ring-1 ring-steel-500/40 font-semibold';
       case 'visited':
-        return 'bg-obsidian-800 border-slate-600 text-slate-300';
+        // "Tempered" — previously memoized cell
+        return 'bg-steel-950/50 border-steel-500/40 text-steel-200 font-semibold';
+      case 'danger':
+        // "Overheated" — invalid/infeasible state
+        return 'bg-red-950/40 border-red-500/60 text-red-300 ring-2 ring-red-500/30';
       default:
-        return 'bg-obsidian-900 border-slate-800 text-slate-300';
+        // "Unforged" — uncomputed raw cell
+        return 'bg-[#1a1c22] border-[#3d434f] text-slate-300 hover:border-slate-500';
     }
   };
 

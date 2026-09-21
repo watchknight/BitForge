@@ -35,38 +35,51 @@ export const ArrayRenderer: React.FC<ArrayRendererProps> = ({
   const getCardClasses = (role?: HighlightRole) => {
     switch (role) {
       case 'comparing':
-        return 'bg-amber-500/20 border-amber-400 text-amber-300 ring-2 ring-amber-400/40 shadow-lg shadow-amber-500/20 scale-105';
+        // "In the forge" — comparing/checking
+        return 'bg-amber-500/25 border-amber-400 text-amber-200 ring-2 ring-amber-400/45 shadow-lg shadow-amber-500/25 scale-105';
       case 'active':
-        return 'bg-brand-500/20 border-brand-400 text-brand-200 ring-2 ring-brand-400/40 shadow-lg shadow-brand-500/20 scale-105';
-      case 'sorted':
-        return 'bg-steel-500/20 border-steel-400 text-steel-200 ring-1 ring-steel-500/40 shadow-lg shadow-steel-500/10';
-      case 'visited':
-        return 'bg-obsidian-800/90 border-slate-600 text-slate-300';
+        // "In the forge" — actively modified/heated
+        return 'bg-brand-500/25 border-brand-500 text-brand-100 ring-2 ring-brand-400/50 shadow-lg shadow-brand-500/30 scale-105';
       case 'pivot':
-        return 'bg-amber-400/25 border-amber-300 text-amber-200 ring-2 ring-amber-400/50 shadow-lg shadow-amber-500/25';
+        // "In the forge" — molten pivot
+        return 'bg-amber-500/25 border-amber-300 text-amber-200 ring-2 ring-amber-400/50 shadow-lg shadow-amber-500/30 scale-105';
+      case 'sorted':
+        // "Tempered" — confirmed finished/sorted
+        return 'bg-steel-500/20 border-steel-400 text-steel-200 ring-1 ring-steel-400/40 shadow-lg shadow-steel-500/15';
+      case 'visited':
+        // "Tempered" — processed marker
+        return 'bg-steel-950/40 border-steel-500/40 text-steel-200 ring-1 ring-steel-500/30';
       case 'danger':
-        return 'bg-rose-500/20 border-rose-400 text-rose-300 ring-2 ring-rose-400/40';
+        // "Overheated" — mistake/conflict state
+        return 'bg-red-950/40 border-red-500/60 text-red-300 ring-2 ring-red-500/40';
       default:
-        return 'bg-obsidian-900 border-slate-800 text-slate-300 hover:border-slate-700';
+        // "Unforged" — raw iron, cool muted grey
+        return 'bg-[#1a1c22] border-[#3d434f] text-slate-300 hover:border-slate-500';
     }
   };
 
   const getBarColor = (role?: HighlightRole) => {
     switch (role) {
       case 'comparing':
-        return 'bg-amber-400 shadow-amber-400/50';
+        // "In the forge" — molten crucible gold
+        return 'bg-amber-400 shadow-md shadow-amber-400/40';
       case 'active':
-        return 'bg-brand-400 shadow-brand-400/50';
-      case 'sorted':
-        return 'bg-steel-400 shadow-steel-400/50';
-      case 'visited':
-        return 'bg-slate-500 shadow-slate-500/30';
+        // "In the forge" — blazing forge flame (most vivid)
+      case 'secondary':
+        return 'bg-brand-500 shadow-lg shadow-brand-500/50';
       case 'pivot':
-        return 'bg-amber-300 shadow-amber-300/60';
+        return 'bg-amber-300 shadow-md shadow-amber-300/50';
+      case 'sorted':
+        // "Tempered" — cooled blue-steel
+        return 'bg-steel-400 shadow-md shadow-steel-400/40';
+      case 'visited':
+        return 'bg-steel-500 shadow-sm shadow-steel-500/20';
       case 'danger':
-        return 'bg-rose-400 shadow-rose-400/50';
+        // "Overheated" — deep desaturated red
+        return 'bg-red-500 shadow-md shadow-red-500/40';
       default:
-        return 'bg-slate-700 hover:bg-slate-600';
+        // "Unforged" — cool muted grey unworked iron
+        return 'bg-[#333842] hover:bg-[#3f444e]';
     }
   };
 

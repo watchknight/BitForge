@@ -34,17 +34,23 @@ export const LinkedListRenderer: React.FC<LinkedListRendererProps> = ({
   const getNodeClasses = (role?: HighlightRole) => {
     switch (role) {
       case 'active':
-        return 'bg-brand-500/20 border-brand-400 text-brand-200 ring-2 ring-brand-400/40 shadow-lg shadow-brand-500/20';
+        // "In the forge" — actively modified/transferred node
+        return 'bg-brand-500/25 border-brand-500 text-brand-100 ring-2 ring-brand-400/50 shadow-lg shadow-brand-500/25';
       case 'comparing':
-        return 'bg-amber-500/20 border-amber-400 text-amber-200 ring-2 ring-amber-400/40 shadow-lg shadow-amber-500/20';
+        // "In the forge" — comparing/evaluating pointer
+        return 'bg-amber-500/25 border-amber-400 text-amber-200 ring-2 ring-amber-400/50 shadow-lg shadow-amber-500/20';
       case 'sorted':
+        // "Tempered" — confirmed correctly linked/ordered node
         return 'bg-steel-500/20 border-steel-400 text-steel-200 ring-1 ring-steel-400/40';
-      case 'danger':
-        return 'bg-rose-500/20 border-rose-400 text-rose-200 ring-2 ring-rose-400/40';
       case 'visited':
-        return 'bg-obsidian-800 border-slate-600 text-slate-300 ring-1 ring-slate-500/30';
+        // "Tempered" — traversed node
+        return 'bg-steel-950/50 border-steel-500/40 text-steel-200 ring-1 ring-steel-500/30';
+      case 'danger':
+        // "Overheated" — deleted node or cycle violation
+        return 'bg-red-950/40 border-red-500/60 text-red-300 ring-2 ring-red-500/40';
       default:
-        return 'bg-obsidian-900 border-slate-800 text-slate-100 hover:border-slate-700';
+        // "Unforged" — raw unvisited node
+        return 'bg-[#1a1c22] border-[#3d434f] text-slate-100 hover:border-slate-500';
     }
   };
 

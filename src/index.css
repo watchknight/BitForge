@@ -25,6 +25,35 @@
   --forge-ember-400: #fb923c;
   --forge-gold-400: #f59e0b;
   --forge-steel-400: #38bdf8;
+
+  /* Step 2 Semantic Accent System: "The Forge" Simulation Engine Tokens */
+  /* 1. Unforged (default / not yet visited): cool muted grey */
+  --forge-unforged-fill: #333842;
+  --forge-unforged-subtle: #1a1c22;
+  --forge-unforged-border: #3d434f;
+  --forge-unforged-text: #94a3b8;
+  --forge-unforged-text-bright: #cbd5e1;
+
+  /* 2. In the forge (active / comparing / processing): glowing amber/orange */
+  --forge-heat-active: #f97316;
+  --forge-heat-compare: #f59e0b;
+  --forge-heat-text: #ffedd5;
+  --forge-heat-glow: rgba(249, 115, 22, 0.45);
+  --forge-heat-bg: rgba(249, 115, 22, 0.16);
+
+  /* 3. Tempered (done / confirmed / sorted): cooled blue-steel / soft silver-blue */
+  --forge-tempered-sheen: #38bdf8;
+  --forge-tempered-deep: #0284c7;
+  --forge-tempered-border: #0ea5e9;
+  --forge-tempered-text: #bae6fd;
+  --forge-tempered-muted: #7dd3fc;
+  --forge-tempered-bg: rgba(56, 189, 248, 0.14);
+
+  /* 4. Mistake / Error state: deep slightly desaturated red (overheated metal) */
+  --forge-overheated-border: #c53030;
+  --forge-overheated-text: #fca5a5;
+  --forge-overheated-bg: rgba(185, 28, 28, 0.18);
+  --forge-overheated-dark: #241010;
 }
 
 @layer base {

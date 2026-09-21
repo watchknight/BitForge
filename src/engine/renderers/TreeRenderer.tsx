@@ -93,17 +93,23 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
   const getNodeFill = (role?: HighlightRole) => {
     switch (role) {
       case 'active':
-        return '#f97316'; // blazing forge heat
+        // "In the forge" — blazing forge flame (single most vivid color)
+        return '#f97316';
       case 'comparing':
-        return '#f59e0b'; // molten gold
+        // "In the forge" — molten crucible gold
+        return '#f59e0b';
       case 'sorted':
-        return '#38bdf8'; // tempered cool blue-steel
+        // "Tempered" — confirmed sorted/balanced
+        return '#38bdf8';
       case 'visited':
-        return '#3f3f46'; // worked warm cast iron
+        // "Tempered" — traversed node
+        return '#0284c7';
       case 'danger':
-        return '#ef4444'; // slag warning
+        // "Overheated" — violation / backtracked node
+        return '#c53030';
       default:
-        return '#141416'; // unworked cast iron
+        // "Unforged" — raw unworked iron
+        return '#1a1c22';
     }
   };
 
@@ -116,9 +122,12 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
       case 'sorted':
         return '#7dd3fc';
       case 'visited':
-        return '#79736a';
+        return '#38bdf8';
+      case 'danger':
+        return '#fca5a5';
       default:
-        return '#2e2e33';
+        // "Unforged" — cool muted border
+        return '#3d434f';
     }
   };
 

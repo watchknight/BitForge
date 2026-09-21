@@ -99,15 +99,52 @@ export default {
           950: '#082f49',
         },
 
+        // Step 2 Semantic Accent System: "The Forge" Simulation Engine States
+        forge: {
+          // 1. "Unforged" (default / not yet visited): cool muted grey
+          unforged: {
+            DEFAULT: '#333842', // unworked iron bar / node fill
+            subtle: '#1a1c22',  // unvisited card/surface fill
+            border: '#3d434f',  // unworked outline
+            text: '#94a3b8',    // cool muted grey text (7.62:1 AAA against base)
+            bright: '#cbd5e1',  // light cool iron label (13.16:1 AAA against base)
+          },
+          // 2. "In the forge" (active / comparing / processing): glowing amber/orange (most vivid)
+          heat: {
+            active: '#f97316',    // blazing forge heat (single most vivid color, 6.97:1 AA)
+            compare: '#f59e0b',   // molten crucible gold (9.10:1 AAA)
+            text: '#ffedd5',      // incandescent heat text (17.05:1 AAA)
+            glow: 'rgba(249, 115, 22, 0.45)',
+            bg: 'rgba(249, 115, 22, 0.16)',
+          },
+          // 3. "Tempered" (done / confirmed / sorted): cooled blue-steel (distinct from grey)
+          tempered: {
+            sheen: '#38bdf8',     // cooled blue-steel oxide sheen (9.12:1 AAA)
+            deep: '#0284c7',      // deep quenched steel
+            border: '#0ea5e9',    // quenched border
+            text: '#bae6fd',      // soft silver-ice text (14.73:1 AAA)
+            muted: '#7dd3fc',     // cool blue-steel secondary text
+            bg: 'rgba(56, 189, 248, 0.14)',
+          },
+          // 4. Mistake / error state (Overheated metal): deep, slightly desaturated red
+          overheated: {
+            border: '#c53030',    // deep desaturated red outline
+            text: '#fca5a5',      // overheated warning text (10.30:1 AAA)
+            bg: 'rgba(185, 28, 28, 0.18)', // overheated tint
+            dark: '#241010',
+          }
+        },
+
         // Semantic algorithm roles:
         algo: {
-          active: '#f97316',    // heated / transforming iron (blazing orange)
-          compare: '#f59e0b',   // molten crucible gold (amber)
-          sorted: '#38bdf8',    // tempered cool blue-steel (finished/quenched)
-          visited: '#79736a',   // worked warm graphite marker
-          danger: '#ef4444',    // slag / critical heat warning
-          neutral: '#58524a',   // raw unworked cast iron
-          secondary: '#fb923c', // secondary heat marker
+          unforged: '#333842',  // cool muted raw iron
+          active: '#f97316',    // "In the forge" — blazing orange
+          compare: '#f59e0b',   // "In the forge" — molten crucible gold
+          sorted: '#38bdf8',    // "Tempered" — cooled blue-steel
+          visited: '#38bdf8',   // "Tempered" — visited marker
+          danger: '#c53030',    // "Overheated" — mistake/error state
+          neutral: '#333842',   // "Unforged" — default raw iron
+          secondary: '#fb923c', // "In the forge" — secondary heat marker
         }
       },
       fontFamily: {

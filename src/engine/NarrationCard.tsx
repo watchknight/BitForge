@@ -14,19 +14,24 @@ export const NarrationCard: React.FC<NarrationCardProps> = ({ step }) => {
   // Semantic color for the action badge
   const getBadgeStyle = (act: string) => {
     const lower = act.toLowerCase();
+    // "In the forge" — comparing / checking (molten gold)
     if (lower.includes('compare') || lower.includes('check')) {
-      return 'bg-amber-950/70 text-amber-300 border-amber-500/40';
+      return 'bg-amber-950/80 text-amber-200 border-amber-500/50 shadow-sm shadow-amber-500/10';
     }
-    if (lower.includes('swap') || lower.includes('merge') || lower.includes('insert') || lower.includes('write')) {
-      return 'bg-brand-950/70 text-brand-300 border-brand-500/40';
+    // "In the forge" — active modification / heat (blazing flame)
+    if (lower.includes('swap') || lower.includes('merge') || lower.includes('insert') || lower.includes('write') || lower.includes('active')) {
+      return 'bg-brand-950/80 text-brand-200 border-brand-500/50 shadow-sm shadow-brand-500/10';
     }
-    if (lower.includes('sorted') || lower.includes('found') || lower.includes('complete') || lower.includes('finish')) {
-      return 'bg-steel-950/80 text-steel-200 border-steel-500/40';
+    // "Tempered" — finished / sorted / quenched (blue-steel)
+    if (lower.includes('sorted') || lower.includes('found') || lower.includes('complete') || lower.includes('finish') || lower.includes('quenched')) {
+      return 'bg-steel-950/80 text-steel-200 border-steel-500/50 shadow-sm shadow-steel-500/10';
     }
-    if (lower.includes('delete') || lower.includes('danger') || lower.includes('unwind')) {
-      return 'bg-rose-950/70 text-rose-300 border-rose-500/40';
+    // "Overheated" — mistake / danger / error (desaturated red)
+    if (lower.includes('delete') || lower.includes('danger') || lower.includes('unwind') || lower.includes('error') || lower.includes('conflict')) {
+      return 'bg-red-950/80 text-red-200 border-red-500/50 shadow-sm shadow-red-500/10';
     }
-    return 'bg-obsidian-800 text-slate-300 border-slate-700';
+    // "Unforged" — default raw state
+    return 'bg-[#1a1c22] text-slate-300 border-[#3d434f]';
   };
 
   return (

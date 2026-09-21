@@ -44,10 +44,10 @@ export const CallStackRenderer: React.FC<CallStackRendererProps> = ({
                   transition={{ duration: 0.2 }}
                   className={`p-2 rounded-lg border text-xs font-mono transition-all ${
                     isTop
-                      ? 'bg-brand-500/20 border-brand-500/50 text-brand-100 shadow-md shadow-brand-500/10'
+                      ? 'bg-brand-500/25 border-brand-500/60 text-brand-100 shadow-md shadow-brand-500/15'
                       : frame.status === 'returned'
-                      ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300'
-                      : 'bg-obsidian-900 border-slate-800 text-slate-400'
+                      ? 'bg-steel-950/60 border-steel-500/40 text-steel-200'
+                      : 'bg-obsidian-900 border-[#3d434f] text-slate-400'
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -76,7 +76,7 @@ export const CallStackRenderer: React.FC<CallStackRendererProps> = ({
 
                   {/* Return value if finished */}
                   {frame.returnValue !== undefined && (
-                    <div className="mt-1 text-[10px] text-emerald-400">
+                    <div className="mt-1 text-[10px] text-steel-300 font-semibold">
                       Returned: {frame.returnValue}
                     </div>
                   )}
