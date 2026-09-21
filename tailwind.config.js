@@ -17,145 +17,154 @@ export default {
         '10xl': '108rem', // 1728px (3xl)
       },
       colors: {
-        // Base / Neutrals: "The Forge" Metallurgy Foundations
-        // 1. Warm near-black (graphite/charcoal, NOT blue-black) for backgrounds
+        // Base / Neutrals: "The Forge" Metallurgy Foundations (Dynamic Theme Tokens)
         obsidian: {
-          950: '#0c0c0e', // deep warm graphite canvas base (replaces blue-black)
-          900: '#141416', // warm charcoal card surface
-          850: '#1a1a1d', // warm deep charcoal panel
-          800: '#222226', // warm charcoal interactive surface
-          700: '#2e2e33', // warm graphite divider
-          600: '#3f3f46', // muted cast iron
+          950: 'rgb(var(--color-obsidian-950) / <alpha-value>)',
+          900: 'rgb(var(--color-obsidian-900) / <alpha-value>)',
+          850: 'rgb(var(--color-obsidian-850) / <alpha-value>)',
+          800: 'rgb(var(--color-obsidian-800) / <alpha-value>)',
+          700: 'rgb(var(--color-obsidian-700) / <alpha-value>)',
+          600: 'rgb(var(--color-obsidian-600) / <alpha-value>)',
         },
         charcoal: {
-          950: '#0c0c0e',
-          900: '#141416',
-          850: '#1a1a1d',
-          800: '#222226',
-          700: '#2e2e33',
-          600: '#3f3f46',
+          950: 'rgb(var(--color-obsidian-950) / <alpha-value>)',
+          900: 'rgb(var(--color-obsidian-900) / <alpha-value>)',
+          850: 'rgb(var(--color-obsidian-850) / <alpha-value>)',
+          800: 'rgb(var(--color-obsidian-800) / <alpha-value>)',
+          700: 'rgb(var(--color-obsidian-700) / <alpha-value>)',
+          600: 'rgb(var(--color-obsidian-600) / <alpha-value>)',
         },
 
-        // 2. Warm off-white / bone for primary text (not pure white)
-        white: '#f5f2eb',     // replaces pure white (#ffffff) with warm off-white / bone
+        // Primary High-Contrast Text (Bone in Dark, Charcoal in Light)
+        white: 'rgb(var(--color-white) / <alpha-value>)',
         bone: {
-          DEFAULT: '#f5f2eb', // warm off-white / bone primary text
-          50: '#faf8f5',      // ivory highlight
-          100: '#f5f2eb',     // warm bone
-          200: '#ede8df',     // soft parchment
-          300: '#ded7cc',     // muted bone
-          400: '#cec7be',     // antique bone
+          DEFAULT: 'rgb(var(--color-bone) / <alpha-value>)',
+          50: 'rgb(var(--color-slate-50) / <alpha-value>)',
+          100: 'rgb(var(--color-slate-100) / <alpha-value>)',
+          200: 'rgb(var(--color-slate-200) / <alpha-value>)',
+          300: 'rgb(var(--color-slate-300) / <alpha-value>)',
+          400: 'rgb(var(--color-slate-400) / <alpha-value>)',
         },
 
-        // 3. Muted warm grey for secondary text and borders
+        // Muted Warm Grey Scale
         warmgrey: {
-          50: '#faf8f5',
-          100: '#f5f2eb', // warm bone
-          200: '#e6e1d8',
-          300: '#cec7be', // high-contrast secondary text
-          400: '#a39e95', // muted warm grey for secondary text
-          500: '#79736a', // muted warm grey for tertiary text / captions
-          600: '#585046', // dark warm grey for unworked outlines
-          700: '#443a32', // warm cast-iron border (prominent / hover)
-          800: '#2c2621', // warm soot-iron border (default card border)
-          850: '#201c18', // ultra-subtle warm divider
-          900: '#1a1816', // sunken warm grey surface
-          950: '#11100f', // deep warm soot
+          50: 'rgb(var(--color-slate-50) / <alpha-value>)',
+          100: 'rgb(var(--color-slate-100) / <alpha-value>)',
+          200: 'rgb(var(--color-slate-200) / <alpha-value>)',
+          300: 'rgb(var(--color-slate-300) / <alpha-value>)',
+          400: 'rgb(var(--color-slate-400) / <alpha-value>)',
+          500: 'rgb(var(--color-slate-500) / <alpha-value>)',
+          600: 'rgb(var(--color-slate-600) / <alpha-value>)',
+          700: 'rgb(var(--color-slate-700) / <alpha-value>)',
+          800: 'rgb(var(--color-slate-800) / <alpha-value>)',
+          850: 'rgb(var(--color-slate-850) / <alpha-value>)',
+          900: 'rgb(var(--color-slate-900) / <alpha-value>)',
+          950: 'rgb(var(--color-slate-950) / <alpha-value>)',
         },
 
-        // Map Tailwind's default slate scale to muted warm grey & bone
-        // so all existing text-slate-* and border-slate-* automatically shed their cold blue tint
+        // Slate scale mapped to dynamic custom properties
         slate: {
-          50: '#faf8f5',
-          100: '#f5f2eb', // warm off-white / bone (primary text)
-          200: '#e6e1d8',
-          300: '#cec7be',
-          400: '#a39e95', // muted warm grey (secondary text)
-          500: '#79736a', // tertiary text
-          600: '#585046',
-          700: '#443a32', // prominent warm cast-iron border
-          800: '#2c2621', // default warm card border
-          850: '#201c18',
-          900: '#1a1816',
-          950: '#11100f',
+          50: 'rgb(var(--color-slate-50) / <alpha-value>)',
+          100: 'rgb(var(--color-slate-100) / <alpha-value>)',
+          200: 'rgb(var(--color-slate-200) / <alpha-value>)',
+          300: 'rgb(var(--color-slate-300) / <alpha-value>)',
+          400: 'rgb(var(--color-slate-400) / <alpha-value>)',
+          500: 'rgb(var(--color-slate-500) / <alpha-value>)',
+          600: 'rgb(var(--color-slate-600) / <alpha-value>)',
+          700: 'rgb(var(--color-slate-700) / <alpha-value>)',
+          800: 'rgb(var(--color-slate-800) / <alpha-value>)',
+          850: 'rgb(var(--color-slate-850) / <alpha-value>)',
+          900: 'rgb(var(--color-slate-900) / <alpha-value>)',
+          950: 'rgb(var(--color-slate-950) / <alpha-value>)',
         },
 
         // "The Forge" — Heated Metal & Furnace Flame Palette
         brand: {
-          50: '#fff7ed',  // glowing white heat
-          100: '#ffedd5', // incandescent warmth
-          200: '#fed7aa', // furnace radiance
-          300: '#fdba74', // molten gold
-          400: '#fb923c', // glowing forge amber
-          500: '#f97316', // blazing forge heat (Primary CTA)
-          600: '#ea580c', // deep glowing ember
-          700: '#c2410c', // hearth red
-          800: '#9a3412', // furnace brick
-          900: '#7c2d12', // molten core dark
-          950: '#431407', // soot and dark ember base
+          50: '#fff7ed',
+          100: '#ffedd5',
+          200: '#fed7aa',
+          300: 'rgb(var(--color-brand-300) / <alpha-value>)',
+          400: 'rgb(var(--color-brand-400) / <alpha-value>)',
+          500: 'rgb(var(--color-brand-500) / <alpha-value>)',
+          600: 'rgb(var(--color-brand-600) / <alpha-value>)',
+          700: '#c2410c',
+          800: '#9a3412',
+          900: '#7c2d12',
+          950: 'rgb(var(--color-brand-950) / <alpha-value>)',
         },
 
-        // "The Forge" — Tempered Cool Blue-Steel (Finished / Mastered / Quenched)
+        // "The Forge" — Tempered Cool Blue-Steel
         steel: {
           50: '#f0f9ff',
           100: '#e0f2fe',
           200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8', // tempered blue-steel sheen
-          500: '#0ea5e9', // quenched steel
-          600: '#0284c7', // deep tempered steel
+          300: 'rgb(var(--color-steel-300) / <alpha-value>)',
+          400: 'rgb(var(--color-steel-400) / <alpha-value>)',
+          500: 'rgb(var(--color-steel-500) / <alpha-value>)',
+          600: '#0284c7',
           700: '#0369a1',
           800: '#075985',
           900: '#0c4a6e',
-          950: '#082f49',
+          950: 'rgb(var(--color-steel-950) / <alpha-value>)',
         },
 
-        // Step 2 Semantic Accent System: "The Forge" Simulation Engine States
+        // Amber / Crucible Gold Palette
+        amber: {
+          50: '#fffbeb',
+          100: '#fef3c7',
+          200: '#fde68a',
+          300: 'rgb(var(--color-amber-300) / <alpha-value>)',
+          400: 'rgb(var(--color-amber-400) / <alpha-value>)',
+          500: 'rgb(var(--color-amber-500) / <alpha-value>)',
+          600: '#d97706',
+          700: '#b45309',
+          800: '#92400e',
+          900: '#78350f',
+          950: '#451a03',
+        },
+
+        // Semantic Accent System: "The Forge" Simulation Engine States
         forge: {
-          // 1. "Unforged" (default / not yet visited): cool muted grey
           unforged: {
-            DEFAULT: '#333842', // unworked iron bar / node fill
-            subtle: '#1a1c22',  // unvisited card/surface fill
-            border: '#3d434f',  // unworked outline
-            text: '#94a3b8',    // cool muted grey text (7.62:1 AAA against base)
-            bright: '#cbd5e1',  // light cool iron label (13.16:1 AAA against base)
+            DEFAULT: 'var(--forge-unforged-fill)',
+            subtle: 'var(--forge-unforged-subtle)',
+            border: 'var(--forge-unforged-border)',
+            text: 'var(--forge-unforged-text)',
+            bright: 'var(--forge-unforged-text-bright)',
           },
-          // 2. "In the forge" (active / comparing / processing): glowing amber/orange (most vivid)
           heat: {
-            active: '#f97316',    // blazing forge heat (single most vivid color, 6.97:1 AA)
-            compare: '#f59e0b',   // molten crucible gold (9.10:1 AAA)
-            text: '#ffedd5',      // incandescent heat text (17.05:1 AAA)
-            glow: 'rgba(249, 115, 22, 0.45)',
-            bg: 'rgba(249, 115, 22, 0.16)',
+            active: 'var(--forge-heat-active)',
+            compare: 'var(--forge-heat-compare)',
+            text: 'var(--forge-heat-text)',
+            glow: 'var(--forge-heat-glow)',
+            bg: 'var(--forge-heat-bg)',
           },
-          // 3. "Tempered" (done / confirmed / sorted): cooled blue-steel (distinct from grey)
           tempered: {
-            sheen: '#38bdf8',     // cooled blue-steel oxide sheen (9.12:1 AAA)
-            deep: '#0284c7',      // deep quenched steel
-            border: '#0ea5e9',    // quenched border
-            text: '#bae6fd',      // soft silver-ice text (14.73:1 AAA)
-            muted: '#7dd3fc',     // cool blue-steel secondary text
-            bg: 'rgba(56, 189, 248, 0.14)',
+            sheen: 'var(--forge-tempered-sheen)',
+            deep: 'var(--forge-tempered-deep)',
+            border: 'var(--forge-tempered-border)',
+            text: 'var(--forge-tempered-text)',
+            muted: 'var(--forge-tempered-muted)',
+            bg: 'var(--forge-tempered-bg)',
           },
-          // 4. Mistake / error state (Overheated metal): deep, slightly desaturated red
           overheated: {
-            border: '#c53030',    // deep desaturated red outline
-            text: '#fca5a5',      // overheated warning text (10.30:1 AAA)
-            bg: 'rgba(185, 28, 28, 0.18)', // overheated tint
-            dark: '#241010',
+            border: 'var(--forge-overheated-border)',
+            text: 'var(--forge-overheated-text)',
+            bg: 'var(--forge-overheated-bg)',
+            dark: 'var(--forge-overheated-dark)',
           }
         },
 
-        // Semantic algorithm roles:
+        // Semantic algorithm roles
         algo: {
-          unforged: '#333842',  // cool muted raw iron
-          active: '#f97316',    // "In the forge" — blazing orange
-          compare: '#f59e0b',   // "In the forge" — molten crucible gold
-          sorted: '#38bdf8',    // "Tempered" — cooled blue-steel
-          visited: '#38bdf8',   // "Tempered" — visited marker
-          danger: '#c53030',    // "Overheated" — mistake/error state
-          neutral: '#333842',   // "Unforged" — default raw iron
-          secondary: '#fb923c', // "In the forge" — secondary heat marker
+          unforged: 'var(--forge-unforged-fill)',
+          active: 'var(--forge-heat-active)',
+          compare: 'var(--forge-heat-compare)',
+          sorted: 'var(--forge-tempered-sheen)',
+          visited: 'var(--forge-tempered-deep)',
+          danger: 'var(--forge-overheated-border)',
+          neutral: 'var(--forge-unforged-fill)',
+          secondary: 'var(--forge-heat-active)',
         }
       },
       fontFamily: {

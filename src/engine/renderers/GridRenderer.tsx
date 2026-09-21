@@ -1,6 +1,7 @@
 import React from 'react';
 import { HighlightRole } from '../../types/simulation';
 import { motion } from 'framer-motion';
+import { useTheme } from '../../context/ThemeContext';
 
 export interface GridCell {
   row: number;
@@ -27,6 +28,9 @@ export const GridRenderer: React.FC<GridRendererProps> = ({
   formula,
   activeCell,
 }) => {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
+
   // Normalize to 2D array
   const is2D = Array.isArray(cells[0]);
   const matrix: (number | string | null)[][] = is2D
@@ -41,22 +45,34 @@ export const GridRenderer: React.FC<GridRendererProps> = ({
     switch (role) {
       case 'active':
         // "In the forge" — actively computed DP cell
-        return 'bg-brand-500/25 border-brand-500 text-brand-100 ring-2 ring-brand-400/50 shadow-lg shadow-brand-500/25 scale-105 font-bold';
+        return isLight
+          ? 'bg-brand-500/20 border-brand-600 text-brand-900 ring-2 ring-brand-500/50 shadow-md shadow-brand-500/20 scale-105 font-bold'
+          : 'bg-brand-500/25 border-brand-500 text-brand-100 ring-2 ring-brand-400/50 shadow-lg shadow-brand-500/25 scale-105 font-bold';
       case 'comparing':
         // "In the forge" — dependency/lookup cell
-        return 'bg-amber-500/25 border-amber-400 text-amber-200 ring-2 ring-amber-400/50 shadow-lg shadow-amber-500/20 font-bold';
+        return isLight
+          ? 'bg-amber-500/20 border-amber-600 text-amber-900 ring-2 ring-amber-500/50 shadow-md shadow-amber-500/20 font-bold'
+          : 'bg-amber-500/25 border-amber-400 text-amber-200 ring-2 ring-amber-400/50 shadow-lg shadow-amber-500/20 font-bold';
       case 'sorted':
         // "Tempered" — computed finished value
-        return 'bg-steel-500/20 border-steel-400 text-steel-200 ring-1 ring-steel-500/40 font-semibold';
+        return isLight
+          ? 'bg-steel-500/20 border-steel-600 text-steel-900 ring-1 ring-steel-500/40 font-semibold'
+          : 'bg-steel-500/20 border-steel-400 text-steel-200 ring-1 ring-steel-500/40 font-semibold';
       case 'visited':
         // "Tempered" — previously memoized cell
-        return 'bg-steel-950/50 border-steel-500/40 text-steel-200 font-semibold';
+        return isLight
+          ? 'bg-steel-500/10 border-steel-400 text-steel-800 font-semibold'
+          : 'bg-steel-950/50 border-steel-500/40 text-steel-200 font-semibold';
       case 'danger':
         // "Overheated" — invalid/infeasible state
-        return 'bg-red-950/40 border-red-500/60 text-red-300 ring-2 ring-red-500/30';
+        return isLight
+          ? 'bg-red-500/15 border-red-600 text-red-800 ring-2 ring-red-500/40'
+          : 'bg-red-950/40 border-red-500/60 text-red-300 ring-2 ring-red-500/30';
       default:
         // "Unforged" — uncomputed raw cell
-        return 'bg-[#1a1c22] border-[#3d434f] text-slate-300 hover:border-slate-500';
+        return isLight
+          ? 'bg-[#ede7dc] border-[#cbbfad] text-slate-800 hover:border-slate-400'
+          : 'bg-[#1a1c22] border-[#3d434f] text-slate-300 hover:border-slate-500';
     }
   };
 
@@ -64,9 +80,9 @@ export const GridRenderer: React.FC<GridRendererProps> = ({
     <div className="w-full flex flex-col items-center justify-center p-4 md:p-6 select-none">
       {/* Recurrence / Calculation preview */}
       {formula && (
-        <div className="mb-4 px-4 py-1.5 rounded-lg bg-obsidian-950 border border-brand-500/30 text-xs font-mono text-brand-300 flex items-center gap-2 shadow-sm">
+        <div className="mb-4 px-4 py-1.5 rounded-lg bg-obsidian-950 border border-brand-500/30 text-xs font-mono flex items-center gap-2 shadow-sm">
           <span className="text-slate-400 font-sans">Active Calculation:</span>
-          <span className="font-bold text-slate-100">{formula}</span>
+          <span className={`font-bold ${isLight ? 'text-brand-800' : 'text-brand-300'}`}>{formula}</span>
         </div>
       )}
 

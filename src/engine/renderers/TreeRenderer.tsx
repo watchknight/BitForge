@@ -2,6 +2,7 @@ import React from 'react';
 import { HighlightRole } from '../../types/simulation';
 import { motion } from 'framer-motion';
 import { SimulationViewport } from './SimulationViewport';
+import { useTheme } from '../../context/ThemeContext';
 
 export interface TreeNode {
   id: string | number;
@@ -32,6 +33,8 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
   traversalList = [],
   pointers = {},
 }) => {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const WIDTH = 600;
   const HEIGHT = 280;
   const NODE_RADIUS = 20;
@@ -92,29 +95,57 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
   traverse(positionedRoot);
 
   const getNodeFill = (role?: HighlightRole) => {
+    if (isLight) {
+      switch (role) {
+        case 'active':
+          return '#c2410c'; // deep saturated burnt orange
+        case 'comparing':
+          return '#b45309'; // deep golden amber
+        case 'sorted':
+          return '#0369a1'; // deep steel-blue
+        case 'visited':
+          return '#075985'; // deep quenched steel
+        case 'danger':
+          return '#b91c1c'; // deep brick red
+        default:
+          return '#ede7dc'; // warm mid-grey / soft stone
+      }
+    }
+
     switch (role) {
       case 'active':
-        // "In the forge" — blazing forge flame (single most vivid color)
         return '#f97316';
       case 'comparing':
-        // "In the forge" — molten crucible gold
         return '#f59e0b';
       case 'sorted':
-        // "Tempered" — confirmed sorted/balanced
         return '#38bdf8';
       case 'visited':
-        // "Tempered" — traversed node
         return '#0284c7';
       case 'danger':
-        // "Overheated" — violation / backtracked node
         return '#c53030';
       default:
-        // "Unforged" — raw unworked iron
         return '#1a1c22';
     }
   };
 
   const getNodeStroke = (role?: HighlightRole) => {
+    if (isLight) {
+      switch (role) {
+        case 'active':
+          return '#9a3412';
+        case 'comparing':
+          return '#92400e';
+        case 'sorted':
+          return '#075985';
+        case 'visited':
+          return '#0c4a6e';
+        case 'danger':
+          return '#991b1b';
+        default:
+          return '#cbbfad';
+      }
+    }
+
     switch (role) {
       case 'active':
         return '#fb923c';
@@ -127,21 +158,21 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
       case 'danger':
         return '#fca5a5';
       default:
-        // "Unforged" — cool muted border
         return '#3d434f';
     }
   };
 
   const getNodeTextColor = (role?: HighlightRole) => {
-    // On solid glowing forge heat/amber, use deep obsidian dark for WCAG AAA 7.2:1 - 9.6:1 contrast
-    if (role === 'active' || role === 'comparing') {
+    if (isLight) {
+      if (!role) {
+        return '#1c1917'; // warm dark charcoal on soft stone
+      }
+      return '#ffffff';   // crisp white on deep saturated fills
+    }
+
+    if (role === 'active' || role === 'comparing' || role === 'sorted') {
       return '#0c0c0e';
     }
-    // On tempered blue-steel, dark obsidian gives 7.5:1 contrast
-    if (role === 'sorted') {
-      return '#0c0c0e';
-    }
-    // On dark unworked iron or deep quenched visited nodes, use warm bone
     return '#f5f2eb';
   };
 
@@ -172,7 +203,7 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
                 y1={l.y1}
                 x2={l.x2}
                 y2={l.y2}
-                stroke="#2e2e33"
+                stroke={isLight ? '#cbbfad' : '#2e2e33'}
                 strokeWidth="2.5"
                 strokeLinecap="round"
               />

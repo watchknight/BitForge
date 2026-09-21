@@ -2,6 +2,7 @@ import React from 'react';
 import { HighlightRole } from '../../types/simulation';
 import { ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '../../context/ThemeContext';
 
 export interface LLNode {
   id: string;
@@ -22,6 +23,9 @@ export const LinkedListRenderer: React.FC<LinkedListRendererProps> = ({
   highlights = {},
   pointers = {},
 }) => {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
+
   // Map node ID to list of pointers pointing to it
   const nodePointers: Record<string, string[]> = {};
   Object.entries(pointers).forEach(([name, targetId]) => {
@@ -35,22 +39,34 @@ export const LinkedListRenderer: React.FC<LinkedListRendererProps> = ({
     switch (role) {
       case 'active':
         // "In the forge" — actively modified/transferred node
-        return 'bg-brand-500/25 border-brand-500 text-brand-100 ring-2 ring-brand-400/50 shadow-lg shadow-brand-500/25';
+        return isLight
+          ? 'bg-brand-500/20 border-brand-600 text-brand-900 ring-2 ring-brand-500/50 shadow-md shadow-brand-500/20 font-bold'
+          : 'bg-brand-500/25 border-brand-500 text-brand-100 ring-2 ring-brand-400/50 shadow-lg shadow-brand-500/25';
       case 'comparing':
         // "In the forge" — comparing/evaluating pointer
-        return 'bg-amber-500/25 border-amber-400 text-amber-200 ring-2 ring-amber-400/50 shadow-lg shadow-amber-500/20';
+        return isLight
+          ? 'bg-amber-500/20 border-amber-600 text-amber-900 ring-2 ring-amber-500/50 shadow-md shadow-amber-500/20 font-bold'
+          : 'bg-amber-500/25 border-amber-400 text-amber-200 ring-2 ring-amber-400/50 shadow-lg shadow-amber-500/20';
       case 'sorted':
         // "Tempered" — confirmed correctly linked/ordered node
-        return 'bg-steel-500/20 border-steel-400 text-steel-200 ring-1 ring-steel-400/40';
+        return isLight
+          ? 'bg-steel-500/20 border-steel-600 text-steel-900 ring-1 ring-steel-500/40 font-semibold'
+          : 'bg-steel-500/20 border-steel-400 text-steel-200 ring-1 ring-steel-400/40';
       case 'visited':
         // "Tempered" — traversed node
-        return 'bg-steel-950/50 border-steel-500/40 text-steel-200 ring-1 ring-steel-500/30';
+        return isLight
+          ? 'bg-steel-500/10 border-steel-400 text-steel-800 ring-1 ring-steel-500/30 font-semibold'
+          : 'bg-steel-950/50 border-steel-500/40 text-steel-200 ring-1 ring-steel-500/30';
       case 'danger':
         // "Overheated" — deleted node or cycle violation
-        return 'bg-red-950/40 border-red-500/60 text-red-300 ring-2 ring-red-500/40';
+        return isLight
+          ? 'bg-red-500/15 border-red-600 text-red-800 ring-2 ring-red-500/40'
+          : 'bg-red-950/40 border-red-500/60 text-red-300 ring-2 ring-red-500/40';
       default:
         // "Unforged" — raw unvisited node
-        return 'bg-[#1a1c22] border-[#3d434f] text-slate-100 hover:border-slate-500';
+        return isLight
+          ? 'bg-[#ede7dc] border-[#cbbfad] text-slate-800 hover:border-slate-400'
+          : 'bg-[#1a1c22] border-[#3d434f] text-slate-100 hover:border-slate-500';
     }
   };
 

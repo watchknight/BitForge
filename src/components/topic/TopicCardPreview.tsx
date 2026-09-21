@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useAccessibility } from '../../context/AccessibilityContext';
+import { useTheme } from '../../context/ThemeContext';
 
 interface TopicCardPreviewProps {
   type: 'array' | 'linked-list' | 'tree' | 'graph' | 'grid' | string;
@@ -9,6 +10,8 @@ interface TopicCardPreviewProps {
 
 export const TopicCardPreview: React.FC<TopicCardPreviewProps> = ({ type, isHovered }) => {
   const { reducedMotion } = useAccessibility();
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
 
   // If reduced motion is preferred, show a crisp static icon/layout without animation
   if (reducedMotion) {
@@ -62,7 +65,7 @@ export const TopicCardPreview: React.FC<TopicCardPreviewProps> = ({ type, isHove
               <motion.div
                 animate={isHovered ? {
                   scale: [1, 1.2, 1],
-                  borderColor: ['#2e2e33', '#fb923c', '#2e2e33'],
+                  borderColor: isLight ? ['#cbbfad', '#c2410c', '#cbbfad'] : ['#2e2e33', '#fb923c', '#2e2e33'],
                 } : { scale: 1 }}
                 transition={{ duration: 1, repeat: Infinity, delay: i * 0.25 }}
                 className="w-3.5 h-3.5 rounded-md bg-obsidian-900 border border-slate-700 flex items-center justify-center text-[8px] font-mono text-slate-300"
@@ -84,14 +87,14 @@ export const TopicCardPreview: React.FC<TopicCardPreviewProps> = ({ type, isHove
       {/* 3. Tree micro-branches */}
       {type === 'tree' && (
         <svg className="w-20 h-7" viewBox="0 0 80 28">
-          <line x1="40" y1="4" x2="20" y2="20" stroke="#2e2e33" strokeWidth="1" />
-          <line x1="40" y1="4" x2="60" y2="20" stroke="#2e2e33" strokeWidth="1" />
+          <line x1="40" y1="4" x2="20" y2="20" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="1" />
+          <line x1="40" y1="4" x2="60" y2="20" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="1" />
           <motion.circle
             cx="40"
             cy="6"
             r={4}
-            fill="#9a3412"
-            stroke="#fb923c"
+            fill={isLight ? '#c2410c' : '#9a3412'}
+            stroke={isLight ? '#9a3412' : '#fb923c'}
             strokeWidth="1"
             animate={isHovered ? { scale: [1, 1.3, 1] } : { scale: 1 }}
             style={{ transformOrigin: '40px 6px' }}
@@ -101,8 +104,8 @@ export const TopicCardPreview: React.FC<TopicCardPreviewProps> = ({ type, isHove
             cx="20"
             cy="20"
             r={3.5}
-            fill="#141416"
-            stroke="#f97316"
+            fill={isLight ? '#ede7dc' : '#141416'}
+            stroke={isLight ? '#c2410c' : '#f97316'}
             strokeWidth="1"
             animate={isHovered ? { scale: [1, 1.3, 1] } : { scale: 1 }}
             style={{ transformOrigin: '20px 20px' }}
@@ -112,8 +115,8 @@ export const TopicCardPreview: React.FC<TopicCardPreviewProps> = ({ type, isHove
             cx="60"
             cy="20"
             r={3.5}
-            fill="#141416"
-            stroke="#38bdf8"
+            fill={isLight ? '#ede7dc' : '#141416'}
+            stroke={isLight ? '#0369a1' : '#38bdf8'}
             strokeWidth="1"
             animate={isHovered ? { scale: [1, 1.3, 1] } : { scale: 1 }}
             style={{ transformOrigin: '60px 20px' }}
@@ -125,16 +128,16 @@ export const TopicCardPreview: React.FC<TopicCardPreviewProps> = ({ type, isHove
       {/* 4. Graph micro-network */}
       {type === 'graph' && (
         <svg className="w-20 h-7" viewBox="0 0 80 28">
-          <line x1="15" y1="14" x2="40" y2="6" stroke="#2e2e33" strokeWidth="1" />
-          <line x1="40" y1="6" x2="65" y2="14" stroke="#2e2e33" strokeWidth="1" />
-          <line x1="15" y1="14" x2="40" y2="22" stroke="#2e2e33" strokeWidth="1" />
-          <line x1="40" y1="22" x2="65" y2="14" stroke="#2e2e33" strokeWidth="1" />
+          <line x1="15" y1="14" x2="40" y2="6" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="1" />
+          <line x1="40" y1="6" x2="65" y2="14" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="1" />
+          <line x1="15" y1="14" x2="40" y2="22" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="1" />
+          <line x1="40" y1="22" x2="65" y2="14" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="1" />
           <motion.circle
             cx="15"
             cy="14"
             r={3.5}
-            fill="#9a3412"
-            stroke="#fb923c"
+            fill={isLight ? '#c2410c' : '#9a3412'}
+            stroke={isLight ? '#9a3412' : '#fb923c'}
             animate={isHovered ? { scale: [1, 1.3, 1] } : { scale: 1 }}
             style={{ transformOrigin: '15px 14px' }}
             transition={{ duration: 1, repeat: Infinity }}
@@ -143,8 +146,8 @@ export const TopicCardPreview: React.FC<TopicCardPreviewProps> = ({ type, isHove
             cx="40"
             cy="6"
             r={3.5}
-            fill="#141416"
-            stroke="#f97316"
+            fill={isLight ? '#ede7dc' : '#141416'}
+            stroke={isLight ? '#c2410c' : '#f97316'}
             animate={isHovered ? { scale: [1, 1.3, 1] } : { scale: 1 }}
             style={{ transformOrigin: '40px 6px' }}
             transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
@@ -153,8 +156,8 @@ export const TopicCardPreview: React.FC<TopicCardPreviewProps> = ({ type, isHove
             cx="40"
             cy="22"
             r={3.5}
-            fill="#141416"
-            stroke="#58524a"
+            fill={isLight ? '#ede7dc' : '#141416'}
+            stroke={isLight ? '#78716c' : '#58524a'}
             animate={isHovered ? { scale: [1, 1.3, 1] } : { scale: 1 }}
             style={{ transformOrigin: '40px 22px' }}
             transition={{ duration: 1, repeat: Infinity, delay: 0.4 }}
@@ -163,8 +166,8 @@ export const TopicCardPreview: React.FC<TopicCardPreviewProps> = ({ type, isHove
             cx="65"
             cy="14"
             r={3.5}
-            fill="#075985"
-            stroke="#38bdf8"
+            fill={isLight ? '#0369a1' : '#075985'}
+            stroke={isLight ? '#075985' : '#38bdf8'}
             animate={isHovered ? { scale: [1, 1.3, 1] } : { scale: 1 }}
             style={{ transformOrigin: '65px 14px' }}
             transition={{ duration: 1, repeat: Infinity, delay: 0.6 }}
@@ -179,8 +182,8 @@ export const TopicCardPreview: React.FC<TopicCardPreviewProps> = ({ type, isHove
             <motion.div
               key={i}
               animate={isHovered ? {
-                backgroundColor: ['#141416', '#c2410c', '#141416'],
-                borderColor: ['#2e2e33', '#fb923c', '#2e2e33'],
+                backgroundColor: isLight ? ['#ffffff', '#c2410c', '#ffffff'] : ['#141416', '#c2410c', '#141416'],
+                borderColor: isLight ? ['#cbbfad', '#c2410c', '#cbbfad'] : ['#2e2e33', '#fb923c', '#2e2e33'],
               } : {}}
               transition={{ duration: 1.1, repeat: Infinity, delay: i * 0.18 }}
               className="w-4 h-4 rounded bg-obsidian-900 border border-slate-700 flex items-center justify-center text-[8px] font-mono text-slate-300"

@@ -14,8 +14,11 @@ import {
   Trophy,
   GraduationCap,
   Eye,
-  EyeOff
+  EyeOff,
+  Sun,
+  Moon
 } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
 import { useProgress } from '../../context/ProgressContext';
 import { useAccessibility } from '../../context/AccessibilityContext';
 import { SoundEqualizerButton } from '../common/SoundEqualizerButton';
@@ -30,6 +33,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenSearch }) => {
   const { progress } = useProgress();
   const { reducedMotion, toggleReducedMotion } = useAccessibility();
+  const { theme, toggleTheme } = useTheme();
   const [topicsDropdownOpen, setTopicsDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -220,6 +224,20 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
             {reducedMotion ? <EyeOff className="w-4 h-4 text-amber-400" /> : <Eye className="w-4 h-4" />}
           </button>
 
+          {/* Theme Toggle Button (Sun / Moon) */}
+          <button
+            onClick={toggleTheme}
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-xl bg-obsidian-900 border border-slate-800 text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-all group"
+            title={theme === 'dark' ? 'Switch to Light Mode ("The Forge in Daylight")' : 'Switch to Dark Mode ("Midnight Forge")'}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {theme === 'dark' ? (
+              <Sun className="w-4 h-4 text-amber-400 transition-transform duration-300 group-hover:rotate-45" />
+            ) : (
+              <Moon className="w-4 h-4 text-brand-400 transition-transform duration-300 group-hover:-rotate-12" />
+            )}
+          </button>
+
           {/* Search trigger on small mobile */}
           {onOpenSearch && (
             <button
@@ -298,6 +316,21 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
                 </kbd>
               </button>
             )}
+
+            {/* Mobile Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-xs font-mono bg-obsidian-950 border border-slate-800 flex items-center justify-between transition-colors hover:border-slate-700"
+              aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+            >
+              <span className="flex items-center gap-2 text-slate-200">
+                {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-brand-400" />}
+                <span>Theme: {theme === 'dark' ? 'Midnight Forge (Dark)' : 'Forge in Daylight (Light)'}</span>
+              </span>
+              <span className="text-[10px] uppercase font-bold text-brand-400 bg-brand-500/10 px-2 py-0.5 rounded-full border border-brand-500/20">
+                Toggle
+              </span>
+            </button>
 
             <button
               onClick={() => {

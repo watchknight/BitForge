@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Language } from '../types/topic';
 import { Code2, Check, Copy } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 interface SyncedCodePanelProps {
   snippets: Record<Language, string>;
@@ -11,6 +12,9 @@ export const SyncedCodePanel: React.FC<SyncedCodePanelProps> = ({
   snippets,
   activeLine,
 }) => {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
+
   const [activeLang, setActiveLang] = useState<Language>('python');
   const [copied, setCopied] = useState(false);
   const lineRefs = useRef<Record<number, HTMLDivElement | null>>({});
@@ -50,7 +54,9 @@ export const SyncedCodePanel: React.FC<SyncedCodePanelProps> = ({
               onClick={() => setActiveLang(lang.id)}
               className={`px-3 py-1.5 min-h-[38px] sm:min-h-[32px] text-xs font-medium rounded-lg text-center flex items-center justify-center transition-all ${
                 activeLang === lang.id
-                  ? 'bg-brand-500/20 text-brand-300 font-semibold border border-brand-500/30 shadow-sm'
+                  ? isLight
+                    ? 'bg-brand-500/15 text-brand-800 font-semibold border border-brand-500/30 shadow-sm'
+                    : 'bg-brand-500/20 text-brand-300 font-semibold border border-brand-500/30 shadow-sm'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
               }`}
             >
@@ -88,14 +94,24 @@ export const SyncedCodePanel: React.FC<SyncedCodePanelProps> = ({
                 ref={(el) => (lineRefs.current[lineNumber] = el)}
                 className={`flex items-center rounded transition-colors duration-150 px-2 py-0.5 group min-w-max ${
                   isActive
-                    ? 'bg-brand-500/20 border-l-2 border-brand-400 text-brand-100 font-medium'
+                    ? isLight
+                      ? 'bg-brand-500/15 border-l-2 border-brand-500 text-brand-900 font-semibold'
+                      : 'bg-brand-500/20 border-l-2 border-brand-400 text-brand-100 font-medium'
+                    : isLight
+                    ? 'hover:bg-slate-200/50 text-slate-800'
                     : 'hover:bg-slate-800/30 text-slate-300'
                 }`}
               >
                 {/* Line number */}
                 <span
                   className={`w-7 shrink-0 text-right pr-3 select-none text-[11px] font-mono ${
-                    isActive ? 'text-brand-400 font-bold' : 'text-slate-600 group-hover:text-slate-500'
+                    isActive
+                      ? isLight
+                        ? 'text-brand-700 font-bold'
+                        : 'text-brand-400 font-bold'
+                      : isLight
+                      ? 'text-slate-400 group-hover:text-slate-600'
+                      : 'text-slate-600 group-hover:text-slate-500'
                   }`}
                 >
                   {lineNumber}
@@ -108,7 +124,11 @@ export const SyncedCodePanel: React.FC<SyncedCodePanelProps> = ({
 
                 {/* Active pointer badge on right */}
                 {isActive && (
-                  <span className="ml-3 text-[10px] tracking-wider uppercase font-mono px-1.5 py-0.5 rounded bg-brand-400/20 text-brand-300 border border-brand-400/30 select-none animate-pulse">
+                  <span className={`ml-3 text-[10px] tracking-wider uppercase font-mono px-1.5 py-0.5 rounded border select-none animate-pulse ${
+                    isLight
+                      ? 'bg-brand-500/15 text-brand-800 border-brand-500/30'
+                      : 'bg-brand-400/20 text-brand-300 border-brand-400/30'
+                  }`}>
                     current
                   </span>
                 )}

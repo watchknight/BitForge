@@ -3,49 +3,62 @@
 @tailwind utilities;
 
 :root {
-  /* "The Forge" Step 2 — Base / Neutrals Design Tokens */
-  /* Warm near-black (graphite/charcoal, NOT blue-black) */
-  --forge-bg-base: #0c0c0e;
-  --forge-bg-surface: #141416;
-  --forge-bg-panel: #1a1a1d;
-  --forge-bg-card: #222226;
+  /* ========================================================= */
+  /* DARK MODE (Midnight Forge) — Base RGB Channels            */
+  /* ========================================================= */
+  --color-obsidian-950: 12 12 14;      /* #0c0c0e warm graphite canvas base */
+  --color-obsidian-900: 20 20 22;      /* #141416 card surface */
+  --color-obsidian-850: 26 26 29;      /* #1a1a1d panel surface */
+  --color-obsidian-800: 34 34 38;      /* #222226 interactive surface */
+  --color-obsidian-700: 46 46 51;      /* #2e2e33 divider */
+  --color-obsidian-600: 63 63 70;      /* #3f3f46 muted cast iron */
 
-  /* Warm off-white / bone for primary text (not pure white) */
-  --forge-text-primary: #f5f2eb;
-  --forge-text-ivory: #faf8f5;
+  /* Text & Slate Neutrals in Dark Mode */
+  --color-slate-50: 250 248 245;       /* #faf8f5 ivory */
+  --color-slate-100: 245 242 235;      /* #f5f2eb warm bone primary text */
+  --color-slate-200: 230 225 216;      /* #e6e1d8 */
+  --color-slate-300: 206 199 190;      /* #cec7be secondary text */
+  --color-slate-400: 163 158 149;      /* #a39e95 muted text */
+  --color-slate-500: 121 115 106;      /* #79736a tertiary text */
+  --color-slate-600: 88 80 70;         /* #585046 */
+  --color-slate-700: 68 58 50;         /* #443a32 cast iron border prominent */
+  --color-slate-800: 44 38 33;         /* #2c2621 default card border */
+  --color-slate-850: 32 28 24;         /* #201c18 subtle divider */
+  --color-slate-900: 26 24 22;         /* #1a1816 sunken surface */
+  --color-slate-950: 17 16 15;         /* #11100f deep soot */
 
-  /* Muted warm grey for secondary text and borders */
-  --forge-text-secondary: #a39e95;
-  --forge-text-muted: #79736a;
-  --forge-border-subtle: #2c2621;
-  --forge-border-prominent: #443a32;
-  --forge-border-card: #2c2621;
-  --forge-shadow-warm-sm: 0 1px 2px 0 rgba(14, 11, 9, 0.45);
-  --forge-shadow-warm-md: 0 4px 6px -1px rgba(12, 9, 7, 0.65), 0 0 16px -2px rgba(249, 115, 22, 0.04);
-  --forge-shadow-warm-lg: 0 10px 25px -5px rgba(10, 8, 6, 0.8), 0 0 24px -4px rgba(249, 115, 22, 0.05);
+  --color-white: 245 242 235;          /* #f5f2eb warm bone */
+  --color-bone: 245 242 235;
 
-  /* Forge Heat & Accent Reference Tokens */
-  --forge-flame-500: #f97316;
-  --forge-ember-400: #fb923c;
-  --forge-gold-400: #f59e0b;
-  --forge-steel-400: #38bdf8;
+  /* Forge Accents in Dark Mode */
+  --color-brand-300: 253 186 116;      /* #fdba74 molten gold */
+  --color-brand-400: 251 146 60;       /* #fb923c glowing forge amber */
+  --color-brand-500: 249 115 22;       /* #f97316 blazing forge flame */
+  --color-brand-600: 234 88 12;        /* #ea580c */
+  --color-brand-950: 67 20 7;          /* #431407 */
 
-  /* Step 2 Semantic Accent System: "The Forge" Simulation Engine Tokens */
-  /* 1. Unforged (default / not yet visited): cool muted grey */
+  --color-steel-300: 125 211 252;      /* #7dd3fc */
+  --color-steel-400: 56 189 248;       /* #38bdf8 tempered blue-steel */
+  --color-steel-500: 14 165 233;       /* #0ea5e9 quenched steel */
+  --color-steel-950: 8 47 73;          /* #082f49 */
+
+  --color-amber-300: 252 211 77;       /* #fcd34d */
+  --color-amber-400: 251 191 36;       /* #fbbf24 */
+  --color-amber-500: 245 158 11;       /* #f59e0b */
+
+  /* Semantic Simulation Engine Tokens */
   --forge-unforged-fill: #333842;
   --forge-unforged-subtle: #1a1c22;
   --forge-unforged-border: #3d434f;
   --forge-unforged-text: #94a3b8;
   --forge-unforged-text-bright: #cbd5e1;
 
-  /* 2. In the forge (active / comparing / processing): glowing amber/orange */
   --forge-heat-active: #f97316;
   --forge-heat-compare: #f59e0b;
   --forge-heat-text: #ffedd5;
   --forge-heat-glow: rgba(249, 115, 22, 0.45);
   --forge-heat-bg: rgba(249, 115, 22, 0.16);
 
-  /* 3. Tempered (done / confirmed / sorted): cooled blue-steel / soft silver-blue */
   --forge-tempered-sheen: #38bdf8;
   --forge-tempered-deep: #0284c7;
   --forge-tempered-border: #0ea5e9;
@@ -53,11 +66,80 @@
   --forge-tempered-muted: #7dd3fc;
   --forge-tempered-bg: rgba(56, 189, 248, 0.14);
 
-  /* 4. Mistake / Error state: deep slightly desaturated red (overheated metal) */
   --forge-overheated-border: #c53030;
   --forge-overheated-text: #fca5a5;
   --forge-overheated-bg: rgba(185, 28, 28, 0.18);
   --forge-overheated-dark: #241010;
+}
+
+html.light {
+  /* ========================================================= */
+  /* LIGHT MODE ("The Forge in Daylight") — Base RGB Channels  */
+  /* ========================================================= */
+  --color-obsidian-950: 248 245 238;   /* #f8f5ee warm cream base */
+  --color-obsidian-900: 255 255 255;   /* #ffffff warm crisp white card surface */
+  --color-obsidian-850: 243 238 228;   /* #f3eee4 soft warm stone panel */
+  --color-obsidian-800: 236 230 218;   /* #ece6da interactive surface / hover */
+  --color-obsidian-700: 224 216 203;   /* #e0d8cb soft divider */
+  --color-obsidian-600: 207 197 180;   /* #cfc5b4 */
+
+  /* Text & Neutrals in Light Mode: Warm Dark Charcoal (16.06:1 AAA) */
+  --color-slate-50: 28 25 23;          /* #1c1917 primary charcoal */
+  --color-slate-100: 28 25 23;         /* #1c1917 primary charcoal text (16.06:1 AAA) */
+  --color-slate-200: 44 40 37;         /* #2c2825 secondary deep charcoal (14.5:1 AAA) */
+  --color-slate-300: 68 62 55;         /* #443e37 high-contrast secondary (8.5:1 AAA) */
+  --color-slate-400: 87 83 78;         /* #57534e warm charcoal secondary (7.01:1 AAA) */
+  --color-slate-500: 111 104 96;       /* #6f6860 muted tertiary text (5.10:1 AA) */
+  --color-slate-600: 140 132 121;      /* #8c8479 soft text / outline (3.4:1 AA-UI) */
+  --color-slate-700: 185 174 158;      /* #b9ae9e prominent warm border */
+  --color-slate-800: 226 218 208;      /* #e2dad0 default warm card border */
+  --color-slate-850: 232 225 215;      /* #e8e1d7 subtle divider */
+  --color-slate-900: 243 238 228;      /* #f3eee4 sunken surface */
+  --color-slate-950: 248 245 238;      /* #f8f5ee cream canvas */
+
+  --color-white: 28 25 23;             /* text-white becomes warm dark charcoal #1c1917 */
+  --color-bone: 28 25 23;
+
+  /* Forge Accents in Light Mode: Saturated & Deep for High Contrast */
+  --color-brand-300: 194 65 12;        /* #c2410c deep saturated burnt orange (4.76:1 AA) */
+  --color-brand-400: 180 83 9;         /* #b45309 deep golden amber (4.61:1 AA) */
+  --color-brand-500: 194 65 12;        /* #c2410c blazing primary CTA */
+  --color-brand-600: 154 52 18;        /* #9a3412 hearth brick red */
+  --color-brand-950: 254 215 170;      /* #fed7aa warm pale peach pill background */
+
+  --color-steel-300: 7 89 133;         /* #075985 deep quenched steel (6.95:1 AA) */
+  --color-steel-400: 3 105 161;        /* #0369a1 deep steel-blue (5.45:1 AA) */
+  --color-steel-500: 2 132 199;        /* #0284c7 */
+  --color-steel-950: 224 242 254;      /* #e0f2fe pale sky pill background */
+
+  --color-amber-300: 180 83 9;         /* #b45309 deep golden amber (4.61:1 AA) */
+  --color-amber-400: 146 64 14;        /* #92400e (6.51:1 AA) */
+  --color-amber-500: 180 83 9;         /* #b45309 (4.61:1 AA) */
+
+  /* Semantic Simulation Engine Tokens in Light Mode */
+  --forge-unforged-fill: #78716c;      /* warm mid-grey */
+  --forge-unforged-subtle: #ede7dc;    /* soft stone */
+  --forge-unforged-border: #cbbfad;    /* stone border */
+  --forge-unforged-text: #57534e;      /* warm charcoal text */
+  --forge-unforged-text-bright: #1c1917;
+
+  --forge-heat-active: #c2410c;        /* deep saturated burnt orange */
+  --forge-heat-compare: #b45309;       /* deep golden amber */
+  --forge-heat-text: #ffffff;
+  --forge-heat-glow: rgba(194, 65, 12, 0.25);
+  --forge-heat-bg: rgba(194, 65, 12, 0.12);
+
+  --forge-tempered-sheen: #0369a1;     /* deep steel-blue */
+  --forge-tempered-deep: #075985;      /* quenched steel */
+  --forge-tempered-border: #0369a1;
+  --forge-tempered-text: #ffffff;
+  --forge-tempered-muted: #075985;
+  --forge-tempered-bg: rgba(3, 105, 161, 0.12);
+
+  --forge-overheated-border: #b91c1c;  /* deep brick red */
+  --forge-overheated-text: #991b1b;
+  --forge-overheated-bg: rgba(185, 28, 28, 0.12);
+  --forge-overheated-dark: #fef2f2;
 }
 
 @layer base {
@@ -69,7 +151,7 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Custom subtle scrollbar in warm graphite & charcoal */
+  /* Custom subtle scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -86,13 +168,29 @@
   }
 }
 
-/* Tactile film-grain noise texture — eliminates flat vector look without reducing legibility */
+/* Light mode scrollbar */
+html.light ::-webkit-scrollbar-track {
+  background: #f8f5ee;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: #dcd2c3;
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #c2410c;
+}
+
+/* Tactile film-grain noise texture — eliminates flat vector look */
 .forge-grain {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.038'/%3E%3C/svg%3E");
   background-repeat: repeat;
 }
 
-/* Atmospheric Ember & Rust Radial Glows */
+html.light .forge-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.022'/%3E%3C/svg%3E");
+  opacity: 0.45;
+}
+
+/* Atmospheric Ember & Rust Radial Glows in Dark Mode */
 .forge-glow-hero {
   background: radial-gradient(
     ellipse 60% 50% at 50% 28%,
@@ -120,7 +218,35 @@
   );
 }
 
-/* Glassmorphism card surfaces in warm graphite & bone */
+/* Atmospheric Soft Peach / Warm Cream Glows in Light Mode */
+html.light .forge-glow-hero {
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 28%,
+    rgba(254, 215, 170, 0.45) 0%,
+    rgba(253, 186, 116, 0.20) 40%,
+    rgba(248, 245, 238, 0) 75%
+  );
+}
+
+html.light .forge-glow-break {
+  background: radial-gradient(
+    ellipse 65% 50% at 50% 50%,
+    rgba(254, 215, 170, 0.40) 0%,
+    rgba(253, 186, 116, 0.15) 50%,
+    rgba(248, 245, 238, 0) 75%
+  );
+}
+
+html.light .forge-glow-content {
+  background: radial-gradient(
+    ellipse 80% 45% at 50% 15%,
+    rgba(254, 215, 170, 0.30) 0%,
+    rgba(253, 186, 116, 0.10) 45%,
+    rgba(248, 245, 238, 0) 75%
+  );
+}
+
+/* Glassmorphism card surfaces */
 .glass-panel {
   background: rgba(20, 20, 23, 0.82);
   backdrop-filter: blur(12px);
@@ -138,11 +264,29 @@
   box-shadow: 0 12px 36px rgba(10, 8, 6, 0.8), 0 0 20px rgba(249, 115, 22, 0.15);
 }
 
+html.light .glass-panel {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #e2dad0;
+  box-shadow: 0 8px 30px rgba(180, 160, 140, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
+}
+
+html.light .glass-panel-hover:hover {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(194, 65, 12, 0.4);
+  box-shadow: 0 12px 36px rgba(180, 160, 140, 0.18), 0 0 20px rgba(194, 65, 12, 0.12);
+}
+
 /* Dedicated warm-toned Forge card utility */
 .card-forge {
   background-color: #141417;
   border: 1px solid #2c2621;
   box-shadow: 0 10px 25px -5px rgba(10, 8, 6, 0.8), inset 0 1px 0 0 rgba(255, 237, 213, 0.04);
+}
+
+html.light .card-forge {
+  background-color: #ffffff;
+  border: 1px solid #e2dad0;
+  box-shadow: 0 10px 25px -5px rgba(180, 160, 140, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
 }
 
 /* Reduced Motion Mode */
@@ -180,10 +324,10 @@ html.reduced-motion ::after {
   50% { height: 16px; }
 }
 
-/* Step 4: Fluid Responsive Container & Proportional Large-Viewport Scaling */
+/* Fluid Responsive Container */
 .forge-container {
   width: 100%;
-  max-width: 80rem; /* 1280px */
+  max-width: 80rem;
   margin-left: auto;
   margin-right: auto;
   padding-left: clamp(1rem, 2.5vw, 3rem);
@@ -192,13 +336,13 @@ html.reduced-motion ::after {
 
 @media (min-width: 1536px) {
   .forge-container {
-    max-width: 96rem; /* 1536px */
+    max-width: 96rem;
   }
 }
 
 @media (min-width: 1920px) {
   .forge-container {
-    max-width: 108rem; /* 1728px */
+    max-width: 108rem;
   }
 }
 
@@ -206,5 +350,3 @@ html.reduced-motion ::after {
   padding-left: clamp(1rem, 2.5vw, 3rem);
   padding-right: clamp(1rem, 2.5vw, 3rem);
 }
-
-

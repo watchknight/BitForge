@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
+import { ThemeProvider } from './context/ThemeContext';
 import { ProgressProvider } from './context/ProgressContext';
 import { AccessibilityProvider } from './context/AccessibilityContext';
 import { Navbar } from './components/layout/Navbar';
@@ -146,9 +147,10 @@ export const App: React.FC = () => {
   };
 
   return (
-    <AccessibilityProvider>
-      <ProgressProvider>
-        <div className="min-h-screen bg-obsidian-950 text-slate-100 flex flex-col font-sans selection:bg-brand-500/30 selection:text-brand-200 relative overflow-x-hidden">
+    <ThemeProvider>
+      <AccessibilityProvider>
+        <ProgressProvider>
+          <div className="min-h-screen bg-obsidian-950 text-slate-100 flex flex-col font-sans selection:bg-brand-500/30 selection:text-brand-200 relative overflow-x-hidden transition-colors duration-200">
           {/* Universal Tactile Film-Grain Overlay */}
           <div className="fixed inset-0 forge-grain opacity-60 pointer-events-none z-0" aria-hidden="true" />
 
@@ -230,6 +232,7 @@ export const App: React.FC = () => {
 
       </ProgressProvider>
     </AccessibilityProvider>
+  </ThemeProvider>
   );
 };
 

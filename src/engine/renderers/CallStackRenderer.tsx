@@ -2,6 +2,7 @@ import React from 'react';
 import { CallStackFrame } from '../../types/simulation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Layers, ArrowDown } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
 
 interface CallStackRendererProps {
   stack: CallStackFrame[];
@@ -12,6 +13,9 @@ export const CallStackRenderer: React.FC<CallStackRendererProps> = ({
   stack = [],
   maxDepth = 8,
 }) => {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
+
   return (
     <div className="bg-obsidian-950/80 border border-slate-800 rounded-xl p-3 md:p-4 flex flex-col w-full max-w-xs shadow-lg">
       <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-800/80">
@@ -44,9 +48,15 @@ export const CallStackRenderer: React.FC<CallStackRendererProps> = ({
                   transition={{ duration: 0.2 }}
                   className={`p-2 rounded-lg border text-xs font-mono transition-all ${
                     isTop
-                      ? 'bg-brand-500/25 border-brand-500/60 text-brand-100 shadow-md shadow-brand-500/15'
+                      ? isLight
+                        ? 'bg-brand-500/20 border-brand-600 text-brand-950 shadow-md shadow-brand-500/15'
+                        : 'bg-brand-500/25 border-brand-500/60 text-brand-100 shadow-md shadow-brand-500/15'
                       : frame.status === 'returned'
-                      ? 'bg-steel-950/60 border-steel-500/40 text-steel-200'
+                      ? isLight
+                        ? 'bg-steel-500/15 border-steel-400 text-steel-900'
+                        : 'bg-steel-950/60 border-steel-500/40 text-steel-200'
+                      : isLight
+                      ? 'bg-white border-[#cbbfad] text-slate-700'
                       : 'bg-obsidian-900 border-[#3d434f] text-slate-400'
                   }`}
                 >

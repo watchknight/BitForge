@@ -2,6 +2,7 @@ import React from 'react';
 import { HighlightRole } from '../../types/simulation';
 import { motion } from 'framer-motion';
 import { SimulationViewport } from './SimulationViewport';
+import { useTheme } from '../../context/ThemeContext';
 
 export interface GraphNode {
   id: string;
@@ -36,6 +37,8 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
   distances = {},
   activeEdge,
 }) => {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const NODE_RADIUS = 22;
 
   // Lookup node by ID
@@ -43,29 +46,57 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
   nodes.forEach((n) => nodeMap.set(n.id, n));
 
   const getNodeFill = (role?: HighlightRole) => {
+    if (isLight) {
+      switch (role) {
+        case 'active':
+          return '#c2410c'; // deep saturated burnt orange
+        case 'comparing':
+          return '#b45309'; // deep golden amber
+        case 'sorted':
+          return '#0369a1'; // deep steel-blue
+        case 'visited':
+          return '#075985'; // deep quenched steel
+        case 'danger':
+          return '#b91c1c'; // deep brick red
+        default:
+          return '#ede7dc'; // warm mid-grey / soft stone
+      }
+    }
+
     switch (role) {
       case 'active':
-        // "In the forge" — blazing forge flame (single most vivid color)
         return '#f97316';
       case 'comparing':
-        // "In the forge" — molten crucible gold
         return '#f59e0b';
       case 'sorted':
-        // "Tempered" — cooled blue-steel
         return '#38bdf8';
       case 'visited':
-        // "Tempered" — processed / quenched steel
         return '#0284c7';
       case 'danger':
-        // "Overheated" — deep desaturated overheated red
         return '#c53030';
       default:
-        // "Unforged" — raw unworked iron
         return '#1a1c22';
     }
   };
 
   const getNodeStroke = (role?: HighlightRole) => {
+    if (isLight) {
+      switch (role) {
+        case 'active':
+          return '#9a3412';
+        case 'comparing':
+          return '#92400e';
+        case 'sorted':
+          return '#075985';
+        case 'visited':
+          return '#0c4a6e';
+        case 'danger':
+          return '#991b1b';
+        default:
+          return '#cbbfad';
+      }
+    }
+
     switch (role) {
       case 'active':
         return '#fb923c';
@@ -78,13 +109,18 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
       case 'danger':
         return '#fca5a5';
       default:
-        // "Unforged" — cool muted border
         return '#3d434f';
     }
   };
 
   const getNodeTextColor = (role?: HighlightRole) => {
-    // Deep obsidian on glowing orange or gold for WCAG AAA 7.2:1 - 9.6:1 contrast
+    if (isLight) {
+      if (!role) {
+        return '#1c1917'; // warm dark charcoal on soft stone
+      }
+      return '#ffffff';   // crisp white on deep saturated fills
+    }
+
     if (role === 'active' || role === 'comparing' || role === 'sorted') {
       return '#0c0c0e';
     }
@@ -122,7 +158,7 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
                   y1={u.y}
                   x2={v.x}
                   y2={v.y}
-                  stroke={isEdgeActive ? '#f97316' : '#2e2e33'}
+                  stroke={isEdgeActive ? (isLight ? '#c2410c' : '#f97316') : (isLight ? '#d6cebf' : '#2e2e33')}
                   strokeWidth={isEdgeActive ? '3.5' : '2'}
                   strokeDasharray={isEdgeActive ? '4 2' : undefined}
                   className="transition-all duration-300"
@@ -132,7 +168,7 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
                     x={(u.x + v.x) / 2}
                     y={(u.y + v.y) / 2 - 6}
                     textAnchor="middle"
-                    fill="#a39e95"
+                    fill={isLight ? '#57534e' : '#a39e95'}
                     fontSize="11"
                     fontFamily="monospace"
                   >
@@ -156,7 +192,7 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
                     cy={node.y}
                     r={NODE_RADIUS + 6}
                     fill="none"
-                    stroke="#fb923c"
+                    stroke={isLight ? '#c2410c' : '#fb923c'}
                     strokeWidth="2"
                     opacity="0.6"
                     className="animate-ping"
@@ -192,15 +228,15 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
                       width="20"
                       height="16"
                       rx="4"
-                      fill="#0c0c0e"
-                      stroke="#ea580c"
+                      fill={isLight ? '#ffffff' : '#0c0c0e'}
+                      stroke={isLight ? '#c2410c' : '#ea580c'}
                       strokeWidth="1"
                     />
                     <text
                       x={node.x + 22}
                       y={node.y - 12}
                       textAnchor="middle"
-                      fill="#fed7aa"
+                      fill={isLight ? '#9a3412' : '#fed7aa'}
                       fontSize="10"
                       fontFamily="monospace"
                       fontWeight="bold"
@@ -243,13 +279,17 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
                   animate={{ scale: 1, opacity: 1 }}
                   className={`px-3 py-1 rounded text-xs font-mono font-bold border ${
                     idx === 0
-                      ? 'bg-brand-500/20 text-brand-300 border-brand-500/40 ring-1 ring-brand-400/40'
+                      ? isLight
+                        ? 'bg-brand-500/15 text-brand-800 border-brand-500/40 ring-1 ring-brand-500/40'
+                        : 'bg-brand-500/20 text-brand-300 border-brand-500/40 ring-1 ring-brand-400/40'
+                      : isLight
+                      ? 'bg-white text-slate-700 border-slate-300'
                       : 'bg-obsidian-800 text-slate-300 border-slate-700'
                   }`}
                 >
                   {item}
                   {idx === 0 && (
-                    <span className="ml-1.5 text-[9px] text-brand-400 uppercase font-sans">
+                    <span className={`ml-1.5 text-[9px] uppercase font-sans ${isLight ? 'text-brand-700' : 'text-brand-400'}`}>
                       Head
                     </span>
                   )}
@@ -277,7 +317,11 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
               visited.map((v) => (
                 <span
                   key={v}
-                  className="px-2 py-0.5 rounded bg-steel-500/20 text-steel-200 border border-steel-500/40 text-xs font-mono font-bold"
+                  className={`px-2 py-0.5 rounded text-xs font-mono font-bold border ${
+                    isLight
+                      ? 'bg-steel-500/15 text-steel-800 border-steel-500/30'
+                      : 'bg-steel-500/20 text-steel-200 border-steel-500/40'
+                  }`}
                 >
                   {v}
                 </span>

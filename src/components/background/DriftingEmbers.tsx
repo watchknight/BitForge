@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useAccessibility } from '../../context/AccessibilityContext';
+import { useTheme } from '../../context/ThemeContext';
 
 interface EmberParticle {
   x: number;
@@ -38,8 +39,11 @@ export const DriftingEmbers: React.FC<DriftingEmbersProps> = ({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { reducedMotion } = useAccessibility();
+  const { theme } = useTheme();
 
   useEffect(() => {
+    if (theme === 'light') return;
+
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
@@ -214,7 +218,11 @@ export const DriftingEmbers: React.FC<DriftingEmbersProps> = ({
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
     };
-  }, [density, speed, reducedMotion]);
+  }, [density, speed, reducedMotion, theme]);
+
+  if (theme === 'light') {
+    return null;
+  }
 
   return (
     <div ref={containerRef} className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>

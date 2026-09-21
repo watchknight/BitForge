@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useAccessibility } from '../../context/AccessibilityContext';
 import { Sparkles, Network, GitBranch, BarChart3, ArrowDown } from 'lucide-react';
 import { DriftingEmbers } from '../background/DriftingEmbers';
+import { useTheme } from '../../context/ThemeContext';
 
 interface SectionBreatherProps {
   initialVariant?: 'sorting' | 'tree' | 'graph';
@@ -22,6 +23,8 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
   showEmbers = true,
 }) => {
   const { reducedMotion } = useAccessibility();
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const [variant, setVariant] = useState<'sorting' | 'tree' | 'graph'>(initialVariant);
 
   return (
@@ -109,36 +112,36 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
             <div className="relative w-full h-full flex items-center justify-center">
               <svg className="w-full h-full max-w-md" viewBox="0 0 400 180">
                 {/* Connecting Edges */}
-                <line x1="200" y1="30" x2="100" y2="80" stroke="#2e2e33" strokeWidth="2" strokeDasharray="4 2" />
-                <line x1="200" y1="30" x2="300" y2="80" stroke="#2e2e33" strokeWidth="2" strokeDasharray="4 2" />
-                <line x1="100" y1="80" x2="60" y2="140" stroke="#2e2e33" strokeWidth="1.5" />
-                <line x1="100" y1="80" x2="140" y2="140" stroke="#2e2e33" strokeWidth="1.5" />
-                <line x1="300" y1="80" x2="260" y2="140" stroke="#2e2e33" strokeWidth="1.5" />
-                <line x1="300" y1="80" x2="340" y2="140" stroke="#2e2e33" strokeWidth="1.5" />
+                <line x1="200" y1="30" x2="100" y2="80" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="2" strokeDasharray="4 2" />
+                <line x1="200" y1="30" x2="300" y2="80" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="2" strokeDasharray="4 2" />
+                <line x1="100" y1="80" x2="60" y2="140" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="1.5" />
+                <line x1="100" y1="80" x2="140" y2="140" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="1.5" />
+                <line x1="300" y1="80" x2="260" y2="140" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="1.5" />
+                <line x1="300" y1="80" x2="340" y2="140" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="1.5" />
 
                 {/* Level 0: Root */}
-                <circle cx="200" cy="30" r="14" fill="#9a3412" stroke="#fb923c" strokeWidth="2" />
-                <text x="200" y="34" textAnchor="middle" fill="#f5f2eb" fontSize="11" fontFamily="monospace" fontWeight="bold">50</text>
+                <circle cx="200" cy="30" r="14" fill={isLight ? '#c2410c' : '#9a3412'} stroke={isLight ? '#9a3412' : '#fb923c'} strokeWidth="2" />
+                <text x="200" y="34" textAnchor="middle" fill="#ffffff" fontSize="11" fontFamily="monospace" fontWeight="bold">50</text>
 
                 {/* Level 1 */}
-                <circle cx="100" cy="80" r="12" fill="#141416" stroke="#f97316" strokeWidth="2" />
-                <text x="100" y="84" textAnchor="middle" fill="#ded7cc" fontSize="10" fontFamily="monospace">25</text>
+                <circle cx="100" cy="80" r="12" fill={isLight ? '#ede7dc' : '#141416'} stroke={isLight ? '#c2410c' : '#f97316'} strokeWidth="2" />
+                <text x="100" y="84" textAnchor="middle" fill={isLight ? '#1c1917' : '#ded7cc'} fontSize="10" fontFamily="monospace">25</text>
 
-                <circle cx="300" cy="80" r="12" fill="#141416" stroke="#38bdf8" strokeWidth="2" />
-                <text x="300" y="84" textAnchor="middle" fill="#ded7cc" fontSize="10" fontFamily="monospace">75</text>
+                <circle cx="300" cy="80" r="12" fill={isLight ? '#ede7dc' : '#141416'} stroke={isLight ? '#0369a1' : '#38bdf8'} strokeWidth="2" />
+                <text x="300" y="84" textAnchor="middle" fill={isLight ? '#1c1917' : '#ded7cc'} fontSize="10" fontFamily="monospace">75</text>
 
                 {/* Level 2: Leaves */}
-                <circle cx="60" cy="140" r="10" fill="#0c0c0e" stroke="#3a3632" strokeWidth="1.5" />
-                <text x="60" y="143" textAnchor="middle" fill="#a39e95" fontSize="9" fontFamily="monospace">10</text>
+                <circle cx="60" cy="140" r="10" fill={isLight ? '#f5f2eb' : '#0c0c0e'} stroke={isLight ? '#cbbfad' : '#3a3632'} strokeWidth="1.5" />
+                <text x="60" y="143" textAnchor="middle" fill={isLight ? '#57534e' : '#a39e95'} fontSize="9" fontFamily="monospace">10</text>
 
-                <circle cx="140" cy="140" r="10" fill="#0c0c0e" stroke="#3a3632" strokeWidth="1.5" />
-                <text x="140" y="143" textAnchor="middle" fill="#a39e95" fontSize="9" fontFamily="monospace">35</text>
+                <circle cx="140" cy="140" r="10" fill={isLight ? '#f5f2eb' : '#0c0c0e'} stroke={isLight ? '#cbbfad' : '#3a3632'} strokeWidth="1.5" />
+                <text x="140" y="143" textAnchor="middle" fill={isLight ? '#57534e' : '#a39e95'} fontSize="9" fontFamily="monospace">35</text>
 
-                <circle cx="260" cy="140" r="10" fill="#0c0c0e" stroke="#3a3632" strokeWidth="1.5" />
-                <text x="260" y="143" textAnchor="middle" fill="#a39e95" fontSize="9" fontFamily="monospace">60</text>
+                <circle cx="260" cy="140" r="10" fill={isLight ? '#f5f2eb' : '#0c0c0e'} stroke={isLight ? '#cbbfad' : '#3a3632'} strokeWidth="1.5" />
+                <text x="260" y="143" textAnchor="middle" fill={isLight ? '#57534e' : '#a39e95'} fontSize="9" fontFamily="monospace">60</text>
 
-                <circle cx="340" cy="140" r="10" fill="#0c0c0e" stroke="#3a3632" strokeWidth="1.5" />
-                <text x="340" y="143" textAnchor="middle" fill="#a39e95" fontSize="9" fontFamily="monospace">90</text>
+                <circle cx="340" cy="140" r="10" fill={isLight ? '#f5f2eb' : '#0c0c0e'} stroke={isLight ? '#cbbfad' : '#3a3632'} strokeWidth="1.5" />
+                <text x="340" y="143" textAnchor="middle" fill={isLight ? '#57534e' : '#a39e95'} fontSize="9" fontFamily="monospace">90</text>
               </svg>
             </div>
           )}
@@ -149,36 +152,36 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
               <svg className="w-full h-full max-w-lg" viewBox="0 0 450 180">
                 <defs>
                   <marker id="arrowhead" markerWidth="6" markerHeight="4" refX="10" refY="2" orient="auto">
-                    <polygon points="0 0, 6 2, 0 4" fill="#f97316" />
+                    <polygon points="0 0, 6 2, 0 4" fill={isLight ? '#c2410c' : '#f97316'} />
                   </marker>
                 </defs>
                 {/* Directed Edges */}
-                <line x1="60" y1="90" x2="160" y2="40" stroke="#f97316" strokeWidth="2" markerEnd="url(#arrowhead)" />
-                <line x1="60" y1="90" x2="160" y2="140" stroke="#2e2e33" strokeWidth="1.5" markerEnd="url(#arrowhead)" />
-                <line x1="160" y1="40" x2="280" y2="40" stroke="#f97316" strokeWidth="2" markerEnd="url(#arrowhead)" />
-                <line x1="160" y1="140" x2="280" y2="140" stroke="#2e2e33" strokeWidth="1.5" markerEnd="url(#arrowhead)" />
-                <line x1="160" y1="40" x2="280" y2="140" stroke="#2e2e33" strokeWidth="1.5" markerEnd="url(#arrowhead)" />
-                <line x1="280" y1="40" x2="390" y2="90" stroke="#f97316" strokeWidth="2" markerEnd="url(#arrowhead)" />
-                <line x1="280" y1="140" x2="390" y2="90" stroke="#2e2e33" strokeWidth="1.5" markerEnd="url(#arrowhead)" />
+                <line x1="60" y1="90" x2="160" y2="40" stroke={isLight ? '#c2410c' : '#f97316'} strokeWidth="2" markerEnd="url(#arrowhead)" />
+                <line x1="60" y1="90" x2="160" y2="140" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="1.5" markerEnd="url(#arrowhead)" />
+                <line x1="160" y1="40" x2="280" y2="40" stroke={isLight ? '#c2410c' : '#f97316'} strokeWidth="2" markerEnd="url(#arrowhead)" />
+                <line x1="160" y1="140" x2="280" y2="140" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="1.5" markerEnd="url(#arrowhead)" />
+                <line x1="160" y1="40" x2="280" y2="140" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="1.5" markerEnd="url(#arrowhead)" />
+                <line x1="280" y1="40" x2="390" y2="90" stroke={isLight ? '#c2410c' : '#f97316'} strokeWidth="2" markerEnd="url(#arrowhead)" />
+                <line x1="280" y1="140" x2="390" y2="90" stroke={isLight ? '#cbbfad' : '#2e2e33'} strokeWidth="1.5" markerEnd="url(#arrowhead)" />
 
                 {/* Nodes */}
-                <circle cx="60" cy="90" r="14" fill="#9a3412" stroke="#fb923c" strokeWidth="2" />
-                <text x="60" y="94" textAnchor="middle" fill="#f5f2eb" fontSize="11" fontFamily="monospace" fontWeight="bold">S</text>
+                <circle cx="60" cy="90" r="14" fill={isLight ? '#c2410c' : '#9a3412'} stroke={isLight ? '#9a3412' : '#fb923c'} strokeWidth="2" />
+                <text x="60" y="94" textAnchor="middle" fill="#ffffff" fontSize="11" fontFamily="monospace" fontWeight="bold">S</text>
 
-                <circle cx="160" cy="40" r="13" fill="#141416" stroke="#f97316" strokeWidth="2" />
-                <text x="160" y="44" textAnchor="middle" fill="#ded7cc" fontSize="10" fontFamily="monospace">A</text>
+                <circle cx="160" cy="40" r="13" fill={isLight ? '#ede7dc' : '#141416'} stroke={isLight ? '#c2410c' : '#f97316'} strokeWidth="2" />
+                <text x="160" y="44" textAnchor="middle" fill={isLight ? '#1c1917' : '#ded7cc'} fontSize="10" fontFamily="monospace">A</text>
 
-                <circle cx="160" cy="140" r="13" fill="#0c0c0e" stroke="#3a3632" strokeWidth="1.5" />
-                <text x="160" y="144" textAnchor="middle" fill="#a39e95" fontSize="10" fontFamily="monospace">B</text>
+                <circle cx="160" cy="140" r="13" fill={isLight ? '#f5f2eb' : '#0c0c0e'} stroke={isLight ? '#cbbfad' : '#3a3632'} strokeWidth="1.5" />
+                <text x="160" y="144" textAnchor="middle" fill={isLight ? '#57534e' : '#a39e95'} fontSize="10" fontFamily="monospace">B</text>
 
-                <circle cx="280" cy="40" r="13" fill="#141416" stroke="#38bdf8" strokeWidth="2" />
-                <text x="280" y="44" textAnchor="middle" fill="#ded7cc" fontSize="10" fontFamily="monospace">C</text>
+                <circle cx="280" cy="40" r="13" fill={isLight ? '#ede7dc' : '#141416'} stroke={isLight ? '#0369a1' : '#38bdf8'} strokeWidth="2" />
+                <text x="280" y="44" textAnchor="middle" fill={isLight ? '#1c1917' : '#ded7cc'} fontSize="10" fontFamily="monospace">C</text>
 
-                <circle cx="280" cy="140" r="13" fill="#0c0c0e" stroke="#3a3632" strokeWidth="1.5" />
-                <text x="280" y="144" textAnchor="middle" fill="#a39e95" fontSize="10" fontFamily="monospace">D</text>
+                <circle cx="280" cy="140" r="13" fill={isLight ? '#f5f2eb' : '#0c0c0e'} stroke={isLight ? '#cbbfad' : '#3a3632'} strokeWidth="1.5" />
+                <text x="280" y="144" textAnchor="middle" fill={isLight ? '#57534e' : '#a39e95'} fontSize="10" fontFamily="monospace">D</text>
 
-                <circle cx="390" cy="90" r="14" fill="#075985" stroke="#38bdf8" strokeWidth="2" />
-                <text x="390" y="94" textAnchor="middle" fill="#f5f2eb" fontSize="11" fontFamily="monospace" fontWeight="bold">T</text>
+                <circle cx="390" cy="90" r="14" fill={isLight ? '#0369a1' : '#075985'} stroke={isLight ? '#075985' : '#38bdf8'} strokeWidth="2" />
+                <text x="390" y="94" textAnchor="middle" fill="#ffffff" fontSize="11" fontFamily="monospace" fontWeight="bold">T</text>
               </svg>
             </div>
           )}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { HighlightRole } from '../../types/simulation';
 import { motion } from 'framer-motion';
+import { useTheme } from '../../context/ThemeContext';
 
 interface ArrayRendererProps {
   array: number[];
@@ -20,6 +21,8 @@ export const ArrayRenderer: React.FC<ArrayRendererProps> = ({
   pointers = {},
   auxiliary,
 }) => {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const maxVal = Math.max(...array, 1);
 
   // Group pointers by index to render stacked badges if multiple pointers land on same index
@@ -33,52 +36,79 @@ export const ArrayRenderer: React.FC<ArrayRendererProps> = ({
   });
 
   const getCardClasses = (role?: HighlightRole) => {
+    if (isLight) {
+      switch (role) {
+        case 'comparing':
+          return 'bg-amber-50 border-amber-600 text-amber-900 font-bold ring-2 ring-amber-500/40 shadow-md scale-105';
+        case 'active':
+          return 'bg-orange-50 border-orange-600 text-orange-950 font-bold ring-2 ring-orange-500/40 shadow-md scale-105';
+        case 'pivot':
+          return 'bg-amber-50 border-amber-500 text-amber-900 font-bold ring-2 ring-amber-400/40 shadow-md scale-105';
+        case 'sorted':
+          return 'bg-sky-50 border-sky-600 text-sky-900 font-bold ring-1 ring-sky-500/40 shadow-md';
+        case 'visited':
+          return 'bg-sky-50/70 border-sky-500 text-sky-800 font-semibold ring-1 ring-sky-400/30';
+        case 'danger':
+          return 'bg-red-50 border-red-600 text-red-900 font-bold ring-2 ring-red-500/40';
+        default:
+          return 'bg-white border-slate-700/60 text-slate-100 hover:border-slate-500 shadow-sm';
+      }
+    }
+
     switch (role) {
       case 'comparing':
-        // "In the forge" — comparing/checking
         return 'bg-amber-500/25 border-amber-400 text-amber-200 ring-2 ring-amber-400/45 shadow-lg shadow-amber-500/25 scale-105';
       case 'active':
-        // "In the forge" — actively modified/heated
         return 'bg-brand-500/25 border-brand-500 text-brand-100 ring-2 ring-brand-400/50 shadow-lg shadow-brand-500/30 scale-105';
       case 'pivot':
-        // "In the forge" — molten pivot
         return 'bg-amber-500/25 border-amber-300 text-amber-200 ring-2 ring-amber-400/50 shadow-lg shadow-amber-500/30 scale-105';
       case 'sorted':
-        // "Tempered" — confirmed finished/sorted
         return 'bg-steel-500/20 border-steel-400 text-steel-200 ring-1 ring-steel-400/40 shadow-lg shadow-steel-500/15';
       case 'visited':
-        // "Tempered" — processed marker
         return 'bg-steel-950/40 border-steel-500/40 text-steel-200 ring-1 ring-steel-500/30';
       case 'danger':
-        // "Overheated" — mistake/conflict state
         return 'bg-red-950/40 border-red-500/60 text-red-300 ring-2 ring-red-500/40';
       default:
-        // "Unforged" — raw iron, cool muted grey
         return 'bg-[#1a1c22] border-[#3d434f] text-slate-300 hover:border-slate-500';
     }
   };
 
   const getBarColor = (role?: HighlightRole) => {
+    if (isLight) {
+      switch (role) {
+        case 'comparing':
+          return 'bg-[#b45309] shadow-md shadow-amber-900/15';
+        case 'active':
+        case 'secondary':
+          return 'bg-[#c2410c] shadow-lg shadow-orange-900/20';
+        case 'pivot':
+          return 'bg-[#d97706] shadow-md shadow-amber-900/15';
+        case 'sorted':
+          return 'bg-[#0369a1] shadow-md shadow-sky-900/15';
+        case 'visited':
+          return 'bg-[#075985] shadow-sm';
+        case 'danger':
+          return 'bg-[#b91c1c] shadow-md shadow-red-900/15';
+        default:
+          return 'bg-[#78716c] hover:bg-[#6b655f]';
+      }
+    }
+
     switch (role) {
       case 'comparing':
-        // "In the forge" — molten crucible gold
         return 'bg-amber-400 shadow-md shadow-amber-400/40';
       case 'active':
-        // "In the forge" — blazing forge flame (most vivid)
       case 'secondary':
         return 'bg-brand-500 shadow-lg shadow-brand-500/50';
       case 'pivot':
         return 'bg-amber-300 shadow-md shadow-amber-300/50';
       case 'sorted':
-        // "Tempered" — cooled blue-steel
         return 'bg-steel-400 shadow-md shadow-steel-400/40';
       case 'visited':
         return 'bg-steel-500 shadow-sm shadow-steel-500/20';
       case 'danger':
-        // "Overheated" — deep desaturated red
         return 'bg-red-500 shadow-md shadow-red-500/40';
       default:
-        // "Unforged" — cool muted grey unworked iron
         return 'bg-[#333842] hover:bg-[#3f444e]';
     }
   };
