@@ -126,7 +126,7 @@ export const BigOCheatSheetPage: React.FC<BigOCheatSheetPageProps> = ({
       </div>
 
       {/* Sortable Complexity Table */}
-      <div className="bg-obsidian-900/90 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl overflow-x-auto">
+      <div className="bg-obsidian-900/90 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]">
         <table className="w-full text-left border-collapse min-w-[700px]">
           <thead>
             <tr className="bg-obsidian-950 border-b border-slate-800 text-[11px] font-mono uppercase tracking-wider text-slate-400">
