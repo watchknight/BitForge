@@ -92,9 +92,9 @@ export const QuizCard: React.FC<QuizCardProps> = ({ topicId, questions }) => {
 
                 if (isAnswered) {
                   if (isCorrect) {
-                    btnStyle = 'bg-emerald-950/50 border-emerald-500/60 text-emerald-200 font-semibold shadow-sm';
+                    btnStyle = 'bg-steel-950/60 border-steel-500/60 text-steel-100 font-semibold shadow-sm';
                   } else if (isSelected) {
-                    btnStyle = 'bg-rose-950/50 border-rose-500/60 text-rose-200';
+                    btnStyle = 'bg-red-950/60 border-red-500/60 text-red-200';
                   } else {
                     btnStyle = 'bg-obsidian-950/40 border-slate-800/60 text-slate-500 opacity-60';
                   }
@@ -115,10 +115,10 @@ export const QuizCard: React.FC<QuizCardProps> = ({ topicId, questions }) => {
                     </div>
 
                     {isAnswered && isCorrect && (
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-steel-400 shrink-0 mt-0.5" />
                     )}
                     {isAnswered && isSelected && !isCorrect && (
-                      <XCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                      <XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
                     )}
                   </button>
                 );
@@ -132,19 +132,19 @@ export const QuizCard: React.FC<QuizCardProps> = ({ topicId, questions }) => {
                 animate={{ opacity: 1, y: 0 }}
                 className={`p-3.5 rounded-xl border text-xs leading-relaxed ${
                   selectedOption === currentQ.correctIndex
-                    ? 'bg-emerald-950/30 border-emerald-500/30 text-emerald-200'
-                    : 'bg-amber-950/30 border-amber-500/30 text-amber-200'
+                    ? 'bg-steel-950/40 border-steel-500/40 text-steel-200'
+                    : 'bg-red-950/30 border-red-500/40 text-red-200'
                 }`}
               >
                 <div className="font-bold mb-1 flex items-center gap-1.5">
                   {selectedOption === currentQ.correctIndex ? (
                     <>
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-steel-400" />
                       <span>Correct!</span>
                     </>
                   ) : (
                     <>
-                      <XCircle className="w-3.5 h-3.5 text-rose-400" />
+                      <XCircle className="w-3.5 h-3.5 text-red-400" />
                       <span>Explanation:</span>
                     </>
                   )}

@@ -121,23 +121,26 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
 
   const renderStatusBadge = (status: TopicStatus) => {
     if (status === 'mastered') {
+      // "Tempered" — confirmed mastered
       return (
-        <span className="flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300">
-          <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+        <span className="flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-steel-500/20 border border-steel-500/40 text-steel-200 shadow-sm shadow-steel-500/10">
+          <CheckCircle2 className="w-3 h-3 text-steel-400" />
           Mastered
         </span>
       );
     }
     if (status === 'practicing') {
+      // "In the forge" — active practice
       return (
-        <span className="flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300">
-          <Clock className="w-3 h-3 text-amber-400" />
+        <span className="flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-brand-500/20 border border-brand-500/40 text-brand-300 shadow-sm shadow-brand-500/10">
+          <Clock className="w-3 h-3 text-brand-400" />
           Practicing
         </span>
       );
     }
+    // "Unforged" — raw unvisited
     return (
-      <span className="flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-800/60 border border-slate-700/40 text-slate-400">
+      <span className="flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#1a1c22] border border-[#3d434f] text-slate-400">
         <Circle className="w-2.5 h-2.5 text-slate-500" />
         Not Started
       </span>
@@ -147,13 +150,13 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
   const getDifficultyColor = (diff: string) => {
     switch (diff.toLowerCase()) {
       case 'beginner':
-        return 'text-emerald-400 border-emerald-500/30 bg-emerald-950/40';
+        return 'text-steel-300 border-steel-500/40 bg-steel-950/40';
       case 'intermediate':
-        return 'text-brand-400 border-brand-500/30 bg-brand-950/40';
+        return 'text-amber-300 border-amber-500/40 bg-amber-950/40';
       case 'advanced':
-        return 'text-purple-400 border-purple-500/30 bg-purple-950/40';
+        return 'text-brand-300 border-brand-500/40 bg-brand-950/40';
       default:
-        return 'text-slate-400 border-slate-700 bg-slate-800/40';
+        return 'text-slate-400 border-[#3d434f] bg-[#1a1c22]';
     }
   };
 

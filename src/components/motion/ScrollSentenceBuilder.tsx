@@ -238,13 +238,13 @@ export const ScrollSentenceBuilder: React.FC = () => {
                 {current.dataVisual.items.map((item, idx) => {
                   const heightPercent = Math.max(20, Math.round((item.val / 82) * 100));
 
-                  let barStyle = 'bg-slate-700 border-slate-600 text-slate-400';
+                  let barStyle = 'bg-[#333842] border-[#3d434f] text-slate-400';
                   if (item.state === 'active') {
                     barStyle = 'bg-brand-500 border-brand-400 text-obsidian-950 font-bold shadow-lg shadow-brand-500/30';
                   } else if (item.state === 'comparing') {
                     barStyle = 'bg-amber-400 border-amber-300 text-obsidian-950 font-bold animate-pulse shadow-lg shadow-amber-400/30';
                   } else if (item.state === 'sorted') {
-                    barStyle = 'bg-emerald-500 border-emerald-400 text-obsidian-950 font-bold shadow-lg shadow-emerald-500/20';
+                    barStyle = 'bg-steel-400 border-steel-300 text-obsidian-950 font-bold shadow-lg shadow-steel-400/30';
                   }
 
                   return (

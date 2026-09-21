@@ -264,12 +264,12 @@ export const QuizHubPage: React.FC<QuizHubPageProps> = ({
               data-testid="quiz-exam-card"
               onClick={() => startQuiz('exam')}
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') startQuiz('exam'); }}
-              className="bg-obsidian-900 border border-slate-800 hover:border-purple-500/60 rounded-2xl p-6 shadow-xl cursor-pointer group transition-all transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-purple-400"
+              className="bg-obsidian-900 border border-slate-800 hover:border-amber-500/60 rounded-2xl p-6 shadow-xl cursor-pointer group transition-all transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-amber-400"
             >
-              <div className="w-12 h-12 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-4 group-hover:scale-110 transition-transform">
                 <Trophy className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
+              <h3 className="text-xl font-bold text-white group-hover:text-amber-300 transition-colors">
                 Comprehensive Exam
               </h3>
               <p className="text-xs text-slate-400 mt-2 line-clamp-2">
@@ -277,7 +277,7 @@ export const QuizHubPage: React.FC<QuizHubPageProps> = ({
               </p>
               <div className="mt-5 flex items-center justify-between text-xs font-mono text-slate-400 border-t border-slate-800/80 pt-3">
                 <span>15 Questions</span>
-                <span className="text-purple-400 font-semibold flex items-center gap-1">
+                <span className="text-amber-400 font-semibold flex items-center gap-1">
                   Start Exam <ArrowRight className="w-3.5 h-3.5" />
                 </span>
               </div>
@@ -358,9 +358,9 @@ export const QuizHubPage: React.FC<QuizHubPageProps> = ({
 
               if (hasAnswered) {
                 if (isCorrect) {
-                  btnStyle = 'bg-emerald-950/50 border-emerald-500 text-emerald-200 shadow-md shadow-emerald-500/10';
+                  btnStyle = 'bg-steel-950/60 border-steel-500 text-steel-200 shadow-md shadow-steel-500/15';
                 } else if (isSelected) {
-                  btnStyle = 'bg-rose-950/50 border-rose-500 text-rose-200 shadow-md shadow-rose-500/10';
+                  btnStyle = 'bg-red-950/50 border-red-500 text-red-200 shadow-md shadow-red-500/10';
                 } else {
                   btnStyle = 'bg-obsidian-950/60 border-slate-800/60 text-slate-500 opacity-60';
                 }
@@ -377,9 +377,9 @@ export const QuizHubPage: React.FC<QuizHubPageProps> = ({
                   <div className="flex items-center gap-3">
                     <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-mono text-xs font-bold ${
                       hasAnswered && isCorrect
-                        ? 'bg-emerald-500 text-obsidian-950'
+                        ? 'bg-steel-500 text-obsidian-950'
                         : hasAnswered && isSelected
-                        ? 'bg-rose-500 text-white'
+                        ? 'bg-red-500 text-white'
                         : 'bg-slate-800 text-slate-300'
                     }`}>
                       {letter}
@@ -388,10 +388,10 @@ export const QuizHubPage: React.FC<QuizHubPageProps> = ({
                   </div>
 
                   {hasAnswered && isCorrect && (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-steel-400 flex-shrink-0" />
                   )}
                   {hasAnswered && isSelected && !isCorrect && (
-                    <XCircle className="w-5 h-5 text-rose-400 flex-shrink-0" />
+                    <XCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
                   )}
                 </button>
               );
@@ -403,12 +403,12 @@ export const QuizHubPage: React.FC<QuizHubPageProps> = ({
             <div className="p-4 rounded-xl bg-obsidian-950 border border-slate-800 space-y-2 animate-fadeIn">
               <div className="flex items-center gap-2">
                 {selectedAnswer === activeQuestion.correctIndex ? (
-                  <span className="text-emerald-400 font-bold text-xs flex items-center gap-1">
-                    <CheckCircle2 className="w-4 h-4" /> Correct Answer! (+15 XP)
+                  <span className="text-steel-300 font-bold text-xs flex items-center gap-1">
+                    <CheckCircle2 className="w-4 h-4 text-steel-400" /> Correct Answer! (+15 XP)
                   </span>
                 ) : (
-                  <span className="text-rose-400 font-bold text-xs flex items-center gap-1">
-                    <XCircle className="w-4 h-4" /> Incorrect
+                  <span className="text-red-300 font-bold text-xs flex items-center gap-1">
+                    <XCircle className="w-4 h-4 text-red-400" /> Incorrect
                   </span>
                 )}
               </div>
@@ -495,8 +495,8 @@ export const QuizHubPage: React.FC<QuizHubPageProps> = ({
                   key={idx}
                   className={`p-4 rounded-xl border ${
                     ans.isCorrect
-                      ? 'bg-emerald-950/20 border-emerald-500/30'
-                      : 'bg-rose-950/20 border-rose-500/30'
+                      ? 'bg-steel-950/20 border-steel-500/30'
+                      : 'bg-red-950/20 border-red-500/30'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2 mb-2">
@@ -511,12 +511,12 @@ export const QuizHubPage: React.FC<QuizHubPageProps> = ({
 
                     <div className="flex items-center gap-1 text-xs font-mono">
                       {ans.isCorrect ? (
-                        <span className="text-emerald-400 flex items-center gap-1 font-bold">
-                          <CheckCircle2 className="w-4 h-4" /> Correct
+                        <span className="text-steel-300 flex items-center gap-1 font-bold">
+                          <CheckCircle2 className="w-4 h-4 text-steel-400" /> Correct
                         </span>
                       ) : (
-                        <span className="text-rose-400 flex items-center gap-1 font-bold">
-                          <XCircle className="w-4 h-4" /> Missed
+                        <span className="text-red-300 flex items-center gap-1 font-bold">
+                          <XCircle className="w-4 h-4 text-red-400" /> Missed
                         </span>
                       )}
                     </div>
@@ -529,14 +529,14 @@ export const QuizHubPage: React.FC<QuizHubPageProps> = ({
                   <div className="text-xs text-slate-400 space-y-1">
                     <div>
                       <span className="text-slate-500">Your Answer:</span>{' '}
-                      <span className={ans.isCorrect ? 'text-emerald-300' : 'text-rose-300'}>
+                      <span className={ans.isCorrect ? 'text-steel-300' : 'text-red-300'}>
                         {ans.question.options[ans.chosenIndex]}
                       </span>
                     </div>
                     {!ans.isCorrect && (
                       <div>
                         <span className="text-slate-500">Correct Answer:</span>{' '}
-                        <span className="text-emerald-300 font-medium">
+                        <span className="text-steel-300 font-medium">
                           {ans.question.options[ans.question.correctIndex]}
                         </span>
                       </div>

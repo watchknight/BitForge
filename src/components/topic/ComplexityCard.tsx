@@ -20,10 +20,10 @@ export const ComplexityCard: React.FC<ComplexityCardProps> = ({ complexity }) =>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         <div className="p-3 rounded-xl bg-obsidian-950 border border-slate-800/80 flex flex-col">
           <span className="text-[11px] font-mono text-slate-400 flex items-center gap-1">
-            <Clock className="w-3 h-3 text-emerald-400" />
+            <Clock className="w-3 h-3 text-steel-400" />
             Best Time
           </span>
-          <span className="text-sm md:text-base font-mono font-bold text-emerald-300 mt-1">
+          <span className="text-sm md:text-base font-mono font-bold text-steel-300 mt-1">
             {complexity.bestTime}
           </span>
         </div>
@@ -50,10 +50,10 @@ export const ComplexityCard: React.FC<ComplexityCardProps> = ({ complexity }) =>
 
         <div className="p-3 rounded-xl bg-obsidian-950 border border-slate-800/80 flex flex-col">
           <span className="text-[11px] font-mono text-slate-400 flex items-center gap-1">
-            <HardDrive className="w-3 h-3 text-cyan-400" />
+            <HardDrive className="w-3 h-3 text-steel-400" />
             Aux Space
           </span>
-          <span className="text-sm md:text-base font-mono font-bold text-cyan-300 mt-1">
+          <span className="text-sm md:text-base font-mono font-bold text-steel-300 mt-1">
             {complexity.space}
           </span>
         </div>
@@ -72,7 +72,7 @@ export const ComplexityCard: React.FC<ComplexityCardProps> = ({ complexity }) =>
         </div>
 
         <div className="p-3.5 rounded-xl bg-obsidian-950/60 border border-slate-800">
-          <h4 className="text-xs font-mono font-bold text-cyan-300 flex items-center gap-1.5 mb-1">
+          <h4 className="text-xs font-mono font-bold text-steel-300 flex items-center gap-1.5 mb-1">
             <HardDrive className="w-3.5 h-3.5" />
             Why this space complexity?
           </h4>

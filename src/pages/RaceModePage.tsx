@@ -44,7 +44,7 @@ const AVAILABLE_ALGORITHMS: SortAlgorithmMeta[] = [
     complexity: 'O(N log N)',
     bestCase: 'O(N log N)',
     generator: generateQuickSortSteps,
-    color: 'from-steel-400 to-sky-600',
+    color: 'from-steel-400 to-steel-600',
   },
   {
     id: 'merge-sort',
@@ -76,7 +76,7 @@ const AVAILABLE_ALGORITHMS: SortAlgorithmMeta[] = [
     complexity: 'O(N²)',
     bestCase: 'O(N)',
     generator: generateBubbleSortSteps,
-    color: 'from-rose-500 to-red-700',
+    color: 'from-red-500 to-red-700',
   },
   {
     id: 'selection-sort',
@@ -84,7 +84,7 @@ const AVAILABLE_ALGORITHMS: SortAlgorithmMeta[] = [
     complexity: 'O(N²)',
     bestCase: 'O(N²)',
     generator: generateSelectionSortSteps,
-    color: 'from-stone-600 to-stone-800',
+    color: 'from-obsidian-600 to-obsidian-800',
   },
 ];
 

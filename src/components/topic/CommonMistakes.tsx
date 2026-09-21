@@ -41,10 +41,10 @@ export const CommonMistakes: React.FC<CommonMistakesProps> = ({ mistakes }) => {
             </div>
 
             {/* Fix */}
-            <div className="flex items-start gap-2 text-xs md:text-[13px] text-emerald-300 bg-emerald-950/20 p-2.5 rounded-lg border border-emerald-900/40">
-              <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+            <div className="flex items-start gap-2 text-xs md:text-[13px] text-steel-200 bg-steel-950/30 p-2.5 rounded-lg border border-steel-500/30">
+              <CheckCircle className="w-4 h-4 text-steel-400 shrink-0 mt-0.5" />
               <div>
-                <span className="font-semibold text-emerald-200">The Fix: </span>
+                <span className="font-semibold text-steel-100">The Fix: </span>
                 {m.fix}
               </div>
             </div>

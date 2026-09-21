@@ -159,25 +159,34 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
 
         {/* Status Filter Tab Pills */}
         <div className="flex flex-wrap items-center gap-1.5 p-1 bg-obsidian-950 rounded-xl border border-slate-800">
-          {(['all', 'mastered', 'practicing', 'not-started'] as const).map((st) => (
-            <button
-              key={st}
-              onClick={() => setStatusFilter(st)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono capitalize transition-all ${
-                statusFilter === st
-                  ? 'bg-brand-500/20 text-brand-300 font-bold border border-brand-500/40 shadow-sm'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
-              }`}
-            >
-              {st === 'all'
-                ? `All (${totalTopics})`
-                : st === 'mastered'
-                ? `Mastered (${masteredCount})`
-                : st === 'practicing'
-                ? `Practicing (${practicingCount})`
-                : `Not Started (${notStartedCount})`}
-            </button>
-          ))}
+          {(['all', 'mastered', 'practicing', 'not-started'] as const).map((st) => {
+            const isSelected = statusFilter === st;
+            let activeStyle = 'bg-brand-500/20 text-brand-300 font-bold border border-brand-500/40 shadow-sm';
+            if (st === 'mastered') {
+              activeStyle = 'bg-steel-500/20 text-steel-200 font-bold border border-steel-500/40 shadow-sm';
+            } else if (st === 'not-started') {
+              activeStyle = 'bg-[#1a1c22] text-slate-300 font-bold border border-[#3d434f] shadow-sm';
+            }
+            return (
+              <button
+                key={st}
+                onClick={() => setStatusFilter(st)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-mono capitalize transition-all ${
+                  isSelected
+                    ? activeStyle
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                }`}
+              >
+                {st === 'all'
+                  ? `All (${totalTopics})`
+                  : st === 'mastered'
+                  ? `Mastered (${masteredCount})`
+                  : st === 'practicing'
+                  ? `Practicing (${practicingCount})`
+                  : `Not Started (${notStartedCount})`}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -258,7 +267,13 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
                       onClick={() => onSelectTopic(topicRef.id)}
                       onMouseEnter={() => setHoveredTopicId(topicRef.id)}
                       onMouseLeave={() => setHoveredTopicId(null)}
-                      className="group p-4 rounded-xl bg-obsidian-950 border border-slate-800 hover:border-brand-500/50 hover:bg-obsidian-900/90 transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-md relative"
+                      className={`group p-4 rounded-xl bg-obsidian-950 border transition-all duration-200 cursor-pointer flex flex-col justify-between shadow-md relative ${
+                        isDone
+                          ? 'border-steel-500/40 hover:border-steel-400 hover:shadow-steel-500/10'
+                          : status === 'practicing'
+                          ? 'border-brand-500/40 hover:border-brand-400 hover:shadow-brand-500/10'
+                          : 'border-slate-800 hover:border-slate-700'
+                      }`}
                     >
                       <div className="space-y-2.5">
                         {/* Top Bar with Status Badge & Manual Dropdown Switch */}
@@ -336,8 +351,8 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
                         <TopicCardPreview type={archetype} isHovered={isHovered} />
 
                         {userProg?.quizPassed && (
-                          <div className="flex items-center gap-1.5 text-[11px] font-mono text-emerald-400">
-                            <Trophy className="w-3 h-3" />
+                          <div className="flex items-center gap-1.5 text-[11px] font-mono text-steel-300">
+                            <Trophy className="w-3 h-3 text-steel-400" />
                             <span>Quiz Passed ({userProg.quizScore}/3)</span>
                           </div>
                         )}

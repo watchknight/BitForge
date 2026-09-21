@@ -108,7 +108,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onStartLearning }) => {
 
       {/* Accessible & Color-Blind Safe */}
       <div className="p-6 rounded-2xl bg-obsidian-900/60 border border-slate-800 flex items-start gap-4">
-        <div className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 shrink-0">
+        <div className="p-2.5 rounded-xl bg-steel-500/10 text-steel-400 shrink-0">
           <Eye className="w-5 h-5" />
         </div>
         <div className="space-y-1">

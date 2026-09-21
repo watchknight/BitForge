@@ -67,7 +67,7 @@ export const SyncedCodePanel: React.FC<SyncedCodePanelProps> = ({
             className="p-1.5 rounded-md hover:bg-slate-800 text-slate-400 hover:text-slate-200 transition-colors"
             title="Copy code to clipboard"
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+            {copied ? <Check className="w-3.5 h-3.5 text-steel-400" /> : <Copy className="w-3.5 h-3.5" />}
           </button>
         </div>
       </div>

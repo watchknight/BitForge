@@ -1,12 +1,12 @@
 export type HighlightRole = 
-  | 'comparing'   // Amber: elements being compared or checked
-  | 'active'      // Cyan: currently examined or modified item
-  | 'sorted'      // Emerald: fully processed, sorted, or placed
-  | 'visited'     // Violet: already seen / visited in traversal
-  | 'pivot'       // Sky: pivot or reference element
-  | 'danger'      // Rose: conflict, deletion, or backtracked
-  | 'secondary'   // Indigo/Sky: second pointer or secondary element
-  | 'neutral';    // Slate/Dim: inactive
+  | 'comparing'   // "In the forge" — Molten gold crucible check/compare
+  | 'active'      // "In the forge" — Blazing flame heat (actively modified/examined)
+  | 'sorted'      // "Tempered" — Quenched cool blue-steel oxide sheen
+  | 'visited'     // "Tempered" — Confirmed visited/processed steel
+  | 'pivot'       // "In the forge" — Molten gold pivot/reference
+  | 'danger'      // "Overheated" — Overheated/burnt metal (invalid/conflict/backtracked)
+  | 'secondary'   // "In the forge" — Secondary heat pointer
+  | 'neutral';    // "Unforged" — Cool muted raw iron (default/unvisited)
 
 export interface CallStackFrame {
   id: string;
