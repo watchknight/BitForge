@@ -46,9 +46,10 @@ export default {
           300: '#cec7be', // high-contrast secondary text
           400: '#a39e95', // muted warm grey for secondary text
           500: '#79736a', // muted warm grey for tertiary text / captions
-          600: '#58524a', // dark warm grey for unworked outlines
-          700: '#3a3632', // warm grey border (prominent / hover)
-          800: '#262320', // muted warm grey border (default card border)
+          600: '#585046', // dark warm grey for unworked outlines
+          700: '#443a32', // warm cast-iron border (prominent / hover)
+          800: '#2c2621', // warm soot-iron border (default card border)
+          850: '#201c18', // ultra-subtle warm divider
           900: '#1a1816', // sunken warm grey surface
           950: '#11100f', // deep warm soot
         },
@@ -62,9 +63,10 @@ export default {
           300: '#cec7be',
           400: '#a39e95', // muted warm grey (secondary text)
           500: '#79736a', // tertiary text
-          600: '#58524a',
-          700: '#3a3632', // prominent warm grey border
-          800: '#262320', // default muted warm grey border
+          600: '#585046',
+          700: '#443a32', // prominent warm cast-iron border
+          800: '#2c2621', // default warm card border
+          850: '#201c18',
           900: '#1a1816',
           950: '#11100f',
         },
@@ -148,8 +150,21 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'Fira Code', 'monospace'],
+      },
+      boxShadow: {
+        'sm': '0 1px 2px 0 rgba(14, 11, 9, 0.45), 0 0 1px rgba(249, 115, 22, 0.05)',
+        'DEFAULT': '0 1px 3px 0 rgba(14, 11, 9, 0.55), 0 1px 2px -1px rgba(14, 11, 9, 0.55)',
+        'md': '0 4px 6px -1px rgba(12, 9, 7, 0.65), 0 2px 4px -2px rgba(12, 9, 7, 0.65), 0 0 16px -2px rgba(249, 115, 22, 0.04)',
+        'lg': '0 10px 15px -3px rgba(10, 8, 6, 0.8), 0 4px 6px -4px rgba(10, 8, 6, 0.8), 0 0 24px -4px rgba(249, 115, 22, 0.05)',
+        'xl': '0 20px 25px -5px rgba(8, 6, 5, 0.85), 0 8px 10px -6px rgba(8, 6, 5, 0.85), 0 0 32px -4px rgba(249, 115, 22, 0.06)',
+        '2xl': '0 25px 50px -12px rgba(6, 5, 4, 0.95), 0 0 45px -5px rgba(249, 115, 22, 0.08)',
+        'inner-warm': 'inset 0 1px 0 0 rgba(255, 237, 213, 0.06)',
+        'forge-card': '0 10px 25px -5px rgba(10, 8, 6, 0.8), 0 0 1px 1px rgba(249, 115, 22, 0.08)',
+        'forge-glow': '0 0 25px rgba(249, 115, 22, 0.35)',
+        'steel-glow': '0 0 25px rgba(56, 189, 248, 0.25)',
       },
       animation: {
         'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',

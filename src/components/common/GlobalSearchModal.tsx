@@ -169,7 +169,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
       aria-label="Global Topic Search"
     >
       <div 
-        className="w-full max-w-2xl bg-obsidian-900 border border-slate-800 rounded-2xl shadow-2xl shadow-obsidian-950/90 overflow-hidden flex flex-col max-h-[80vh]"
+        className="w-full max-w-2xl bg-obsidian-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Header Input */}
