@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Zap, 
   Flame, 
@@ -45,6 +45,19 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
     soundEngine.playClickBeep();
     onNavigate(view, topicId);
   };
+
+  // Close mobile navigation drawer on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+      }
+    };
+    if (mobileMenuOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
 
   return (
     <nav className="sticky top-0 z-40 bg-obsidian-950/85 backdrop-blur-md border-b border-slate-800/80">
@@ -234,121 +247,153 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
           {/* Mobile menu trigger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800"
+            className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
             aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-nav-menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Menu Backdrop & Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-obsidian-900 border-b border-slate-800 px-4 py-3 space-y-2 animate-fadeIn">
-          {/* Mobile Stats Pill Header */}
-          <div className="flex sm:hidden items-center justify-between gap-2 p-2 bg-obsidian-950 rounded-xl border border-slate-800 text-xs font-mono mb-2">
-            <div className="flex items-center gap-1.5 text-slate-200">
-              <Flame className="w-4 h-4 text-amber-400 fill-amber-400 animate-pulse" />
-              <span className="font-bold">{progress.streakDays} Day Streak</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-brand-300">
-              <Sparkles className="w-3.5 h-3.5 text-brand-400" />
-              <span className="font-bold">{progress.xp} XP</span>
-            </div>
-          </div>
-
-          {onOpenSearch && (
-            <button
-              onClick={() => {
-                onOpenSearch();
-                setMobileMenuOpen(false);
-              }}
-              className="w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-xs text-brand-300 bg-obsidian-950 border border-slate-800 flex items-center justify-between"
-            >
-              <span className="flex items-center gap-2">
-                <Search className="w-4 h-4 text-brand-400" />
-                Search All Topics...
-              </span>
-              <kbd className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-400">
-                ⌘K
-              </kbd>
-            </button>
-          )}
-
-          <button
-            onClick={() => {
-              onNavigate('roadmap');
-              setMobileMenuOpen(false);
-            }}
-            className="w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-sm text-slate-200 hover:bg-slate-800 flex items-center gap-2.5"
+        <>
+          <div 
+            onClick={() => setMobileMenuOpen(false)}
+            className="fixed inset-0 top-16 bg-obsidian-950/70 backdrop-blur-sm z-30 lg:hidden animate-fadeIn"
+            aria-hidden="true"
+          />
+          <div 
+            id="mobile-nav-menu"
+            className="lg:hidden relative z-40 bg-obsidian-900/98 backdrop-blur-xl border-b border-slate-800 px-4 py-3 space-y-2 animate-fadeIn max-h-[calc(100vh-4rem)] overflow-y-auto"
           >
-            <Map className="w-4 h-4 text-brand-400" />
-            Roadmap & Curriculum
-          </button>
-
-          <button
-            onClick={() => {
-              onNavigate('race');
-              setMobileMenuOpen(false);
-            }}
-            className="w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-sm text-amber-300 hover:bg-slate-800 flex items-center gap-2.5"
-          >
-            <Trophy className="w-4 h-4 text-amber-400" />
-            Sorting Race Mode
-          </button>
-
-          <button
-            onClick={() => {
-              onNavigate('quiz-hub');
-              setMobileMenuOpen(false);
-            }}
-            className="w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-sm text-brand-300 hover:bg-slate-800 flex items-center gap-2.5"
-          >
-            <GraduationCap className="w-4 h-4 text-brand-400" />
-            Quiz Hub (100+ Questions)
-          </button>
-
-          <div className="pt-2 border-t border-slate-800">
-            <div className="text-[10px] font-mono text-slate-500 px-3 uppercase mb-1">
-              Flagship Simulations
+            {/* Mobile Stats Pill Header */}
+            <div className="flex sm:hidden items-center justify-between gap-2 p-2.5 bg-obsidian-950 rounded-xl border border-slate-800 text-xs font-mono mb-2 shadow-inner">
+              <div className="flex items-center gap-1.5 text-slate-200">
+                <Flame className="w-4 h-4 text-amber-400 fill-amber-400 animate-pulse" />
+                <span className="font-bold">{progress.streakDays} Day Streak</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-brand-300">
+                <Sparkles className="w-3.5 h-3.5 text-brand-400" />
+                <span className="font-bold">{progress.xp} XP</span>
+              </div>
             </div>
-            {flagships.map((f) => (
+
+            {onOpenSearch && (
               <button
-                key={f.id}
                 onClick={() => {
-                  onNavigate('topic', f.id);
+                  onOpenSearch();
                   setMobileMenuOpen(false);
                 }}
-                className="w-full text-left px-3.5 py-2 min-h-[40px] rounded-xl text-xs text-slate-300 hover:bg-slate-800 hover:text-brand-300 flex items-center justify-between"
+                className="w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-xs text-brand-300 bg-obsidian-950 border border-slate-800 flex items-center justify-between"
               >
-                <span>{f.label}</span>
-                <span className="text-[10px] text-slate-500 font-mono">{f.type}</span>
+                <span className="flex items-center gap-2">
+                  <Search className="w-4 h-4 text-brand-400" />
+                  Search All Topics...
+                </span>
+                <kbd className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-400">
+                  ⌘K
+                </kbd>
               </button>
-            ))}
+            )}
+
+            <button
+              onClick={() => {
+                onNavigate('roadmap');
+                setMobileMenuOpen(false);
+              }}
+              className={`w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-sm flex items-center gap-2.5 transition-colors ${
+                currentView === 'roadmap'
+                  ? 'bg-brand-500/20 text-brand-300 font-semibold border border-brand-500/30'
+                  : 'text-slate-200 hover:bg-slate-800'
+              }`}
+            >
+              <Map className="w-4 h-4 text-brand-400" />
+              Roadmap & Curriculum
+            </button>
+
+            <button
+              onClick={() => {
+                onNavigate('race');
+                setMobileMenuOpen(false);
+              }}
+              className={`w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-sm flex items-center gap-2.5 transition-colors ${
+                currentView === 'race'
+                  ? 'bg-amber-500/20 text-amber-300 font-semibold border border-amber-500/30'
+                  : 'text-amber-300 hover:bg-slate-800'
+              }`}
+            >
+              <Trophy className="w-4 h-4 text-amber-400" />
+              Sorting Race Mode
+            </button>
+
+            <button
+              onClick={() => {
+                onNavigate('quiz-hub');
+                setMobileMenuOpen(false);
+              }}
+              className={`w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-sm flex items-center gap-2.5 transition-colors ${
+                currentView === 'quiz-hub'
+                  ? 'bg-brand-500/20 text-brand-300 font-semibold border border-brand-500/30'
+                  : 'text-brand-300 hover:bg-slate-800'
+              }`}
+            >
+              <GraduationCap className="w-4 h-4 text-brand-400" />
+              Quiz Hub (100+ Questions)
+            </button>
+
+            <div className="pt-2 border-t border-slate-800">
+              <div className="text-[10px] font-mono text-slate-500 px-3 uppercase mb-1">
+                Flagship Simulations
+              </div>
+              {flagships.map((f) => (
+                <button
+                  key={f.id}
+                  onClick={() => {
+                    onNavigate('topic', f.id);
+                    setMobileMenuOpen(false);
+                  }}
+                  className="w-full text-left px-3.5 py-2 min-h-[40px] rounded-xl text-xs text-slate-300 hover:bg-slate-800 hover:text-brand-300 flex items-center justify-between transition-colors"
+                >
+                  <span>{f.label}</span>
+                  <span className="text-[10px] text-slate-500 font-mono">{f.type}</span>
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={() => {
+                onNavigate('big-o');
+                setMobileMenuOpen(false);
+              }}
+              className={`w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-sm flex items-center gap-2.5 transition-colors ${
+                currentView === 'big-o'
+                  ? 'bg-brand-500/20 text-brand-300 font-semibold border border-brand-500/30'
+                  : 'text-slate-200 hover:bg-slate-800'
+              }`}
+            >
+              <Table className="w-4 h-4 text-brand-400" />
+              Big-O Cheat Sheet
+            </button>
+
+            <button
+              onClick={() => {
+                onNavigate('about');
+                setMobileMenuOpen(false);
+              }}
+              className={`w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-sm flex items-center gap-2.5 transition-colors ${
+                currentView === 'about'
+                  ? 'bg-brand-500/20 text-brand-300 font-semibold border border-brand-500/30'
+                  : 'text-slate-200 hover:bg-slate-800'
+              }`}
+            >
+              <Info className="w-4 h-4 text-brand-400" />
+              About BitForge
+            </button>
           </div>
-
-          <button
-            onClick={() => {
-              onNavigate('big-o');
-              setMobileMenuOpen(false);
-            }}
-            className="w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-sm text-slate-200 hover:bg-slate-800 flex items-center gap-2.5"
-          >
-            <Table className="w-4 h-4 text-brand-400" />
-            Big-O Cheat Sheet
-          </button>
-
-          <button
-            onClick={() => {
-              onNavigate('about');
-              setMobileMenuOpen(false);
-            }}
-            className="w-full text-left px-3.5 py-2.5 min-h-[44px] rounded-xl text-sm text-slate-200 hover:bg-slate-800 flex items-center gap-2.5"
-          >
-            <Info className="w-4 h-4 text-brand-400" />
-            About BitForge
-          </button>
-        </div>
+        </>
       )}
     </nav>
   );

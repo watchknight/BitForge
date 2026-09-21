@@ -62,6 +62,7 @@ export const TextReveal: React.FC<TextRevealProps> = ({
               delay: delay + idx * stagger,
               ease: [0.16, 1, 0.3, 1],
             }}
+            style={{ willChange: 'transform, opacity' }}
             className="inline-block"
           >
             {word}
@@ -75,6 +76,7 @@ export const TextReveal: React.FC<TextRevealProps> = ({
 interface LineRevealProps {
   lines: (string | React.ReactNode)[];
   className?: string;
+  as?: 'h1' | 'h2' | 'h3' | 'div';
   delay?: number;
   lineDelay?: number;
 }
@@ -82,13 +84,14 @@ interface LineRevealProps {
 export const LineReveal: React.FC<LineRevealProps> = ({
   lines,
   className = '',
+  as: Component = 'div',
   delay = 0,
   lineDelay = 0.15,
 }) => {
   const { reducedMotion } = useAccessibility();
 
   return (
-    <div className={`space-y-1 ${className}`}>
+    <Component className={`space-y-1.5 ${className}`}>
       {lines.map((line, idx) => {
         if (reducedMotion) {
           return <div key={idx}>{line}</div>;
@@ -97,19 +100,20 @@ export const LineReveal: React.FC<LineRevealProps> = ({
         return (
           <div key={idx} className="overflow-hidden">
             <motion.div
-              initial={{ y: '115%', opacity: 0, rotate: 1 }}
-              animate={{ y: 0, opacity: 1, rotate: 0 }}
+              initial={{ y: '110%', opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
               transition={{
-                duration: 1.05,
+                duration: 0.95,
                 delay: delay + idx * lineDelay,
                 ease: [0.16, 1, 0.3, 1],
               }}
+              style={{ willChange: 'transform, opacity' }}
             >
               {line}
             </motion.div>
           </div>
         );
       })}
-    </div>
+    </Component>
   );
 };

@@ -34,10 +34,10 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
       {/* Atmospheric Visual Backdrop */}
       <div className="max-w-7xl 2xl:max-w-9xl 3xl:max-w-10xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 relative z-10 flex flex-col items-center text-center">
         {/* Subtle Category Variant Switcher */}
-        <div className="inline-flex items-center gap-1.5 p-1 rounded-xl bg-obsidian-900/90 border border-slate-800 backdrop-blur-md mb-8">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 p-1 rounded-2xl bg-obsidian-900/90 border border-slate-800 backdrop-blur-md mb-8 max-w-full">
           <button
             onClick={() => setVariant('sorting')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-2 min-h-[38px] rounded-xl text-xs font-mono transition-all ${
               variant === 'sorting'
                 ? 'bg-brand-500 text-obsidian-950 font-bold shadow-sm'
                 : 'text-slate-400 hover:text-white'
@@ -49,7 +49,7 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
 
           <button
             onClick={() => setVariant('tree')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-2 min-h-[38px] rounded-xl text-xs font-mono transition-all ${
               variant === 'tree'
                 ? 'bg-brand-500 text-obsidian-950 font-bold shadow-sm'
                 : 'text-slate-400 hover:text-white'
@@ -61,7 +61,7 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
 
           <button
             onClick={() => setVariant('graph')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-2 min-h-[38px] rounded-xl text-xs font-mono transition-all ${
               variant === 'graph'
                 ? 'bg-brand-500 text-obsidian-950 font-bold shadow-sm'
                 : 'text-slate-400 hover:text-white'
@@ -73,13 +73,13 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
         </div>
 
         {/* The Atmospheric Data Structure Graphic */}
-        <div className="w-full max-w-4xl h-44 sm:h-56 rounded-3xl bg-obsidian-900/50 border border-slate-800/80 backdrop-blur-sm p-6 flex items-center justify-center relative overflow-hidden shadow-2xl mb-10 group">
+        <div className="w-full max-w-4xl h-44 sm:h-56 rounded-3xl bg-obsidian-900/50 border border-slate-800/80 backdrop-blur-sm p-4 sm:p-6 flex items-center justify-center relative overflow-hidden shadow-2xl mb-8 sm:mb-10 group">
           {/* Subtle tactile grain background inside canvas */}
           <div className="absolute inset-0 forge-grain opacity-40 pointer-events-none" />
 
           {/* 1. Sorting Variant: Partition Harmonic Bars */}
           {variant === 'sorting' && (
-            <div className="w-full h-full flex items-end justify-center gap-2 sm:gap-3 px-4">
+            <div className="w-full h-full flex items-end justify-center gap-1.5 sm:gap-3 px-2 sm:px-4">
               {[25, 45, 18, 70, 35, 90, 52, 38, 80, 29, 64, 42, 95, 15, 60, 32].map((height, i) => {
                 const isPivot = i === 7;
                 const isSorted = i > 11;
@@ -184,12 +184,12 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
           )}
         </div>
 
-        {/* Thoughtful Text Content */}
+        {/* Thoughtful Text Content with Fluid Sizing & High Contrast */}
         <div className="max-w-2xl space-y-3">
-          <blockquote className="text-lg sm:text-2xl font-serif italic text-slate-200 leading-relaxed font-light">
+          <blockquote className="text-[clamp(1.15rem,2.8vw+0.45rem,1.5rem)] font-serif italic text-white/95 drop-shadow-md leading-relaxed font-light">
             "{quote}"
           </blockquote>
-          <div className="text-xs font-mono uppercase tracking-widest text-brand-400 font-medium">
+          <div className="text-xs font-mono uppercase tracking-widest text-brand-400 font-semibold drop-shadow-sm">
             — {author}
           </div>
         </div>

@@ -193,8 +193,35 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
         </div>
       </div>
 
+      {/* Mobile Stage Navigator: Quick horizontal jump bar for narrow screens */}
+      <div className="flex sm:hidden flex-col gap-1.5 pt-1">
+        <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 px-1">
+          <span className="uppercase tracking-wider text-slate-500">Jump to Stage</span>
+          <span className="text-brand-400">11 Stages</span>
+        </div>
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 pt-0.5 no-scrollbar scroll-smooth">
+          {roadmapCategories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => {
+                const el = document.getElementById(`stage-${cat.order}`);
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
+              className="flex-shrink-0 px-3 py-1.5 rounded-lg bg-obsidian-900 border border-slate-800 text-xs font-mono text-slate-300 hover:text-white hover:border-brand-500/40 active:bg-brand-500/20 active:border-brand-500/60 transition-all flex items-center gap-1.5 min-h-[36px]"
+            >
+              <span className="w-4 h-4 rounded-full bg-brand-500/20 text-brand-300 text-[10px] flex items-center justify-center font-bold">
+                {cat.order}
+              </span>
+              <span className="whitespace-nowrap">{cat.title.split(' ')[0]}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Categories & Stages */}
-      <div className="space-y-8">
+      <div className="space-y-8 relative">
         {roadmapCategories.map((category) => {
           const filteredTopics = category.topics.filter((t) => {
             const status = getTopicStatus(t.id);
@@ -214,21 +241,32 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
           return (
             <div
               key={category.id}
-              className="bg-obsidian-900/60 border border-slate-800/90 rounded-2xl p-5 sm:p-6 space-y-4"
+              id={`stage-${category.order}`}
+              className="scroll-mt-24 bg-obsidian-900/60 border border-slate-800/90 rounded-2xl p-4 sm:p-6 space-y-4 transition-all hover:border-slate-700/80"
             >
-              {/* Category Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 border-b border-slate-800/60">
-                <div>
-                  <h2 className="text-base sm:text-lg font-bold text-white font-sans">
-                    {category.title}
-                  </h2>
-                  <p className="text-xs text-slate-400">
-                    {category.description}
-                  </p>
+              {/* Category Header with Stage Milestone Badge */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800/60">
+                <div className="flex items-start gap-3">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-brand-500/15 border border-brand-500/40 text-brand-300 flex items-center justify-center text-xs font-mono font-bold shrink-0 mt-0.5 shadow-sm shadow-brand-500/10">
+                    {category.order}
+                  </div>
+                  <div>
+                    <h2 className="text-base sm:text-lg font-bold text-white font-sans">
+                      {category.title}
+                    </h2>
+                    <p className="text-xs text-slate-400">
+                      {category.description}
+                    </p>
+                  </div>
                 </div>
-                <span className="text-[11px] font-mono text-slate-500 self-start sm:self-center">
-                  Stage {category.order} of 11
-                </span>
+                <div className="flex items-center gap-2 self-start sm:self-center pl-10 sm:pl-0">
+                  <span className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-obsidian-950 border border-slate-800 text-slate-400">
+                    Stage {category.order} of 11
+                  </span>
+                  <span className="text-[11px] font-mono text-brand-400/80">
+                    {category.topics.length} topics
+                  </span>
+                </div>
               </div>
 
               {category.id === 'sorting' && (

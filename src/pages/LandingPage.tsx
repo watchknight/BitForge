@@ -42,6 +42,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   const [heroComparing, setHeroComparing] = useState<[number, number]>([1, 2]);
   const [heroSorted, setHeroSorted] = useState<number[]>([5, 6]);
   const [hoveredFlagshipId, setHoveredFlagshipId] = useState<string | null>(null);
+  const [activePreviewFlagshipId, setActivePreviewFlagshipId] = useState<string | null>(null);
 
   const randomizeHero = () => {
     soundEngine.playStepSound('swap', Math.random());
@@ -140,13 +141,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </span>
           </div>
 
-          {/* Staggered Line Reveal Headline (Inspired by dkton.at / awwwards) */}
+          {/* Staggered Line Reveal Headline with Fluid CSS clamp() */}
           <LineReveal
+            as="h1"
             lines={[
-              <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-bone font-sans leading-[1.05]">
+              <span className="block text-[clamp(2.1rem,6.5vw+0.5rem,5.5rem)] font-extrabold tracking-tight text-bone font-sans leading-[1.08] break-words hyphens-none">
                 Stop memorizing code.
               </span>,
-              <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight bg-gradient-to-r from-amber-200 via-orange-400 to-amber-500 bg-clip-text text-transparent font-sans leading-[1.05]">
+              <span className="block text-[clamp(2.1rem,6.5vw+0.5rem,5.5rem)] font-extrabold tracking-tight bg-gradient-to-r from-amber-200 via-orange-400 to-amber-500 bg-clip-text text-transparent font-sans leading-[1.08] break-words hyphens-none">
                 Watch data move.
               </span>
             ]}
@@ -265,11 +267,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       {/* Core Architectural Pillars Feature Grid */}
       <section className="max-w-7xl 2xl:max-w-9xl 3xl:max-w-10xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-950/60 border border-brand-500/30 text-brand-300 text-xs font-mono mb-3">
-            <CheckCircle className="w-3.5 h-3.5 text-brand-400" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-950/60 border border-brand-500/30 text-brand-300 text-xs font-mono mb-2">
+            <Layers className="w-3.5 h-3.5 text-brand-400" />
             <span>The BitForge Triad</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white font-sans">
+          <h2 className="text-[clamp(1.5rem,3.5vw+0.5rem,2.25rem)] font-bold text-white font-sans tracking-tight">
             Built for Pedagogical Clarity
           </h2>
           <p className="text-sm text-slate-400 mt-2">
@@ -317,7 +319,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <div className="text-xs font-mono text-brand-400 uppercase tracking-widest mb-1">
               5 Foundational Data Shapes
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white font-sans">
+            <h2 className="text-[clamp(1.5rem,3.5vw+0.5rem,2.25rem)] font-bold text-white font-sans tracking-tight">
               Flagship Simulations
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 mt-1">
@@ -343,6 +345,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           {flagshipCards.map((card) => {
             const Icon = card.icon;
             const isHovered = hoveredFlagshipId === card.id;
+            const isPreviewActive = isHovered || activePreviewFlagshipId === card.id;
 
             return (
               <SpotlightCard
@@ -390,8 +393,38 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                     </div>
                   </div>
 
-                  {/* Micro-Animation Snippet Preview */}
-                  <TopicCardPreview type={card.dataShape} isHovered={isHovered} />
+                  {/* Micro-Animation Snippet Preview with Touch Affordance */}
+                  <div className="space-y-1.5 pt-1">
+                    <div className="flex items-center justify-between text-[10px] font-mono text-slate-400">
+                      <span className="uppercase text-slate-500 tracking-wider">Preview</span>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActivePreviewFlagshipId(activePreviewFlagshipId === card.id ? null : card.id);
+                        }}
+                        aria-label={activePreviewFlagshipId === card.id ? `Stop previewing ${card.title}` : `Preview ${card.title} animation`}
+                        className={`px-2.5 py-1 min-h-[30px] rounded-md text-[10px] font-mono flex items-center gap-1.5 border transition-all ${
+                          activePreviewFlagshipId === card.id
+                            ? 'bg-brand-500 text-obsidian-950 font-bold border-brand-400 shadow-sm'
+                            : 'bg-obsidian-950 text-slate-300 border-slate-800 hover:text-brand-300 hover:border-brand-500/30'
+                        }`}
+                      >
+                        {activePreviewFlagshipId === card.id ? (
+                          <>
+                            <Pause className="w-2.5 h-2.5 fill-current" />
+                            <span>Playing</span>
+                          </>
+                        ) : (
+                          <>
+                            <Play className="w-2.5 h-2.5 fill-current text-brand-400" />
+                            <span>Tap to Preview</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                    <TopicCardPreview type={card.dataShape} isHovered={isPreviewActive} />
+                  </div>
                 </div>
 
                 <div className="pt-4 mt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono text-brand-400 group-hover:text-brand-300">

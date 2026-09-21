@@ -51,9 +51,13 @@ export const DriftingEmbers: React.FC<DriftingEmbersProps> = ({
     let isVisible = true;
     let width = (canvas.width = container.clientWidth || window.innerWidth);
     let height = (canvas.height = container.clientHeight || window.innerHeight);
+    let isMobile = width < 640;
 
     // Particle count: restrained & sparse (sparks rising off a forge, not a blizzard)
-    const particleCount = density === 'sparse' 
+    // On mobile (<640px), cap to 8 to guarantee rock-solid 60fps on mid-range devices
+    const particleCount = isMobile
+      ? 8
+      : density === 'sparse' 
       ? Math.min(28, Math.max(16, Math.floor(width / 65)))
       : Math.min(42, Math.max(22, Math.floor(width / 45)));
 
@@ -93,6 +97,7 @@ export const DriftingEmbers: React.FC<DriftingEmbersProps> = ({
       if (!container || !canvas) return;
       width = canvas.width = container.clientWidth;
       height = canvas.height = container.clientHeight;
+      isMobile = width < 640;
     };
 
     const resizeObserver = new ResizeObserver(handleResize);
@@ -151,13 +156,21 @@ export const DriftingEmbers: React.FC<DriftingEmbersProps> = ({
           // Soft ambient halo glow
           if (p.hasGlow) {
             const glowRadius = p.radius * 3.5;
-            const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowRadius);
-            grad.addColorStop(0, p.glowColor);
-            grad.addColorStop(1, 'rgba(249, 115, 22, 0)');
-            ctx.fillStyle = grad;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, glowRadius, 0, Math.PI * 2);
-            ctx.fill();
+            if (isMobile) {
+              // Lightweight arc fill for mobile GPUs (avoids per-frame createRadialGradient allocation)
+              ctx.fillStyle = p.glowColor;
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, glowRadius, 0, Math.PI * 2);
+              ctx.fill();
+            } else {
+              const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowRadius);
+              grad.addColorStop(0, p.glowColor);
+              grad.addColorStop(1, 'rgba(249, 115, 22, 0)');
+              ctx.fillStyle = grad;
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, glowRadius, 0, Math.PI * 2);
+              ctx.fill();
+            }
           }
 
           // Hot core spark point
