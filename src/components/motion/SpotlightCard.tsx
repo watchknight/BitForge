@@ -50,10 +50,20 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({
     setTilt({ rotateX: 0, rotateY: 0 });
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (onClick && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      onClick();
+    }
+  };
+
   return (
     <motion.div
       ref={cardRef}
       onClick={onClick}
+      onKeyDown={onClick ? handleKeyDown : undefined}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -69,7 +79,9 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({
       style={{
         transformStyle: 'preserve-3d',
       }}
-      className={`relative overflow-hidden rounded-2xl bg-obsidian-900/70 border border-slate-800 hover:border-slate-700 transition-colors group cursor-pointer ${className}`}
+      className={`relative overflow-hidden rounded-2xl bg-obsidian-900/70 border border-slate-800 hover:border-slate-700 transition-colors group ${
+        onClick ? 'cursor-pointer focus-visible:ring-2 focus-visible:ring-brand-400 focus:outline-none' : ''
+      } ${className}`}
     >
       {/* Precision Corner Crosshairs (Inspired by dkton.at) */}
       <span className="absolute top-1.5 left-1.5 font-mono text-[10px] text-slate-700 group-hover:text-brand-400/80 transition-colors pointer-events-none select-none z-20">

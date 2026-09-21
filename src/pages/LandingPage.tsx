@@ -110,10 +110,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     <div className="space-y-20 sm:space-y-28 pb-24">
       {/* Hero Section with Split Interactive Showcase */}
       <section className="relative pt-6 sm:pt-10 lg:pt-14 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 2xl:px-12 max-w-7xl 2xl:max-w-9xl 3xl:max-w-10xl mx-auto overflow-hidden">
-        {/* Atmospheric Layers: Volumetric Ember Glow + Blueprint Coordinate Grid + Film Grain + Drifting Sparks */}
+        {/* Atmospheric Layers: Volumetric Ember Glow + Blueprint Coordinate Grid + Drifting Sparks */}
         <div className="absolute inset-0 forge-glow-hero pointer-events-none" />
         <div className="absolute inset-0 forge-blueprint-grid pointer-events-none opacity-60" />
-        <div className="absolute inset-0 forge-grain opacity-80 pointer-events-none" />
         <DriftingEmbers density="sparse" speed="slow" />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center relative z-10">

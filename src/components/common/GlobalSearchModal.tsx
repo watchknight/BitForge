@@ -189,12 +189,14 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
               onClick={() => setQuery('')}
               className="p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800"
               title="Clear search"
+              aria-label="Clear search query"
             >
               <X className="w-4 h-4" />
             </button>
           )}
           <button
             onClick={onClose}
+            aria-label="Close search modal"
             className="text-xs font-mono px-2 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-slate-200 border border-slate-700"
           >
             ESC
@@ -246,9 +248,18 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
               return (
                 <div
                   key={topic.id}
+                  role="button"
+                  tabIndex={0}
                   onClick={() => {
                     onSelectTopic(topic.id);
                     onClose();
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onSelectTopic(topic.id);
+                      onClose();
+                    }
                   }}
                   onMouseEnter={() => setSelectedIndex(index)}
                   className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all ${

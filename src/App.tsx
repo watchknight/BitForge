@@ -5,10 +5,14 @@ import { AccessibilityProvider } from './context/AccessibilityContext';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { LandingPage } from './pages/LandingPage';
-import { GlobalSearchModal } from './components/common/GlobalSearchModal';
 import { ExperienceIntroGate } from './components/motion/ExperienceIntroGate';
 import { soundEngine } from './services/soundEngine';
 import { BitForgeLogo } from './components/common/BitForgeLogo';
+
+// Lazy load GlobalSearchModal to avoid pulling topic metadata into initial landing bundle
+const GlobalSearchModal = lazy(() =>
+  import('./components/common/GlobalSearchModal').then((m) => ({ default: m.GlobalSearchModal }))
+);
 
 // Lazy load pages for high performance and fast initial load
 const RoadmapPage = lazy(() =>
@@ -222,12 +226,16 @@ export const App: React.FC = () => {
           {/* Cinematic Experience Intro Gate (dkton.at style) */}
           <ExperienceIntroGate />
 
-          {/* Global Search Dialog Modal */}
-          <GlobalSearchModal
-            isOpen={searchOpen}
-            onClose={() => setSearchOpen(false)}
-            onSelectTopic={(tid) => navigateTo('topic', tid)}
-          />
+          {/* Global Search Dialog Modal (Code-split to keep initial bundle lean) */}
+          {searchOpen && (
+            <Suspense fallback={null}>
+              <GlobalSearchModal
+                isOpen={searchOpen}
+                onClose={() => setSearchOpen(false)}
+                onSelectTopic={(tid) => navigateTo('topic', tid)}
+              />
+            </Suspense>
+          )}
         </div>
 
       </ProgressProvider>

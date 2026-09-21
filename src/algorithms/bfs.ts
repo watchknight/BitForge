@@ -103,17 +103,20 @@ export function generateBFSSteps(
   const steps: Step<BFSSimulationState>[] = [];
   let stepId = 1;
 
+  // Validate startNodeId exists in the graph, default to first node or 'A'
+  const validStart = nodes.some((n) => n.id === startNodeId) ? startNodeId : (nodes[0]?.id || 'A');
+
   // Build adjacency list
   const adj: Record<string, string[]> = {};
   nodes.forEach((n) => (adj[n.id] = []));
   edges.forEach((e) => {
-    adj[e.from].push(e.to);
-    adj[e.to].push(e.from); // undirected
+    if (adj[e.from]) adj[e.from].push(e.to);
+    if (adj[e.to]) adj[e.to].push(e.from); // undirected
   });
 
-  const visited: string[] = [startNodeId];
-  const queue: string[] = [startNodeId];
-  const distances: Record<string, number> = { [startNodeId]: 0 };
+  const visited: string[] = [validStart];
+  const queue: string[] = [validStart];
+  const distances: Record<string, number> = { [validStart]: 0 };
 
   // Step 0: Initialization
   steps.push({
@@ -126,13 +129,13 @@ export function generateBFSSteps(
       distances: { ...distances },
       activeEdge: null,
     },
-    highlights: { [startNodeId]: 'active' },
-    pointers: { start: startNodeId },
-    description: `Initializing Breadth-First Search at start node '${startNodeId}'. Mark '${startNodeId}' as visited, set distance=0, and enqueue it.`,
+    highlights: { [validStart]: 'active' },
+    pointers: { start: validStart },
+    description: `Initializing Breadth-First Search at start node '${validStart}'. Mark '${validStart}' as visited, set distance=0, and enqueue it.`,
     codeLine: 4,
     explanation: {
       action: 'INITIALIZE',
-      variables: { start: startNodeId, queueSize: queue.length, visitedCount: visited.length },
+      variables: { start: validStart, queueSize: queue.length, visitedCount: visited.length },
     },
   });
 

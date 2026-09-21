@@ -97,6 +97,8 @@ export const ScrollSentenceBuilder: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const phraseRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  const [isInView, setIsInView] = useState(true);
+
   // Natural scroll-triggered phrase progression (does not require tall desktop scroll distances)
   useEffect(() => {
     if (isAutoPlaying) return;
@@ -122,14 +124,30 @@ export const ScrollSentenceBuilder: React.FC = () => {
     return () => observers.forEach((obs) => obs.disconnect());
   }, [isAutoPlaying]);
 
-  // Auto-play timer if user clicks play
+  // Section visibility observer: Suspend autoplay when scrolled out of view
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto-play timer if user clicks play (only when section is visible)
+  useEffect(() => {
+    if (!isAutoPlaying || !isInView) return;
     const interval = setInterval(() => {
       setActiveStep((prev) => (prev < ALGORITHM_PHRASES.length - 1 ? prev + 1 : 0));
     }, 2800);
     return () => clearInterval(interval);
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, isInView]);
 
   const current = ALGORITHM_PHRASES[activeStep];
 
@@ -138,9 +156,8 @@ export const ScrollSentenceBuilder: React.FC = () => {
       ref={containerRef}
       className="py-14 sm:py-24 bg-gradient-to-b from-obsidian-950 via-obsidian-900 to-obsidian-950 border-y border-slate-800/80 relative overflow-hidden"
     >
-      {/* Tactile grain & subtle ember glow */}
+      {/* Subtle ember glow */}
       <div className="absolute inset-0 forge-glow-break pointer-events-none" />
-      <div className="absolute inset-0 forge-grain opacity-70 pointer-events-none" />
 
       <div className="max-w-6xl 2xl:max-w-8xl 3xl:max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 relative z-10">
         {/* Section Header with Fluid Typography */}

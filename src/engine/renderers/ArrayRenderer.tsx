@@ -1,4 +1,19 @@
-import React from 'react';
+/**
+ * BitForge Array & Sequence Visualizer: `ArrayRenderer`
+ * 
+ * Dual-representation visualizer for linear array and sorting algorithms
+ * (Bubble, QuickSort, MergeSort, Binary Search, Two Pointers, Sliding Window).
+ * 
+ * VISUAL ARCHITECTURE:
+ * 1. Proportional Vertical Bars: Heights scale proportionally based on `maxVal`,
+ *    allowing instant visual comprehension of relative magnitude and sortedness.
+ * 2. Tactile Element Cards: Displays numeric values, 0-based indices, and stacked
+ *    pointer tags (`[i]`, `[j]`, `[pivot]`, `[left]`, `[right]`).
+ * 3. Divide & Conquer Boundaries: Auxiliary indicators (e.g. `mergeRange` badge)
+ *    demarcating recursive partitions.
+ */
+
+import React, { useMemo } from 'react';
 import { HighlightRole } from '../../types/simulation';
 import { motion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
@@ -15,7 +30,7 @@ interface ArrayRendererProps {
   };
 }
 
-export const ArrayRenderer: React.FC<ArrayRendererProps> = ({
+export const ArrayRenderer: React.FC<ArrayRendererProps> = React.memo(({
   array,
   highlights = {},
   pointers = {},
@@ -23,17 +38,20 @@ export const ArrayRenderer: React.FC<ArrayRendererProps> = ({
 }) => {
   const { theme } = useTheme();
   const isLight = theme === 'light';
-  const maxVal = Math.max(...array, 1);
+  const maxVal = useMemo(() => Math.max(...array, 1), [array]);
 
   // Group pointers by index to render stacked badges if multiple pointers land on same index
-  const indexToPointers: Record<number, string[]> = {};
-  Object.entries(pointers).forEach(([name, idx]) => {
-    const numIdx = Number(idx);
-    if (!isNaN(numIdx)) {
-      if (!indexToPointers[numIdx]) indexToPointers[numIdx] = [];
-      indexToPointers[numIdx].push(name);
-    }
-  });
+  const indexToPointers = useMemo(() => {
+    const map: Record<number, string[]> = {};
+    Object.entries(pointers).forEach(([name, idx]) => {
+      const numIdx = Number(idx);
+      if (!isNaN(numIdx)) {
+        if (!map[numIdx]) map[numIdx] = [];
+        map[numIdx].push(name);
+      }
+    });
+    return map;
+  }, [pointers]);
 
   const getCardClasses = (role?: HighlightRole) => {
     if (isLight) {
@@ -224,4 +242,4 @@ export const ArrayRenderer: React.FC<ArrayRendererProps> = ({
       )}
     </div>
   );
-};
+});

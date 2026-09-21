@@ -1,8 +1,23 @@
-import React from 'react';
+/**
+ * BitForge Hierarchical Tree Visualizer: `TreeRenderer`
+ * 
+ * SVG canvas renderer for tree data structures and recursive tree traversals
+ * (Binary Search Tree, AVL Tree, Red-Black Tree, Inorder, Preorder, Postorder).
+ * 
+ * FEATURES:
+ * 1. Recursive Layout Algorithm: Computes balanced (x, y) coordinates based on
+ *    depth and sub-tree boundary intervals.
+ * 2. Connecting Branch Lines: Renders directional SVG lines between parent and children.
+ * 3. Unified Semantic Styling: Delegates fill, stroke, and text styling to `getSvgNodeTheme`.
+ * 4. Interactive Pan/Zoom Viewport: Encapsulated within `SimulationViewport` with pinch/zoom.
+ */
+
+import React, { useMemo } from 'react';
 import { HighlightRole } from '../../types/simulation';
 import { motion } from 'framer-motion';
 import { SimulationViewport } from './SimulationViewport';
 import { useTheme } from '../../context/ThemeContext';
+import { getSvgNodeTheme } from '../semanticThemes';
 
 export interface TreeNode {
   id: string | number;
@@ -27,7 +42,11 @@ interface PositionedNode {
   right?: PositionedNode | null;
 }
 
-export const TreeRenderer: React.FC<TreeRendererProps> = ({
+const WIDTH = 600;
+const HEIGHT = 280;
+const NODE_RADIUS = 20;
+
+export const TreeRenderer: React.FC<TreeRendererProps> = React.memo(({
   root,
   highlights = {},
   traversalList = [],
@@ -35,146 +54,64 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
 }) => {
   const { theme } = useTheme();
   const isLight = theme === 'light';
-  const WIDTH = 600;
-  const HEIGHT = 280;
-  const NODE_RADIUS = 20;
 
-  // Calculate layout coordinates recursively
-  const layoutTree = (
-    node: TreeNode | null,
-    depth: number = 0,
-    minX: number = 20,
-    maxX: number = WIDTH - 20
-  ): PositionedNode | null => {
-    if (!node) return null;
+  // Memoize tree layout geometry and SVG line coordinates
+  const { positionedRoot, nodesList, lines } = useMemo(() => {
+    const layoutTree = (
+      node: TreeNode | null,
+      depth: number = 0,
+      minX: number = 20,
+      maxX: number = WIDTH - 20
+    ): PositionedNode | null => {
+      if (!node) return null;
 
-    const x = (minX + maxX) / 2;
-    const y = 40 + depth * 65;
+      const x = (minX + maxX) / 2;
+      const y = 40 + depth * 65;
 
-    return {
-      id: node.id,
-      val: node.val,
-      x,
-      y,
-      left: layoutTree(node.left ?? null, depth + 1, minX, x),
-      right: layoutTree(node.right ?? null, depth + 1, x, maxX),
+      return {
+        id: node.id,
+        val: node.val,
+        x,
+        y,
+        left: layoutTree(node.left ?? null, depth + 1, minX, x),
+        right: layoutTree(node.right ?? null, depth + 1, x, maxX),
+      };
     };
-  };
 
-  const positionedRoot = layoutTree(root);
+    const positionedRoot = layoutTree(root);
+    const linesArr: Array<{ x1: number; y1: number; x2: number; y2: number; key: string }> = [];
+    const list: PositionedNode[] = [];
 
-  // Collect all lines and nodes for SVG rendering
-  const lines: Array<{ x1: number; y1: number; x2: number; y2: number; key: string }> = [];
-  const nodesList: PositionedNode[] = [];
-
-  const traverse = (node: PositionedNode | null) => {
-    if (!node) return;
-    nodesList.push(node);
-    if (node.left) {
-      lines.push({
-        x1: node.x,
-        y1: node.y,
-        x2: node.left.x,
-        y2: node.left.y,
-        key: `${node.id}->${node.left.id}`,
-      });
-      traverse(node.left);
-    }
-    if (node.right) {
-      lines.push({
-        x1: node.x,
-        y1: node.y,
-        x2: node.right.x,
-        y2: node.right.y,
-        key: `${node.id}->${node.right.id}`,
-      });
-      traverse(node.right);
-    }
-  };
-
-  traverse(positionedRoot);
-
-  const getNodeFill = (role?: HighlightRole) => {
-    if (isLight) {
-      switch (role) {
-        case 'active':
-          return '#c2410c'; // deep saturated burnt orange
-        case 'comparing':
-          return '#b45309'; // deep golden amber
-        case 'sorted':
-          return '#0369a1'; // deep steel-blue
-        case 'visited':
-          return '#075985'; // deep quenched steel
-        case 'danger':
-          return '#b91c1c'; // deep brick red
-        default:
-          return '#ede7dc'; // warm mid-grey / soft stone
+    const traverse = (node: PositionedNode | null) => {
+      if (!node) return;
+      list.push(node);
+      if (node.left) {
+        linesArr.push({
+          x1: node.x,
+          y1: node.y,
+          x2: node.left.x,
+          y2: node.left.y,
+          key: `${node.id}->${node.left.id}`,
+        });
+        traverse(node.left);
       }
-    }
-
-    switch (role) {
-      case 'active':
-        return '#f97316';
-      case 'comparing':
-        return '#f59e0b';
-      case 'sorted':
-        return '#38bdf8';
-      case 'visited':
-        return '#0284c7';
-      case 'danger':
-        return '#c53030';
-      default:
-        return '#1a1c22';
-    }
-  };
-
-  const getNodeStroke = (role?: HighlightRole) => {
-    if (isLight) {
-      switch (role) {
-        case 'active':
-          return '#9a3412';
-        case 'comparing':
-          return '#92400e';
-        case 'sorted':
-          return '#075985';
-        case 'visited':
-          return '#0c4a6e';
-        case 'danger':
-          return '#991b1b';
-        default:
-          return '#cbbfad';
+      if (node.right) {
+        linesArr.push({
+          x1: node.x,
+          y1: node.y,
+          x2: node.right.x,
+          y2: node.right.y,
+          key: `${node.id}->${node.right.id}`,
+        });
+        traverse(node.right);
       }
-    }
+    };
 
-    switch (role) {
-      case 'active':
-        return '#fb923c';
-      case 'comparing':
-        return '#fbbf24';
-      case 'sorted':
-        return '#7dd3fc';
-      case 'visited':
-        return '#38bdf8';
-      case 'danger':
-        return '#fca5a5';
-      default:
-        return '#3d434f';
-    }
-  };
+    traverse(positionedRoot);
+    return { positionedRoot, nodesList: list, lines: linesArr };
+  }, [root]);
 
-  const getNodeTextColor = (role?: HighlightRole) => {
-    if (isLight) {
-      if (!role) {
-        return '#1c1917'; // warm dark charcoal on soft stone
-      }
-      return '#ffffff';   // crisp white on deep saturated fills
-    }
-
-    if (role === 'active' || role === 'comparing' || role === 'sorted') {
-      return '#0c0c0e';
-    }
-    return '#f5f2eb';
-  };
+  const getNodeColors = (role?: HighlightRole) => getSvgNodeTheme(role, isLight);
 
   return (
     <div className="w-full flex flex-col items-center justify-center p-2 md:p-6 select-none">
@@ -213,6 +150,7 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
             {nodesList.map((n) => {
               const role = highlights[n.id] || highlights[n.val];
               const isHighlighted = !!role;
+              const colors = getNodeColors(role);
 
               return (
                 <g key={n.id} className="transition-all duration-300">
@@ -223,7 +161,7 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
                       cy={n.y}
                       r={NODE_RADIUS + 5}
                       fill="none"
-                      stroke={getNodeStroke(role)}
+                      stroke={colors.stroke}
                       strokeWidth="2"
                       opacity="0.6"
                       className="animate-ping"
@@ -235,8 +173,8 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
                     cx={n.x}
                     cy={n.y}
                     r={NODE_RADIUS}
-                    fill={getNodeFill(role)}
-                    stroke={getNodeStroke(role)}
+                    fill={colors.fill}
+                    stroke={colors.stroke}
                     strokeWidth="2.5"
                     className="transition-colors duration-200"
                   />
@@ -246,7 +184,7 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
                     x={n.x}
                     y={n.y + 5}
                     textAnchor="middle"
-                    fill={getNodeTextColor(role)}
+                    fill={colors.text}
                     fontSize="13"
                     fontWeight="bold"
                     fontFamily="monospace"
@@ -285,4 +223,4 @@ export const TreeRenderer: React.FC<TreeRendererProps> = ({
       )}
     </div>
   );
-};
+});

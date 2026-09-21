@@ -3,13 +3,16 @@ import { QuizQuestion } from '../../types/topic';
 import { useProgress } from '../../context/ProgressContext';
 import { CheckCircle2, XCircle, Award, RotateCcw, ChevronRight, HelpCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '../../context/ThemeContext';
 
 interface QuizCardProps {
   topicId: string;
   questions: QuizQuestion[];
 }
 
-export const QuizCard: React.FC<QuizCardProps> = ({ topicId, questions }) => {
+export const QuizCard: React.FC<QuizCardProps> = React.memo(({ topicId, questions }) => {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const { recordQuizScore, getTopicProgress } = useProgress();
   const currentProgress = getTopicProgress(topicId);
 
@@ -92,11 +95,17 @@ export const QuizCard: React.FC<QuizCardProps> = ({ topicId, questions }) => {
 
                 if (isAnswered) {
                   if (isCorrect) {
-                    btnStyle = 'bg-steel-950/60 border-steel-500/60 text-steel-100 font-semibold shadow-sm';
+                    btnStyle = isLight
+                      ? 'bg-sky-50 border-sky-500 text-sky-950 font-semibold shadow-sm'
+                      : 'bg-steel-950/60 border-steel-500/60 text-steel-100 font-semibold shadow-sm';
                   } else if (isSelected) {
-                    btnStyle = 'bg-red-950/60 border-red-500/60 text-red-200';
+                    btnStyle = isLight
+                      ? 'bg-red-50 border-red-500 text-red-950 shadow-sm'
+                      : 'bg-red-950/60 border-red-500/60 text-red-200';
                   } else {
-                    btnStyle = 'bg-obsidian-950/40 border-slate-800/60 text-slate-500 opacity-60';
+                    btnStyle = isLight
+                      ? 'bg-slate-100/60 border-slate-200 text-slate-400 opacity-60'
+                      : 'bg-obsidian-950/40 border-slate-800/60 text-slate-500 opacity-60';
                   }
                 }
 
@@ -115,10 +124,10 @@ export const QuizCard: React.FC<QuizCardProps> = ({ topicId, questions }) => {
                     </div>
 
                     {isAnswered && isCorrect && (
-                      <CheckCircle2 className="w-4 h-4 text-steel-400 shrink-0 mt-0.5" />
+                      <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${isLight ? 'text-sky-600' : 'text-steel-400'}`} />
                     )}
                     {isAnswered && isSelected && !isCorrect && (
-                      <XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                      <XCircle className={`w-4 h-4 shrink-0 mt-0.5 ${isLight ? 'text-red-600' : 'text-red-400'}`} />
                     )}
                   </button>
                 );
@@ -132,24 +141,28 @@ export const QuizCard: React.FC<QuizCardProps> = ({ topicId, questions }) => {
                 animate={{ opacity: 1, y: 0 }}
                 className={`p-3.5 rounded-xl border text-xs leading-relaxed ${
                   selectedOption === currentQ.correctIndex
-                    ? 'bg-steel-950/40 border-steel-500/40 text-steel-200'
-                    : 'bg-red-950/30 border-red-500/40 text-red-200'
+                    ? isLight
+                      ? 'bg-sky-50/90 border-sky-300 text-sky-950'
+                      : 'bg-steel-950/40 border-steel-500/40 text-steel-200'
+                    : isLight
+                      ? 'bg-red-50/90 border-red-300 text-red-950'
+                      : 'bg-red-950/30 border-red-500/40 text-red-200'
                 }`}
               >
                 <div className="font-bold mb-1 flex items-center gap-1.5">
                   {selectedOption === currentQ.correctIndex ? (
                     <>
-                      <CheckCircle2 className="w-3.5 h-3.5 text-steel-400" />
+                      <CheckCircle2 className={`w-3.5 h-3.5 ${isLight ? 'text-sky-600' : 'text-steel-400'}`} />
                       <span>Correct!</span>
                     </>
                   ) : (
                     <>
-                      <XCircle className="w-3.5 h-3.5 text-red-400" />
+                      <XCircle className={`w-3.5 h-3.5 ${isLight ? 'text-red-600' : 'text-red-400'}`} />
                       <span>Explanation:</span>
                     </>
                   )}
                 </div>
-                <p className="text-slate-300">{currentQ.explanation}</p>
+                <p className={isLight ? 'text-slate-800' : 'text-slate-300'}>{currentQ.explanation}</p>
               </motion.div>
             )}
 
@@ -204,4 +217,4 @@ export const QuizCard: React.FC<QuizCardProps> = ({ topicId, questions }) => {
       </AnimatePresence>
     </div>
   );
-};
+});

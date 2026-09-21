@@ -29,10 +29,9 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
 
   return (
     <section className="relative w-full py-20 sm:py-28 overflow-hidden bg-obsidian-950 border-y border-slate-800/80">
-      {/* Step 3: Full atmospheric break treatment (Ember Glow + Film Grain + Drifting Sparks) */}
+      {/* Step 3: Full atmospheric break treatment (Ember Glow + Drifting Sparks) */}
       <div className="absolute inset-0 forge-glow-break pointer-events-none" />
-      <div className="absolute inset-0 forge-grain opacity-80 pointer-events-none" />
-      {showEmbers && <DriftingEmbers density="sparse" speed="slow" />}
+      {showEmbers && <DriftingEmbers density="sparse" speed="slow" className="hidden sm:block" />}
 
       {/* Atmospheric Visual Backdrop */}
       <div className="max-w-7xl 2xl:max-w-9xl 3xl:max-w-10xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 relative z-10 flex flex-col items-center text-center">
@@ -77,8 +76,6 @@ export const SectionBreather: React.FC<SectionBreatherProps> = ({
 
         {/* The Atmospheric Data Structure Graphic */}
         <div className="w-full max-w-4xl h-44 sm:h-56 rounded-3xl bg-obsidian-900/50 border border-slate-800/80 backdrop-blur-sm p-4 sm:p-6 flex items-center justify-center relative overflow-hidden shadow-2xl mb-8 sm:mb-10 group">
-          {/* Subtle tactile grain background inside canvas */}
-          <div className="absolute inset-0 forge-grain opacity-40 pointer-events-none" />
 
           {/* 1. Sorting Variant: Partition Harmonic Bars */}
           {variant === 'sorting' && (

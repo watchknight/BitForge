@@ -150,6 +150,19 @@ export function generateBinarySearchSteps(
   const steps: Step<number[]>[] = [];
   const arr = [...initialArr].sort((a, b) => a - b);
   let stepId = 1;
+
+  if (arr.length === 0) {
+    steps.push({
+      id: stepId++,
+      state: [],
+      highlights: {},
+      description: `Target ${target} cannot be found in an empty array. Returned -1.`,
+      codeLine: 1,
+      explanation: { action: 'NOT FOUND', variables: { target } },
+    });
+    return steps;
+  }
+
   let low = 0;
   let high = arr.length - 1;
 
@@ -292,6 +305,19 @@ export function generateTernarySearchSteps(
   const steps: Step<number[]>[] = [];
   const arr = [...initialArr].sort((a, b) => a - b);
   let stepId = 1;
+
+  if (arr.length === 0) {
+    steps.push({
+      id: stepId++,
+      state: [],
+      highlights: {},
+      description: `Target ${target} cannot be found in an empty array. Returned -1.`,
+      codeLine: 1,
+      explanation: { action: 'NOT FOUND', variables: { target } },
+    });
+    return steps;
+  }
+
   let low = 0;
   let high = arr.length - 1;
 

@@ -6,7 +6,7 @@ interface ComplexityCardProps {
   complexity: ComplexityInfo;
 }
 
-export const ComplexityCard: React.FC<ComplexityCardProps> = ({ complexity }) => {
+export const ComplexityCard: React.FC<ComplexityCardProps> = React.memo(({ complexity }) => {
   return (
     <div className="bg-obsidian-900/90 border border-slate-800 rounded-2xl p-5 md:p-6 shadow-xl">
       <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-800/80">
@@ -83,4 +83,4 @@ export const ComplexityCard: React.FC<ComplexityCardProps> = ({ complexity }) =>
       </div>
     </div>
   );
-};
+});

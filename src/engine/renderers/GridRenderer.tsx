@@ -1,7 +1,23 @@
-import React from 'react';
+/**
+ * BitForge Dynamic Programming Grid Visualizer: `GridRenderer`
+ * 
+ * Matrix and table visualizer for 1D/2D Dynamic Programming and Recurrence relations
+ * (Fibonacci DP, Knapsack 0/1, Longest Common Subsequence, Grid Paths).
+ * 
+ * FEATURES:
+ * 1. 1D Array & 2D Matrix Normalization: Transparently renders both 1D lookup arrays
+ *    and 2D recurrence tables with row/column headers.
+ * 2. Recurrence Formula Ticker: Displays active mathematical formula (e.g. `dp[i] = dp[i-1] + dp[i-2]`).
+ * 3. Cell Dependency Highlights: Highlights source cells being read (`comparing`) and
+ *    target cells being written (`active`).
+ * 4. Unified Semantic Styling: Uses `getBoxHighlightClasses` for theme-aware cells.
+ */
+
+import React, { useMemo } from 'react';
 import { HighlightRole } from '../../types/simulation';
 import { motion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
+import { getBoxHighlightClasses } from '../semanticThemes';
 
 export interface GridCell {
   row: number;
@@ -20,7 +36,7 @@ interface GridRendererProps {
   activeCell?: { row: number; col: number } | number | null;
 }
 
-export const GridRenderer: React.FC<GridRendererProps> = ({
+export const GridRenderer: React.FC<GridRendererProps> = React.memo(({
   cells,
   rowLabels,
   colLabels,
@@ -32,49 +48,20 @@ export const GridRenderer: React.FC<GridRendererProps> = ({
   const isLight = theme === 'light';
 
   // Normalize to 2D array
-  const is2D = Array.isArray(cells[0]);
-  const matrix: (number | string | null)[][] = is2D
-    ? (cells as (number | string | null)[][])
-    : [cells as (number | string | null)[]];
+  const { is2D, matrix } = useMemo(() => {
+    const isTwoDim = Array.isArray(cells[0]);
+    const mat: (number | string | null)[][] = isTwoDim
+      ? (cells as (number | string | null)[][])
+      : [cells as (number | string | null)[]];
+    return { is2D: isTwoDim, matrix: mat };
+  }, [cells]);
 
   const getCellKey = (r: number, c: number) => {
     return is2D ? `${r},${c}` : `${c}`;
   };
 
-  const getCellClasses = (role?: HighlightRole) => {
-    switch (role) {
-      case 'active':
-        // "In the forge" — actively computed DP cell
-        return isLight
-          ? 'bg-brand-500/20 border-brand-600 text-brand-900 ring-2 ring-brand-500/50 shadow-md shadow-brand-500/20 scale-105 font-bold'
-          : 'bg-brand-500/25 border-brand-500 text-brand-100 ring-2 ring-brand-400/50 shadow-lg shadow-brand-500/25 scale-105 font-bold';
-      case 'comparing':
-        // "In the forge" — dependency/lookup cell
-        return isLight
-          ? 'bg-amber-500/20 border-amber-600 text-amber-900 ring-2 ring-amber-500/50 shadow-md shadow-amber-500/20 font-bold'
-          : 'bg-amber-500/25 border-amber-400 text-amber-200 ring-2 ring-amber-400/50 shadow-lg shadow-amber-500/20 font-bold';
-      case 'sorted':
-        // "Tempered" — computed finished value
-        return isLight
-          ? 'bg-steel-500/20 border-steel-600 text-steel-900 ring-1 ring-steel-500/40 font-semibold'
-          : 'bg-steel-500/20 border-steel-400 text-steel-200 ring-1 ring-steel-500/40 font-semibold';
-      case 'visited':
-        // "Tempered" — previously memoized cell
-        return isLight
-          ? 'bg-steel-500/10 border-steel-400 text-steel-800 font-semibold'
-          : 'bg-steel-950/50 border-steel-500/40 text-steel-200 font-semibold';
-      case 'danger':
-        // "Overheated" — invalid/infeasible state
-        return isLight
-          ? 'bg-red-500/15 border-red-600 text-red-800 ring-2 ring-red-500/40'
-          : 'bg-red-950/40 border-red-500/60 text-red-300 ring-2 ring-red-500/30';
-      default:
-        // "Unforged" — uncomputed raw cell
-        return isLight
-          ? 'bg-[#ede7dc] border-[#cbbfad] text-slate-800 hover:border-slate-400'
-          : 'bg-[#1a1c22] border-[#3d434f] text-slate-300 hover:border-slate-500';
-    }
-  };
+  const getCellClasses = (role?: HighlightRole) => getBoxHighlightClasses(role, isLight);
+
 
   return (
     <div className="w-full flex flex-col items-center justify-center p-4 md:p-6 select-none">
@@ -172,4 +159,4 @@ export const GridRenderer: React.FC<GridRendererProps> = ({
       </div>
     </div>
   );
-};
+});

@@ -1,8 +1,23 @@
-import React from 'react';
+/**
+ * BitForge Graph & Network Visualizer: `GraphRenderer`
+ * 
+ * SVG canvas visualizer for directed, undirected, and weighted graph networks
+ * (Breadth-First Search, Depth-First Search, Dijkstra, Prim's, Topological Sort).
+ * 
+ * FEATURES:
+ * 1. Node & Edge Canvas: Renders vertex coordinates with directional arrow markers,
+ *    weight pills, and shortest path highlighting.
+ * 2. Auxiliary Frontier Panels: Displays real-time BFS Queue (FIFO) or DFS Stack
+ *    and visited set tracking below the main network stage.
+ * 3. Unified Semantic Styling: Uses `getSvgNodeTheme` for node circles, rings, and labels.
+ */
+
+import React, { useMemo } from 'react';
 import { HighlightRole } from '../../types/simulation';
 import { motion } from 'framer-motion';
 import { SimulationViewport } from './SimulationViewport';
 import { useTheme } from '../../context/ThemeContext';
+import { getSvgNodeTheme } from '../semanticThemes';
 
 export interface GraphNode {
   id: string;
@@ -28,7 +43,9 @@ interface GraphRendererProps {
   activeEdge?: { from: string; to: string } | null;
 }
 
-export const GraphRenderer: React.FC<GraphRendererProps> = ({
+const GRAPH_NODE_RADIUS = 22;
+
+export const GraphRenderer: React.FC<GraphRendererProps> = React.memo(({
   nodes,
   edges,
   highlights = {},
@@ -39,93 +56,17 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
 }) => {
   const { theme } = useTheme();
   const isLight = theme === 'light';
-  const NODE_RADIUS = 22;
+  const NODE_RADIUS = GRAPH_NODE_RADIUS;
 
-  // Lookup node by ID
-  const nodeMap = new Map<string, GraphNode>();
-  nodes.forEach((n) => nodeMap.set(n.id, n));
+  // Memoize node lookup map
+  const nodeMap = useMemo(() => {
+    const map = new Map<string, GraphNode>();
+    nodes.forEach((n) => map.set(n.id, n));
+    return map;
+  }, [nodes]);
 
-  const getNodeFill = (role?: HighlightRole) => {
-    if (isLight) {
-      switch (role) {
-        case 'active':
-          return '#c2410c'; // deep saturated burnt orange
-        case 'comparing':
-          return '#b45309'; // deep golden amber
-        case 'sorted':
-          return '#0369a1'; // deep steel-blue
-        case 'visited':
-          return '#075985'; // deep quenched steel
-        case 'danger':
-          return '#b91c1c'; // deep brick red
-        default:
-          return '#ede7dc'; // warm mid-grey / soft stone
-      }
-    }
+  const getNodeColors = (role?: HighlightRole) => getSvgNodeTheme(role, isLight);
 
-    switch (role) {
-      case 'active':
-        return '#f97316';
-      case 'comparing':
-        return '#f59e0b';
-      case 'sorted':
-        return '#38bdf8';
-      case 'visited':
-        return '#0284c7';
-      case 'danger':
-        return '#c53030';
-      default:
-        return '#1a1c22';
-    }
-  };
-
-  const getNodeStroke = (role?: HighlightRole) => {
-    if (isLight) {
-      switch (role) {
-        case 'active':
-          return '#9a3412';
-        case 'comparing':
-          return '#92400e';
-        case 'sorted':
-          return '#075985';
-        case 'visited':
-          return '#0c4a6e';
-        case 'danger':
-          return '#991b1b';
-        default:
-          return '#cbbfad';
-      }
-    }
-
-    switch (role) {
-      case 'active':
-        return '#fb923c';
-      case 'comparing':
-        return '#fbbf24';
-      case 'sorted':
-        return '#7dd3fc';
-      case 'visited':
-        return '#38bdf8';
-      case 'danger':
-        return '#fca5a5';
-      default:
-        return '#3d434f';
-    }
-  };
-
-  const getNodeTextColor = (role?: HighlightRole) => {
-    if (isLight) {
-      if (!role) {
-        return '#1c1917'; // warm dark charcoal on soft stone
-      }
-      return '#ffffff';   // crisp white on deep saturated fills
-    }
-
-    if (role === 'active' || role === 'comparing' || role === 'sorted') {
-      return '#0c0c0e';
-    }
-    return '#f5f2eb';
-  };
 
   return (
     <div className="w-full flex flex-col items-center justify-center p-2 md:p-6 select-none">
@@ -199,26 +140,33 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
                   />
                 )}
 
-                <circle
-                  cx={node.x}
-                  cy={node.y}
-                  r={NODE_RADIUS}
-                  fill={getNodeFill(role)}
-                  stroke={getNodeStroke(role)}
-                  strokeWidth="2.5"
-                />
+                {(() => {
+                  const colors = getNodeColors(role);
+                  return (
+                    <>
+                      <circle
+                        cx={node.x}
+                        cy={node.y}
+                        r={NODE_RADIUS}
+                        fill={colors.fill}
+                        stroke={colors.stroke}
+                        strokeWidth="2.5"
+                      />
 
-                <text
-                  x={node.x}
-                  y={node.y + 5}
-                  textAnchor="middle"
-                  fill={getNodeTextColor(role)}
-                  fontSize="14"
-                  fontWeight="bold"
-                  fontFamily="monospace"
-                >
-                  {node.label}
-                </text>
+                      <text
+                        x={node.x}
+                        y={node.y + 5}
+                        textAnchor="middle"
+                        fill={colors.text}
+                        fontSize="14"
+                        fontWeight="bold"
+                        fontFamily="monospace"
+                      >
+                        {node.label}
+                      </text>
+                    </>
+                  );
+                })()}
 
                 {dist !== undefined && (
                   <g>
@@ -332,4 +280,4 @@ export const GraphRenderer: React.FC<GraphRendererProps> = ({
       </div>
     </div>
   );
-};
+});

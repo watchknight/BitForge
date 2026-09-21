@@ -67,9 +67,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
     <nav className="sticky top-0 z-40 bg-obsidian-950/85 backdrop-blur-md border-b border-slate-800/80">
       <div className="max-w-7xl 2xl:max-w-9xl 3xl:max-w-10xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 h-16 flex items-center justify-between gap-2">
         {/* Brand Logo */}
-        <div 
+        <button 
+          type="button"
           onClick={() => handleNav('landing')}
-          className="flex items-center gap-2.5 cursor-pointer group flex-shrink-0"
+          aria-label="BitForge Home"
+          className="flex items-center gap-2.5 cursor-pointer group flex-shrink-0 bg-transparent border-0 p-0 text-left focus-visible:ring-2 focus-visible:ring-brand-400 rounded-xl"
         >
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-obsidian-950 shadow-lg shadow-brand-500/20 group-hover:shadow-brand-500/40 transition-all duration-300">
             <BitForgeLogo className="w-5 h-5" />
@@ -82,7 +84,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenS
               INTERACTIVE DSA
             </span>
           </div>
-        </div>
+        </button>
 
         {/* Global Search Button (Desktop & Tablet) */}
         {onOpenSearch && (

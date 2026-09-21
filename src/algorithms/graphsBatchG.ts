@@ -42,25 +42,28 @@ export function generateDFSSteps(startNodeId: string = 'A'): Step<any>[] {
   const nodes = defaultGraphNodes;
   const edges = defaultGraphEdges;
 
+  // Validate startNodeId exists in the graph, default to 'A' if invalid
+  const validStart = nodes.some((n) => n.id === startNodeId) ? startNodeId : (nodes[0]?.id || 'A');
+
   // Adjacency map
   const adj: Record<string, string[]> = {};
   nodes.forEach((n) => (adj[n.id] = []));
   edges.forEach((e) => {
-    adj[e.from].push(e.to);
-    adj[e.to].push(e.from);
+    if (adj[e.from]) adj[e.from].push(e.to);
+    if (adj[e.to]) adj[e.to].push(e.from);
   });
 
   const visited: string[] = [];
-  const stack: string[] = [startNodeId];
+  const stack: string[] = [validStart];
 
   steps.push({
     id: stepId++,
     state: { nodes, edges, queue: [...stack], visited: [...visited], distances: {} },
-    highlights: { [startNodeId]: 'active' },
-    pointers: { start: startNodeId },
-    description: `Starting Depth-First Search at root node '${startNodeId}'. DFS plunges deeply along each branch before backtracking.`,
+    highlights: { [validStart]: 'active' },
+    pointers: { start: validStart },
+    description: `Starting Depth-First Search at root node '${validStart}'. DFS plunges deeply along each branch before backtracking.`,
     codeLine: 1,
-    explanation: { action: 'INITIALIZE', variables: { start: startNodeId } },
+    explanation: { action: 'INITIALIZE', variables: { start: validStart } },
   });
 
   function visitDFS(u: string) {
@@ -80,7 +83,7 @@ export function generateDFSSteps(startNodeId: string = 'A'): Step<any>[] {
       explanation: { action: 'VISIT NODE', variables: { node: u, totalVisited: visited.length } },
     });
 
-    for (const v of adj[u]) {
+    for (const v of (adj[u] || [])) {
       if (!visited.includes(v)) {
         steps.push({
           id: stepId++,
@@ -117,7 +120,7 @@ export function generateDFSSteps(startNodeId: string = 'A'): Step<any>[] {
 // ==========================================
 // 2. DIJKSTRA'S SHORTEST PATH
 // ==========================================
-export const weightedGraphNodes: GraphNode[] = [
+const weightedGraphNodes: GraphNode[] = [
   { id: 'A', label: 'A', x: 80, y: 150 },
   { id: 'B', label: 'B', x: 220, y: 70 },
   { id: 'C', label: 'C', x: 220, y: 230 },
@@ -126,7 +129,7 @@ export const weightedGraphNodes: GraphNode[] = [
   { id: 'F', label: 'F', x: 480, y: 150 },
 ];
 
-export const weightedGraphEdges: GraphEdge[] = [
+const weightedGraphEdges: GraphEdge[] = [
   { from: 'A', to: 'B', weight: 4 },
   { from: 'A', to: 'C', weight: 2 },
   { from: 'B', to: 'C', weight: 1 },
@@ -144,20 +147,23 @@ export function generateDijkstraSteps(startId: string = 'A'): Step<any>[] {
   const nodes = weightedGraphNodes;
   const edges = weightedGraphEdges;
 
+  // Validate startId exists in the weighted graph, default to 'A' if invalid
+  const validStart = nodes.some((n) => n.id === startId) ? startId : (nodes[0]?.id || 'A');
+
   const dist: Record<string, number> = {};
   nodes.forEach((n) => (dist[n.id] = Infinity));
-  dist[startId] = 0;
+  dist[validStart] = 0;
 
   const visited = new Set<string>();
-  const pq: Array<{ id: string; d: number }> = [{ id: startId, d: 0 }];
+  const pq: Array<{ id: string; d: number }> = [{ id: validStart, d: 0 }];
 
   steps.push({
     id: stepId++,
-    state: { nodes, edges, queue: [startId], visited: [], distances: { ...dist } },
-    highlights: { [startId]: 'active' },
-    description: `Dijkstra's Algorithm from start '${startId}'. Initialized distance to '${startId}' = 0, all other nodes = ∞.`,
+    state: { nodes, edges, queue: [validStart], visited: [], distances: { ...dist } },
+    highlights: { [validStart]: 'active' },
+    description: `Dijkstra's Algorithm from start '${validStart}'. Initialized distance to '${validStart}' = 0, all other nodes = ∞.`,
     codeLine: 2,
-    explanation: { action: 'INITIALIZE', variables: { start: startId, dist: 0 } },
+    explanation: { action: 'INITIALIZE', variables: { start: validStart, dist: 0 } },
   });
 
   while (pq.length > 0) {

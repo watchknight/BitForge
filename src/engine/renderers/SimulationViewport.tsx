@@ -1,3 +1,18 @@
+/**
+ * BitForge Pan/Zoom Simulation Viewport: `SimulationViewport`
+ * 
+ * An interactive canvas container that wraps graphical data structure renderers
+ * (Trees, Graphs, Grid matrices) with fluid pan, zoom, and auto-fit capabilities.
+ * 
+ * CORE CAPABILITIES:
+ * 1. Automatic Responsive Fitting: On viewports narrower than `contentWidth`, automatically
+ *    calculates an optimal scale factor on mount so diagrams fit without clipping.
+ * 2. Multi-Touch Pinch & Drag: Full touch gesture support for pinch-to-zoom and drag-to-pan
+ *    with momentum containment and bounds clamping.
+ * 3. Mouse Wheel & Controls: Desktop zoom via control buttons or trackpad gestures with
+ *    reset to 100% and auto-fit-to-screen shortcuts.
+ */
+
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { ZoomIn, ZoomOut, Maximize2, RotateCcw, Move } from 'lucide-react';
 
@@ -14,7 +29,7 @@ interface SimulationViewportProps {
   showControls?: boolean;
 }
 
-export const SimulationViewport: React.FC<SimulationViewportProps> = ({
+export const SimulationViewport: React.FC<SimulationViewportProps> = React.memo(({
   children,
   contentWidth = 600,
   contentHeight = 320,
@@ -253,4 +268,4 @@ export const SimulationViewport: React.FC<SimulationViewportProps> = ({
       </div>
     </div>
   );
-};
+});

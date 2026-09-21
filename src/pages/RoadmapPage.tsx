@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { roadmapCategories } from '../data/roadmapData';
 import { topicsData } from '../data/topicsData';
 import { useProgress } from '../context/ProgressContext';
+import { useTheme } from '../context/ThemeContext';
 import { TopicStatus } from '../types/roadmap';
 import { TopicCardPreview } from '../components/topic/TopicCardPreview';
 import { SectionBreather } from '../components/motion/SectionBreather';
@@ -26,6 +27,8 @@ interface RoadmapPageProps {
 }
 
 export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const { progress, isTopicCompleted, getTopicProgress, getTopicStatus, setTopicStatus, getStatusCounts } = useProgress();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | TopicStatus>('all');
@@ -268,13 +271,17 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ onSelectTopic }) => {
               </div>
 
               {category.id === 'sorting' && (
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-gradient-to-r from-amber-500/15 via-amber-500/5 to-transparent border border-amber-500/30">
-                  <div className="flex items-center gap-2.5 text-xs text-amber-200">
-                    <div className="p-1.5 rounded-lg bg-amber-500/20 text-amber-400">
+                <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl border ${
+                  isLight
+                    ? 'bg-amber-500/10 border-amber-500/30'
+                    : 'bg-gradient-to-r from-amber-500/15 via-amber-500/5 to-transparent border-amber-500/30'
+                }`}>
+                  <div className={`flex items-center gap-2.5 text-xs ${isLight ? 'text-amber-950 font-medium' : 'text-amber-200'}`}>
+                    <div className="p-1.5 rounded-lg bg-amber-500/20 text-amber-400 shrink-0">
                       <Trophy className="w-4 h-4" />
                     </div>
                     <span>
-                      <strong className="text-white">Sorting Race Mode:</strong> Pick 2–3 algorithms and benchmark them side-by-side with live comparison & swap counters!
+                      <strong className={isLight ? 'text-amber-950 font-bold' : 'text-white'}>Sorting Race Mode:</strong> Pick 2–3 algorithms and benchmark them side-by-side with live comparison & swap counters!
                     </span>
                   </div>
                   <button

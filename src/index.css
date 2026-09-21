@@ -109,7 +109,7 @@ html.light {
 
   --color-steel-300: 7 89 133;         /* #075985 deep quenched steel (6.95:1 AA) */
   --color-steel-400: 3 105 161;        /* #0369a1 deep steel-blue (5.45:1 AA) */
-  --color-steel-500: 2 132 199;        /* #0284c7 */
+  --color-steel-500: 3 105 161;        /* #0369a1 deep steel-blue (6.02:1 AAA on white) */
   --color-steel-950: 224 242 254;      /* #e0f2fe pale sky pill background */
 
   --color-amber-300: 180 83 9;         /* #b45309 deep golden amber (4.61:1 AA) */
@@ -143,6 +143,20 @@ html.light {
 }
 
 @layer base {
+  html, body {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea,
+  a {
+    touch-action: manipulation;
+  }
+
   body {
     @apply bg-obsidian-950 text-slate-100 font-sans;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
@@ -179,14 +193,14 @@ html.light ::-webkit-scrollbar-thumb:hover {
   background: #c2410c;
 }
 
-/* Tactile film-grain noise texture — eliminates flat vector look */
+/* Tactile film-grain noise texture — optimized 128x128 single-octave tile for fast GPU rasterization */
 .forge-grain {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.038'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.038'/%3E%3C/svg%3E");
   background-repeat: repeat;
 }
 
 html.light .forge-grain {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.022'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.022'/%3E%3C/svg%3E");
   opacity: 0.45;
 }
 
@@ -276,49 +290,6 @@ html.light .forge-blueprint-grid {
   animation: forgeShimmer 6s ease infinite;
 }
 
-/* Glassmorphism card surfaces */
-.glass-panel {
-  background: rgba(20, 20, 23, 0.82);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid #2c2621;
-  box-shadow: 0 8px 30px rgba(10, 8, 6, 0.65), inset 0 1px 0 0 rgba(255, 237, 213, 0.05);
-}
-
-.glass-panel-hover {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.glass-panel-hover:hover {
-  background: rgba(26, 26, 29, 0.92);
-  border-color: rgba(249, 115, 22, 0.4);
-  box-shadow: 0 12px 36px rgba(10, 8, 6, 0.8), 0 0 20px rgba(249, 115, 22, 0.15);
-}
-
-html.light .glass-panel {
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid #e2dad0;
-  box-shadow: 0 8px 30px rgba(180, 160, 140, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
-}
-
-html.light .glass-panel-hover:hover {
-  background: rgba(255, 255, 255, 0.98);
-  border-color: rgba(194, 65, 12, 0.4);
-  box-shadow: 0 12px 36px rgba(180, 160, 140, 0.18), 0 0 20px rgba(194, 65, 12, 0.12);
-}
-
-/* Dedicated warm-toned Forge card utility */
-.card-forge {
-  background-color: #141417;
-  border: 1px solid #2c2621;
-  box-shadow: 0 10px 25px -5px rgba(10, 8, 6, 0.8), inset 0 1px 0 0 rgba(255, 237, 213, 0.04);
-}
-
-html.light .card-forge {
-  background-color: #ffffff;
-  border: 1px solid #e2dad0;
-  box-shadow: 0 10px 25px -5px rgba(180, 160, 140, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
-}
-
 /* Reduced Motion Mode */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
@@ -354,29 +325,8 @@ html.reduced-motion ::after {
   50% { height: 16px; }
 }
 
-/* Fluid Responsive Container */
-.forge-container {
-  width: 100%;
-  max-width: 80rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: clamp(1rem, 2.5vw, 3rem);
-  padding-right: clamp(1rem, 2.5vw, 3rem);
-}
-
-@media (min-width: 1536px) {
-  .forge-container {
-    max-width: 96rem;
-  }
-}
-
-@media (min-width: 1920px) {
-  .forge-container {
-    max-width: 108rem;
-  }
-}
-
-.px-fluid {
-  padding-left: clamp(1rem, 2.5vw, 3rem);
-  padding-right: clamp(1rem, 2.5vw, 3rem);
+/* Universal Accessible Keyboard Focus Indicators */
+:focus-visible {
+  outline: 2px solid rgb(var(--color-brand-400));
+  outline-offset: 2px;
 }

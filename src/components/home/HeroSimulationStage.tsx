@@ -26,24 +26,10 @@ interface HeroSimulationStageProps {
   onSelectTopic?: (topicId: string) => void;
 }
 
-export const HeroSimulationStage: React.FC<HeroSimulationStageProps> = ({ onSelectTopic }) => {
-  const { reducedMotion } = useAccessibility();
-  const [activeTab, setActiveTab] = useState<ArchetypeTab>('quicksort');
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
-  const [isFast, setIsFast] = useState<boolean>(false);
-  const [soundMuted, setSoundMuted] = useState<boolean>(() => soundEngine.getMuted());
-  const [stepIndex, setStepIndex] = useState<number>(0);
-  const [hoveredNode, setHoveredNode] = useState<string | number | null>(null);
-
-  // Sync sound mute state
-  useEffect(() => {
-    return soundEngine.subscribe((muted) => setSoundMuted(muted));
-  }, []);
-
-  // ---------------------------------------------------------------------------
-  // Tab 1: Quick Sort State Machine
-  // ---------------------------------------------------------------------------
-  const quicksortSteps = [
+// ---------------------------------------------------------------------------
+// Tab 1: Quick Sort State Machine
+// ---------------------------------------------------------------------------
+const quicksortSteps = [
     {
       arr: [38, 14, 76, 29, 62, 19, 85, 48],
       pivotIdx: 7,
@@ -293,6 +279,49 @@ export const HeroSimulationStage: React.FC<HeroSimulationStageProps> = ({ onSele
     }
   ];
 
+export const HeroSimulationStage: React.FC<HeroSimulationStageProps> = React.memo(({ onSelectTopic }) => {
+  const { reducedMotion } = useAccessibility();
+  const [activeTab, setActiveTab] = useState<ArchetypeTab>('quicksort');
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [isFast, setIsFast] = useState<boolean>(false);
+  const [soundMuted, setSoundMuted] = useState<boolean>(() => soundEngine.getMuted());
+  const [stepIndex, setStepIndex] = useState<number>(0);
+  const [hoveredNode, setHoveredNode] = useState<string | number | null>(null);
+
+  const stepIndexRef = useRef(stepIndex);
+  stepIndexRef.current = stepIndex;
+  const stageContainerRef = useRef<HTMLDivElement | null>(null);
+  const [isInView, setIsInView] = useState(true);
+  const [isDocVisible, setIsDocVisible] = useState(!document.hidden);
+
+  // Sync sound mute state
+  useEffect(() => {
+    return soundEngine.subscribe((muted) => setSoundMuted(muted));
+  }, []);
+
+  // Track document visibility to suspend playback when tab is backgrounded
+  useEffect(() => {
+    const handleVis = () => setIsDocVisible(!document.hidden);
+    document.addEventListener('visibilitychange', handleVis);
+    return () => document.removeEventListener('visibilitychange', handleVis);
+  }, []);
+
+  // IntersectionObserver: Suspend autoplay loop and audio when scrolled out of view
+  useEffect(() => {
+    const container = stageContainerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
   // Get current max steps for active tab
   const getMaxSteps = useCallback(() => {
     switch (activeTab) {
@@ -303,22 +332,20 @@ export const HeroSimulationStage: React.FC<HeroSimulationStageProps> = ({ onSele
     }
   }, [activeTab]);
 
-  // Step advancement with sound sonification
+  // Step advancement with sound sonification (only when visible to save mobile audio resources)
   const handleStep = useCallback((delta: number = 1) => {
     const max = getMaxSteps();
-    setStepIndex((prev) => {
-      const next = (prev + delta + max) % max;
-      // Play tactile auditory feedback
-      if (delta > 0) {
-        if (next === max - 1) {
-          soundEngine.playStepSound('complete', 0.9);
-        } else {
-          soundEngine.playStepSound('compare', next / max);
-        }
+    const next = (stepIndexRef.current + delta + max) % max;
+    setStepIndex(next);
+    // Play tactile auditory feedback only when in viewport and document is active
+    if (delta > 0 && isInView && isDocVisible) {
+      if (next === max - 1) {
+        soundEngine.playStepSound('complete', 0.9);
+      } else {
+        soundEngine.playStepSound('compare', next / max);
       }
-      return next;
-    });
-  }, [getMaxSteps]);
+    }
+  }, [getMaxSteps, isInView, isDocVisible]);
 
   // Reset step index when tab changes
   const handleTabChange = (tab: ArchetypeTab) => {
@@ -327,16 +354,16 @@ export const HeroSimulationStage: React.FC<HeroSimulationStageProps> = ({ onSele
     setStepIndex(0);
   };
 
-  // Autoplay loop timer
+  // Autoplay loop timer (automatically suspended when scrolled off screen or tab hidden)
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!isPlaying || !isInView || !isDocVisible) return;
     const intervalTime = isFast ? 750 : 1400;
     const timer = setInterval(() => {
       handleStep(1);
     }, intervalTime);
 
     return () => clearInterval(timer);
-  }, [isPlaying, isFast, handleStep]);
+  }, [isPlaying, isInView, isDocVisible, isFast, handleStep]);
 
   // Keyboard shortcut listener for spacebar play/pause
   useEffect(() => {
@@ -386,7 +413,10 @@ export const HeroSimulationStage: React.FC<HeroSimulationStageProps> = ({ onSele
   };
 
   return (
-    <div className="relative w-full max-w-5xl mx-auto rounded-2xl md:rounded-3xl bg-obsidian-900/90 border border-brand-500/25 shadow-2xl shadow-obsidian-950/80 backdrop-blur-xl overflow-hidden transition-all duration-300 group hover:border-brand-500/40">
+    <div 
+      ref={stageContainerRef}
+      className="relative w-full max-w-5xl mx-auto rounded-2xl md:rounded-3xl bg-obsidian-900/90 border border-brand-500/25 shadow-2xl shadow-obsidian-950/80 backdrop-blur-xl overflow-hidden transition-all duration-300 group hover:border-brand-500/40"
+    >
       {/* Top Ambient Glow Bar */}
       <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-brand-500/60 to-transparent" />
 
@@ -412,8 +442,14 @@ export const HeroSimulationStage: React.FC<HeroSimulationStageProps> = ({ onSele
         </div>
 
         {/* Center/Right: Archetype Switcher Tabs */}
-        <div className="flex items-center gap-1 bg-obsidian-900 border border-slate-800 rounded-xl p-1 overflow-x-auto max-w-full scrollbar-none">
+        <div 
+          role="tablist" 
+          aria-label="Algorithm archetypes"
+          className="flex items-center gap-1 bg-obsidian-900 border border-slate-800 rounded-xl p-1 overflow-x-auto max-w-full scrollbar-none"
+        >
           <button
+            role="tab"
+            aria-selected={activeTab === 'quicksort'}
             onClick={() => handleTabChange('quicksort')}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium whitespace-nowrap shrink-0 transition-all ${
               activeTab === 'quicksort'
@@ -426,6 +462,8 @@ export const HeroSimulationStage: React.FC<HeroSimulationStageProps> = ({ onSele
           </button>
 
           <button
+            role="tab"
+            aria-selected={activeTab === 'bst'}
             onClick={() => handleTabChange('bst')}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium whitespace-nowrap shrink-0 transition-all ${
               activeTab === 'bst'
@@ -438,6 +476,8 @@ export const HeroSimulationStage: React.FC<HeroSimulationStageProps> = ({ onSele
           </button>
 
           <button
+            role="tab"
+            aria-selected={activeTab === 'graph'}
             onClick={() => handleTabChange('graph')}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium whitespace-nowrap shrink-0 transition-all ${
               activeTab === 'graph'
@@ -450,6 +490,8 @@ export const HeroSimulationStage: React.FC<HeroSimulationStageProps> = ({ onSele
           </button>
 
           <button
+            role="tab"
+            aria-selected={activeTab === 'list'}
             onClick={() => handleTabChange('list')}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium whitespace-nowrap shrink-0 transition-all ${
               activeTab === 'list'
@@ -866,6 +908,7 @@ export const HeroSimulationStage: React.FC<HeroSimulationStageProps> = ({ onSele
           {/* Speed Toggle */}
           <button
             onClick={() => setIsFast(!isFast)}
+            aria-label={`Toggle playback speed (currently ${isFast ? '2.0x' : '1.0x'})`}
             className={`px-2.5 py-1 rounded-xl text-xs font-mono font-semibold border transition-all ${
               isFast
                 ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
@@ -909,4 +952,4 @@ export const HeroSimulationStage: React.FC<HeroSimulationStageProps> = ({ onSele
       </div>
     </div>
   );
-};
+});

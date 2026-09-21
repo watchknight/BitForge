@@ -161,7 +161,10 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
   // Reset indices when algo selection or input changes
   const resetRace = () => {
     setIsPlaying(false);
-    if (timerRef.current) clearInterval(timerRef.current);
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
     const initIndices: Record<string, number> = {};
     selectedAlgoIds.forEach((id) => {
       initIndices[id] = 0;
@@ -197,9 +200,11 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
 
   // Advance race
   const stepForward = () => {
+    const newlyFinished: string[] = [];
+    const now = Date.now();
+
     setCurrentStepIndices((prev) => {
       const next = { ...prev };
-      const now = Date.now();
       let anyAdvanced = false;
 
       algorithmData.forEach((item) => {
@@ -208,13 +213,8 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
           next[item.meta.id] = cur + 1;
           anyAdvanced = true;
           if (cur + 1 === item.totalSteps - 1 && !finishTimestamps[item.meta.id]) {
-            soundEngine.playSuccessChime();
-            setFinishTimestamps((fPrev) => ({
-              ...fPrev,
-              [item.meta.id]: now,
-            }));
+            newlyFinished.push(item.meta.id);
           }
-
         }
       });
 
@@ -223,6 +223,18 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
       }
       return next;
     });
+
+    // Execute side effects cleanly outside of state updater
+    if (newlyFinished.length > 0) {
+      soundEngine.playSuccessChime();
+      setFinishTimestamps((fPrev) => {
+        const updated = { ...fPrev };
+        newlyFinished.forEach((id) => {
+          if (!updated[id]) updated[id] = now;
+        });
+        return updated;
+      });
+    }
   };
 
   const stepBackward = () => {
@@ -246,10 +258,16 @@ export const RaceModePage: React.FC<RaceModePageProps> = ({ onSelectTopic }) => 
         stepForward();
       }, intervalMs);
     } else {
-      if (timerRef.current) clearInterval(timerRef.current);
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
     }
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
     };
   }, [isPlaying, speed, algorithmData, finishTimestamps]);
 

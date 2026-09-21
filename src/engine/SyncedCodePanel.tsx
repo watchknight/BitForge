@@ -1,4 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
+/**
+ * BitForge Synchronized Code Inspector: `SyncedCodePanel`
+ * 
+ * Side-by-side multi-language implementation panel synchronized with active simulation steps.
+ * 
+ * CORE FEATURES:
+ * 1. Multi-Language Switcher: Displays idiomatic implementations in Python, C++, and JavaScript.
+ * 2. Active Line Synchronization: Automatically tracks and highlights the exact source line
+ *    corresponding to `step.codeLine`, with smooth auto-scrolling to keep active lines in view.
+ * 3. Token Syntax Highlighting: Regex-based tokenizer coloring keywords, types, numbers,
+ *    strings, and comments tailored for both Dark and Light Forge themes.
+ * 4. Code Export: 1-click clipboard copying with visual confirmation.
+ */
+
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Language } from '../types/topic';
 import { Code2, Check, Copy } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
@@ -8,7 +22,13 @@ interface SyncedCodePanelProps {
   activeLine: number;
 }
 
-export const SyncedCodePanel: React.FC<SyncedCodePanelProps> = ({
+const SUPPORTED_LANGUAGES: { id: Language; label: string; icon: string }[] = [
+  { id: 'python', label: 'Python', icon: 'py' },
+  { id: 'cpp', label: 'C++', icon: 'cpp' },
+  { id: 'javascript', label: 'JavaScript', icon: 'js' },
+];
+
+export const SyncedCodePanel: React.FC<SyncedCodePanelProps> = React.memo(({
   snippets,
   activeLine,
 }) => {
@@ -20,7 +40,7 @@ export const SyncedCodePanel: React.FC<SyncedCodePanelProps> = ({
   const lineRefs = useRef<Record<number, HTMLDivElement | null>>({});
 
   const currentCode = snippets[activeLang] || '';
-  const lines = currentCode.split('\n');
+  const lines = useMemo(() => currentCode.split('\n'), [currentCode]);
 
   // Auto-scroll active line into view smoothly inside code container
   useEffect(() => {
@@ -36,19 +56,13 @@ export const SyncedCodePanel: React.FC<SyncedCodePanelProps> = ({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const languages: { id: Language; label: string; icon: string }[] = [
-    { id: 'python', label: 'Python', icon: 'py' },
-    { id: 'cpp', label: 'C++', icon: 'cpp' },
-    { id: 'javascript', label: 'JavaScript', icon: 'js' },
-  ];
-
   return (
     <div className="bg-obsidian-900 border border-slate-800 rounded-xl overflow-hidden shadow-xl flex flex-col h-full max-h-[550px]">
       {/* Code Header: responsive segmented language tabs + copy button */}
       <div className="bg-obsidian-950 px-3 sm:px-4 py-2.5 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         {/* Language Tabs: full-width 3-segment pill on mobile, compact on desktop */}
         <div className="grid grid-cols-3 sm:flex items-center gap-1 bg-obsidian-900 p-1 rounded-xl border border-slate-800/80 w-full sm:w-auto">
-          {languages.map((lang) => (
+          {SUPPORTED_LANGUAGES.map((lang) => (
             <button
               key={lang.id}
               onClick={() => setActiveLang(lang.id)}
@@ -139,4 +153,4 @@ export const SyncedCodePanel: React.FC<SyncedCodePanelProps> = ({
       </div>
     </div>
   );
-};
+});

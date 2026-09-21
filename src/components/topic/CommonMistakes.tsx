@@ -1,12 +1,16 @@
 import React from 'react';
 import { CommonMistake } from '../../types/topic';
 import { AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
 
 interface CommonMistakesProps {
   mistakes: CommonMistake[];
 }
 
-export const CommonMistakes: React.FC<CommonMistakesProps> = ({ mistakes }) => {
+export const CommonMistakes: React.FC<CommonMistakesProps> = React.memo(({ mistakes }) => {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
+
   return (
     <div className="bg-obsidian-900/90 border border-slate-800 rounded-2xl p-5 md:p-6 shadow-xl">
       <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-800/80">
@@ -32,19 +36,27 @@ export const CommonMistakes: React.FC<CommonMistakesProps> = ({ mistakes }) => {
             </div>
 
             {/* Misconception */}
-            <div className="flex items-start gap-2 text-xs md:text-[13px] text-rose-300 bg-rose-950/20 p-2.5 rounded-lg border border-rose-900/40">
-              <XCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+            <div className={`flex items-start gap-2 text-xs md:text-[13px] p-2.5 rounded-lg border ${
+              isLight 
+                ? 'text-rose-950 bg-rose-50 border-rose-200/80' 
+                : 'text-rose-300 bg-rose-950/20 border-rose-900/40'
+            }`}>
+              <XCircle className={`w-4 h-4 shrink-0 mt-0.5 ${isLight ? 'text-rose-600' : 'text-rose-400'}`} />
               <div>
-                <span className="font-semibold text-rose-200">The Trap: </span>
+                <span className={`font-bold ${isLight ? 'text-rose-900' : 'text-rose-200'}`}>The Trap: </span>
                 {m.misconception}
               </div>
             </div>
 
             {/* Fix */}
-            <div className="flex items-start gap-2 text-xs md:text-[13px] text-steel-200 bg-steel-950/30 p-2.5 rounded-lg border border-steel-500/30">
-              <CheckCircle className="w-4 h-4 text-steel-400 shrink-0 mt-0.5" />
+            <div className={`flex items-start gap-2 text-xs md:text-[13px] p-2.5 rounded-lg border ${
+              isLight 
+                ? 'text-sky-950 bg-sky-50 border-sky-200/80' 
+                : 'text-steel-200 bg-steel-950/30 border-steel-500/30'
+            }`}>
+              <CheckCircle className={`w-4 h-4 shrink-0 mt-0.5 ${isLight ? 'text-sky-600' : 'text-steel-400'}`} />
               <div>
-                <span className="font-semibold text-steel-100">The Fix: </span>
+                <span className={`font-bold ${isLight ? 'text-sky-900' : 'text-steel-100'}`}>The Fix: </span>
                 {m.fix}
               </div>
             </div>
@@ -53,4 +65,4 @@ export const CommonMistakes: React.FC<CommonMistakesProps> = ({ mistakes }) => {
       </div>
     </div>
   );
-};
+});

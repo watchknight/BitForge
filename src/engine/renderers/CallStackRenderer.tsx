@@ -1,3 +1,17 @@
+/**
+ * BitForge Recursive Call Stack Inspector: `CallStackRenderer`
+ * 
+ * Visualizes the runtime call stack frames for recursive algorithms
+ * (MergeSort, QuickSort, Tree Traversals, Backtracking, Divide-and-Conquer).
+ * 
+ * FEATURES:
+ * 1. LIFO Stack Hierarchy: Renders frames in bottom-up LIFO order (`flex-col-reverse`)
+ *    mirroring CPU stack execution.
+ * 2. Frame State Tracking: Distinguishes between active caller (`active`), suspended
+ *    parent frames waiting on child returns (`waiting`), and returning frames (`returned`).
+ * 3. Scope Variables: Inspects formal parameters and return values passed between stack depths.
+ */
+
 import React from 'react';
 import { CallStackFrame } from '../../types/simulation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,7 +23,7 @@ interface CallStackRendererProps {
   maxDepth?: number;
 }
 
-export const CallStackRenderer: React.FC<CallStackRendererProps> = ({
+export const CallStackRenderer: React.FC<CallStackRendererProps> = React.memo(({
   stack = [],
   maxDepth = 8,
 }) => {
@@ -103,4 +117,4 @@ export const CallStackRenderer: React.FC<CallStackRendererProps> = ({
       </div>
     </div>
   );
-};
+});

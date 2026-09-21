@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { MotionConfig } from 'framer-motion';
 
 interface AccessibilityContextType {
   reducedMotion: boolean;
@@ -35,6 +36,23 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [reducedMotion]);
 
+  // Listen for OS prefers-reduced-motion setting if no manual preference is saved in localStorage
+  useEffect(() => {
+    try {
+      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const handleChange = (e: MediaQueryListEvent) => {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored === null) {
+          setReducedMotion(e.matches);
+        }
+      };
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
   const toggleReducedMotion = () => {
     setReducedMotion((prev) => !prev);
   };
@@ -46,7 +64,9 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
         toggleReducedMotion,
       }}
     >
-      {children}
+      <MotionConfig reducedMotion={reducedMotion ? 'always' : 'user'}>
+        {children}
+      </MotionConfig>
     </AccessibilityContext.Provider>
   );
 };

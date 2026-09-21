@@ -1,25 +1,67 @@
+/**
+ * BitForge Discrete Playback Engine: `useSimulation`
+ * 
+ * Central state machine hook that controls algorithmic step-through animation.
+ * 
+ * HOW IT WORKS:
+ * 1. Timeline Navigation: Accepts precomputed `steps` (from algorithm generators) and
+ *    maintains `currentStepIndex` as a discrete cursor (0 to totalSteps - 1).
+ * 2. Autoplay Timer Loop: When `isPlaying` is true, schedules a non-drifting `setTimeout`
+ *    with dynamic delay (`Math.round(900 / speed)`). When reaching the last step,
+ *    playback automatically pauses and triggers `onComplete`.
+ * 3. Off-Screen Suspension: When `isSuspended` is true (e.g. user scrolled past the canvas),
+ *    the timer immediately cancels without losing the current step index, eliminating battery
+ *    and CPU drain while off-screen.
+ * 4. Safe Topic/Input Switching: If `steps` reference changes (due to new custom input or
+ *    topic route switch), previous timers are purged and cursor resets to step 0.
+ */
+
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Step } from '../types/simulation';
 
 interface UseSimulationProps {
+  /** Array of precomputed atomic state transitions */
   steps: Step[];
-  initialSpeed?: number; // default 1 (e.g. 900ms)
+  /** Playback speed multiplier (1 = normal 900ms, 2 = 450ms, 0.5 = 1800ms) */
+  initialSpeed?: number;
+  /** Optional callback fired when the simulation reaches the final step */
   onComplete?: () => void;
+  /** When true (e.g. scrolled off-screen or tab hidden), halts autoplay to save power */
+  isSuspended?: boolean;
 }
 
-export const useSimulation = ({ steps, initialSpeed = 1, onComplete }: UseSimulationProps) => {
+export const useSimulation = ({ steps, initialSpeed = 1, onComplete, isSuspended = false }: UseSimulationProps) => {
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [speed, setSpeed] = useState<number>(initialSpeed);
 
   const timerRef = useRef<number | null>(null);
+  const prevStepsRef = useRef(steps);
 
-  // Keep index within bounds if steps change
+  // Clean timer on unmount to prevent leaks
   useEffect(() => {
-    if (currentStepIndex >= steps.length) {
+    return () => {
+      if (timerRef.current) {
+        window.clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, []);
+
+  // Handle steps reference change (e.g. topic switch or custom input change)
+  useEffect(() => {
+    if (prevStepsRef.current !== steps) {
+      prevStepsRef.current = steps;
+      if (timerRef.current) {
+        window.clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+      setIsPlaying(false);
+      setCurrentStepIndex(0);
+    } else if (currentStepIndex >= steps.length) {
       setCurrentStepIndex(Math.max(0, steps.length - 1));
     }
-  }, [steps.length, currentStepIndex]);
+  }, [steps, currentStepIndex]);
 
   // Safely trigger onComplete in an effect when reaching the final step
   useEffect(() => {
@@ -51,6 +93,10 @@ export const useSimulation = ({ steps, initialSpeed = 1, onComplete }: UseSimula
   }, []);
 
   const reset = useCallback(() => {
+    if (timerRef.current) {
+      window.clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
     setIsPlaying(false);
     setCurrentStepIndex(0);
   }, []);
@@ -71,9 +117,9 @@ export const useSimulation = ({ steps, initialSpeed = 1, onComplete }: UseSimula
     setIsPlaying(false);
   }, []);
 
-  // Timer loop when isPlaying is true
+  // Timer loop when isPlaying is true (and not suspended by offscreen scroll)
   useEffect(() => {
-    if (!isPlaying) {
+    if (!isPlaying || isSuspended) {
       if (timerRef.current) {
         window.clearTimeout(timerRef.current);
         timerRef.current = null;
@@ -100,7 +146,7 @@ export const useSimulation = ({ steps, initialSpeed = 1, onComplete }: UseSimula
         timerRef.current = null;
       }
     };
-  }, [isPlaying, currentStepIndex, steps.length, speed, stepForward]);
+  }, [isPlaying, isSuspended, currentStepIndex, steps.length, speed, stepForward]);
 
   const currentStep = steps[currentStepIndex] || steps[0] || {
     id: 0,

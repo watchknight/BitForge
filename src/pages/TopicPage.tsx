@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { Topic } from '../types/topic';
 import { topicsData } from '../data/topicsData';
 import { useSimulation } from '../engine/useSimulation';
@@ -86,6 +86,27 @@ import {
   X
 } from 'lucide-react';
 
+// Topics that use fixed didactic simulation scenarios and do not accept custom input / arbitrary array mutation
+const FIXED_TOPICS = new Set([
+  'topological-sort',
+  'circular-queue',
+  'n-queens',
+  'maze-path',
+  'avl-tree',
+  'binary-heap',
+  'trie',
+  'segment-tree',
+  'fenwick-tree',
+  'knapsack-dp',
+  'lcs-dp',
+  'coin-change',
+  'interval-scheduling',
+  'huffman-coding',
+  'disjoint-set',
+  'kmp-search',
+  'bit-manipulation',
+]);
+
 interface TopicPageProps {
   topicId: string;
   onBackToRoadmap: () => void;
@@ -99,6 +120,9 @@ export const TopicPage: React.FC<TopicPageProps> = ({
 }) => {
   const topic: Topic = topicsData[topicId] || topicsData['merge-sort'];
   const { markSimulationViewed } = useProgress();
+
+  const supportsCustomInput = !FIXED_TOPICS.has(topic.id);
+  const supportsRandomize = !FIXED_TOPICS.has(topic.id);
 
   // Custom Input Modal state
   const [customInputModalOpen, setCustomInputModalOpen] = useState(false);
@@ -123,6 +147,18 @@ export const TopicPage: React.FC<TopicPageProps> = ({
     );
     setInputError(null);
   }, [topicId, topic.defaultInput]);
+
+  // Handle closing custom input modal on Escape key
+  useEffect(() => {
+    if (!customInputModalOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setCustomInputModalOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [customInputModalOpen]);
 
   // Generate steps pure function invocation based on topicId
   const steps = useMemo(() => {
@@ -252,7 +288,37 @@ export const TopicPage: React.FC<TopicPageProps> = ({
     }
   }, [topic.id, currentInput, llOpType, llVal, llIdx]);
 
-  // Simulation engine hook
+  const handleSimulationComplete = useCallback(() => {
+    markSimulationViewed(topic.id);
+  }, [markSimulationViewed, topic.id]);
+
+  // Viewport and tab visibility observers for mobile battery conservation
+  const simulationContainerRef = useRef<HTMLDivElement | null>(null);
+  const [isSimInView, setIsSimInView] = useState(true);
+  const [isDocVisible, setIsDocVisible] = useState(!document.hidden);
+
+  useEffect(() => {
+    const handleVis = () => setIsDocVisible(!document.hidden);
+    document.addEventListener('visibilitychange', handleVis);
+    return () => document.removeEventListener('visibilitychange', handleVis);
+  }, []);
+
+  useEffect(() => {
+    const container = simulationContainerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsSimInView(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [topic.id]);
+
+  // Simulation engine hook (suspended when scrolled out of view or tab hidden)
   const {
     currentStepIndex,
     currentStep,
@@ -270,13 +336,12 @@ export const TopicPage: React.FC<TopicPageProps> = ({
   } = useSimulation({
     steps,
     initialSpeed: 1,
-    onComplete: () => {
-      markSimulationViewed(topic.id);
-    },
+    onComplete: handleSimulationComplete,
+    isSuspended: !isSimInView || !isDocVisible,
   });
 
   // Randomize input handler
-  const handleRandomize = () => {
+  const handleRandomize = useCallback(() => {
     reset();
     if (topic.dataStructureType === 'array') {
       const length = Math.floor(Math.random() * 3) + 5; // 5 to 7
@@ -302,9 +367,7 @@ export const TopicPage: React.FC<TopicPageProps> = ({
         setLlIdx(Math.floor(Math.random() * (randomNodes.length + 1)));
         break;
       }
-      case 'binary-search-tree':
-      case 'avl-tree':
-      case 'binary-heap': {
+      case 'binary-search-tree': {
         const samplePool = [15, 25, 35, 45, 55, 65, 75, 85];
         const shuffled = [...samplePool].sort(() => 0.5 - Math.random()).slice(0, 6);
         setCurrentInput(shuffled);
@@ -339,7 +402,7 @@ export const TopicPage: React.FC<TopicPageProps> = ({
         break;
       }
     }
-  };
+  }, [reset, topic.dataStructureType, topic.id]);
 
   // Custom input submit handler with rigorous validation
   const handleApplyCustomInput = () => {
@@ -671,7 +734,7 @@ export const TopicPage: React.FC<TopicPageProps> = ({
         {/* Two-column layout on large screens: Simulator on left, Synced Code on right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column: Visual Canvas + Narration + Playback Controls */}
-          <div className="lg:col-span-7 flex flex-col gap-4">
+          <div ref={simulationContainerRef} className="lg:col-span-7 flex flex-col gap-4">
             {/* Visual Canvas Card with Responsive Padding and Strict Overflow Containment */}
             <div className="bg-obsidian-900/80 border border-slate-800 rounded-2xl p-2 sm:p-4 shadow-xl backdrop-blur-md flex flex-col items-center justify-center min-h-[340px] sm:min-h-[360px] overflow-hidden">
               {renderAlgorithmVisualization()}
@@ -694,8 +757,8 @@ export const TopicPage: React.FC<TopicPageProps> = ({
               onReset={reset}
               onGoToStep={goToStep}
               onSpeedChange={setSpeed}
-              onRandomize={handleRandomize}
-              onOpenCustomInput={() => setCustomInputModalOpen(true)}
+              onRandomize={supportsRandomize ? handleRandomize : undefined}
+              onOpenCustomInput={supportsCustomInput ? () => setCustomInputModalOpen(true) : undefined}
             />
           </div>
 
@@ -722,15 +785,25 @@ export const TopicPage: React.FC<TopicPageProps> = ({
 
       {/* Custom Input Modal */}
       {customInputModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-obsidian-950/80 backdrop-blur-sm p-4">
-          <div className="bg-obsidian-900 border border-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl space-y-4">
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-obsidian-950/80 backdrop-blur-sm p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="custom-input-modal-title"
+          onClick={() => setCustomInputModalOpen(false)}
+        >
+          <div 
+            className="bg-obsidian-900 border border-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-              <h3 className="text-base font-bold text-white font-sans flex items-center gap-2">
+              <h3 id="custom-input-modal-title" className="text-base font-bold text-white font-sans flex items-center gap-2">
                 <Sliders className="w-4 h-4 text-brand-400" />
                 Customize Simulation Input
               </h3>
               <button
                 onClick={() => setCustomInputModalOpen(false)}
+                aria-label="Close custom input dialog"
                 className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
               >
                 <X className="w-4 h-4" />

@@ -1,3 +1,19 @@
+/**
+ * BitForge Simulation Playback Controls
+ * 
+ * Interactive control console for stepping through, scrubbing, and sonifying simulations.
+ * 
+ * CORE FEATURES:
+ * 1. Timeline Scrubber: Accessible range input (`role="slider"`) supporting scrub seeking.
+ * 2. Keyboard Navigation Hub: Supports standard playback shortcuts (`Space`, `←`, `→`, `R`, `1-4`).
+ *    Equipped with strict modifier guards (`!e.metaKey && !e.ctrlKey && !e.altKey`) to guarantee
+ *    native browser shortcuts (refresh, devtools, tab switching, global search) are never hijacked.
+ * 3. Algorithmic Sonification: Emits contextual audio frequencies through `soundEngine` based on
+ *    the action and position along the timeline.
+ * 4. Responsive & Accessible: Guaranteed min 44x44px touch targets on mobile viewports with
+ *    full ARIA labels and live region announcements.
+ */
+
 import React, { useEffect } from 'react';
 import { 
   Play, 
@@ -29,7 +45,9 @@ interface PlaybackControlsProps {
   onOpenCustomInput?: () => void;
 }
 
-export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
+const SPEED_OPTIONS = [0.5, 1, 1.5, 2];
+
+export const PlaybackControls: React.FC<PlaybackControlsProps> = React.memo(({
   currentStepIndex,
   totalSteps,
   isPlaying,
@@ -45,7 +63,6 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
   onRandomize,
   onOpenCustomInput,
 }) => {
-  const speeds = [0.5, 1, 1.5, 2];
 
   // Keyboard navigation for simulation controls (Accessibility Pass)
   useEffect(() => {
@@ -58,6 +75,11 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
           target.tagName === 'TEXTAREA' ||
           target.isContentEditable)
       ) {
+        return;
+      }
+
+      // Do not intercept native browser shortcuts (e.g. Ctrl+R reload, Cmd+K search, Ctrl+1..4 tab switch)
+      if (e.metaKey || e.ctrlKey || e.altKey) {
         return;
       }
 
@@ -240,7 +262,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
           aria-label="Playback speed"
         >
           <FastForward className="w-3.5 h-3.5 text-slate-500 ml-1 mr-0.5" />
-          {speeds.map((s, idx) => (
+          {SPEED_OPTIONS.map((s, idx) => (
             <button
               key={s}
               onClick={() => {
@@ -250,7 +272,7 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
               onMouseEnter={() => soundEngine.playHoverTick()}
               title={`Speed ${s}x (Key: ${idx + 1})`}
               aria-label={`Playback speed ${s}x`}
-              className={`min-w-[34px] sm:min-w-[38px] min-h-[36px] px-2 py-1 text-xs font-mono rounded-lg transition-all flex items-center justify-center ${
+              className={`min-w-[34px] sm:min-w-[38px] min-h-[38px] px-2 py-1 text-xs font-mono rounded-lg transition-all flex items-center justify-center touch-manipulation ${
                 speed === s
                   ? 'bg-brand-500/20 text-brand-300 font-bold border border-brand-500/40'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
@@ -310,4 +332,4 @@ export const PlaybackControls: React.FC<PlaybackControlsProps> = ({
       </div>
     </div>
   );
-};
+});

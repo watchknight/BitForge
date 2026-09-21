@@ -58,12 +58,12 @@ export const DriftingEmbers: React.FC<DriftingEmbersProps> = ({
     let isMobile = width < 640;
 
     // Particle count: restrained & sparse (sparks rising off a forge, not a blizzard)
-    // On mobile (<640px), cap to 8 to guarantee rock-solid 60fps on mid-range devices
+    // On mobile (<640px), cap to 4 particles with zero outer glow to minimize GPU fill rate
     const particleCount = isMobile
-      ? 8
+      ? 4
       : density === 'sparse' 
-      ? Math.min(28, Math.max(16, Math.floor(width / 65)))
-      : Math.min(42, Math.max(22, Math.floor(width / 45)));
+      ? Math.min(24, Math.max(12, Math.floor(width / 70)))
+      : Math.min(36, Math.max(18, Math.floor(width / 50)));
 
     const speedMultiplier = speed === 'slow' ? 0.65 : 0.9;
 
@@ -86,7 +86,7 @@ export const DriftingEmbers: React.FC<DriftingEmbersProps> = ({
         waverAmplitude: Math.random() * 18 + 8, // Gentle convection draft
         color: palette.core,
         glowColor: palette.glow,
-        hasGlow: Math.random() < 0.28, // Only ~28% have soft outer halos
+        hasGlow: isMobile ? false : Math.random() < 0.28, // Disabled on mobile to save GPU fill rate
       };
     };
 
@@ -107,11 +107,25 @@ export const DriftingEmbers: React.FC<DriftingEmbersProps> = ({
     const resizeObserver = new ResizeObserver(handleResize);
     resizeObserver.observe(container);
 
+    // Visibility listener: Stop RAF loop immediately when tab is hidden or phone locked
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (animId) {
+          cancelAnimationFrame(animId);
+          animId = 0;
+        }
+      } else if (isVisible && !reducedMotion && !animId) {
+        lastTimestamp = performance.now();
+        animId = requestAnimationFrame(render);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     // Intersection observer: Pause animation when section scrolls out of view
     const intersectionObserver = new IntersectionObserver(
       ([entry]) => {
         isVisible = entry.isIntersecting;
-        if (isVisible && !reducedMotion && !animId) {
+        if (isVisible && !reducedMotion && !animId && !document.hidden) {
           lastTimestamp = performance.now();
           animId = requestAnimationFrame(render);
         }
@@ -215,6 +229,7 @@ export const DriftingEmbers: React.FC<DriftingEmbersProps> = ({
 
     return () => {
       if (animId) cancelAnimationFrame(animId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
     };
